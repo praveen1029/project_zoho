@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>      
+</head>
+
+
+<script>
+$('#demo').daterangepicker({
+    "startDate": "08/29/2023",
+    "endDate": "09/04/2023"
+}, function(start, end, label) {
+  console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+});
+</script> 
+
+<style>
+    .myDiv{
+        display:none;
+        padding:10px;
+        margin-top:20px;
+    }  
+    #showOne{
+        border:1px solid red;
+    }
+    #showTwo{
+        border:1px solid green;
+    }
+    #showThree{
+        border:1px solid blue;
+    }
+    </style>
+<body>
+
+    <select id="myselection">
+        <div class="col">
+            <option>Select Option</option>
+            <option value="One">One</option>
+            <option value="Two">Two</option>
+            <option value="Three">Three</option>
+        </div>
+    </select> 
+    <div>
+        <div id="showOne" class="myDiv">
+            You have selected option <strong>"One"</strong>.
+        </div>
+        <div id="showTwo" class="myDiv">
+            You have selected option <strong>"Two"</strong>.
+        </div>
+        <div id="showThree" class="myDiv">
+            You have selected option <strong>"Three"</strong>.
+        </div> 
+    </div>
+
+    <i class="fa fa-calendar glyphicon glyphicon-calendar" ></i>
+</body>
+</html>

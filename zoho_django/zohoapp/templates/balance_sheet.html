@@ -26,14 +26,37 @@
       color: white;
     }
     table, tr, td {
-    border: none;
+        border: none;
+    }
 
     .allow-border{
         border-bottom: 1pt dotted white;
     }
-}
+
   </style>
 
+<div class="container-fluid ">
+    <div class="row topbar">
+        <div class="col-md-2">
+            <select id="myselection">
+                <option>Select Option</option>
+                <option value="One">One</option>
+                <option value="Two">Two</option>
+                <option value="Three">Three</option>
+            </select>
+        </div>
+         <div class="col-md-6">
+            <div class="logo"><img src="" alt=""><a href="{% url 'load_customize_report_bs' %}">Customize Report</a></div>
+            
+        </div>
+        <div class=" col-md-2">
+            <div class="logo float-right"><img src="" alt=""><a>Print</a></div>
+        </div>
+        <div class="col-md-2">
+            <div class="logo float-right"><img src="" alt=""><a>Export As</a></div>
+        </div>
+    </div>
+</div>
 
 
 <div class="container-fluid">

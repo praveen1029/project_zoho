@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
+</head>
+
+<style>
+
+table {
+      width: 100%;
+    }
+th,td {
+    text-align: left;
+    color: white;
+}
+td {
+    border: none;
+}
+
+table,th{
+    border: 1pt solid white;
+}
+
+th i{
+    font-size: 200%;
+    color: white;
+}
+
+.right{
+    text-align: right;
+    border-right: 1pt solid white;
+}
+
+.border_right{
+    border-right: 1pt solid white;
+}
+
+.modal-toggle {
+  position: absolute;
+  appearance: none;
+  left: -100%;
+  top: -100%;
+}
+label { 
+  cursor: pointer;
+  user-select: none;
+}
+
+
+/* styling */
+label {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 2em;
+  height: 2em;
+  background-color: #26ae90;
+  border-radius: 6px;
+  padding: 0 1em;
+  margin: 1em;
+  color: #eee;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  &:after {
+    content: "show me"
+  }
+}
+.c-modal {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  margin-top: 5%;
+  margin-left: 16%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  overflow: hidden;
+  transition: all .6s ease-in-out 0s;
+	-webkit-transform: translateX(-50%) scaleY(0);
+	-o-transform: translateX(-50%) scaleY(0);
+	-ms-transform: translateX(-50%) scaleY(0);
+	transform: translateX(-50%) scaleY(0);
+	-webkit-transform-origin: top;
+	-o-transform-origin: top;
+	-ms-transform-origin: top;
+	transform-origin: top;
+}
+
+
+/* checked */
+.modal-toggle:checked {
+  & ~ .c-modal {
+    -webkit-transform: translateX(-50%) scaleY(1);
+    -o-transform: translateX(-50%) scaleY(1);
+    -ms-transform: translateX(-50%) scaleY(1);
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+
+
+a:hover{
+    background-color:#007bff;
+    color:#007bff;
+}
+a:active{
+    background-color: #007bff;
+}
+
+.myDiv:target{
+    
+    display:block !important;
+    
+}
+
+.myd{
+        display:none;
+        padding:10px;
+        margin-top:20px;
+    }  
+
+</style>
+
+<script>
+    $(document).ready(function(){
+    $('#myselection').on('change', function(){
+    	var demovalue = $(this).val(); 
+        if (demovalue=="Three"){
+            $("div.myd").hide();
+            $("#show"+demovalue).show();
+        }
+    });
+});
+</script>
+
+<select id="myselection">
+    <option>Select Option</option>
+    <option value="One">One</option>
+    <option value="Two">Two</option>
+    <option value="Three">Three</option>
+</select>
+
+<div id="showOne" class="myd">
+    You have selected option <strong>"One"</strong>.
+</div>
+<div id="showTwo" class="myd">
+    You have selected option <strong>"Two"</strong>.
+</div>
+<div id="showThree" class="myd">
+    You have selected option <strong>"Three"</strong>.
+</div> 
+
+
+<input type="checkbox" name="modal-toggle" id="modal-toggle" class="modal-toggle" />
+
+<label for="modal-toggle" onclick></label>
+
+<div class="c-modal">
+  <div class="modal-conent">
+    <div class="sidenav">
+        <div class="container-fluid">
+            <div class="row topbar">
+                <div class="d-flex">
+                    <div class="col-md-11">
+                        <div class="logo"><img src="" alt=""><a>Customize Report</a></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="nav-item active ">
+                        <a class="nav-link cursor-pointer active text-white" href="#First">General</a>
+                    </div> 
+
+                    <div class="nav-item">
+                        <a class="nav-link cursor-pointer text-white" href="#Second">Show / Hide Columns</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="myDiv" id="First" style="display:none"> hello </div>
+
+                    <div class="myDiv" id="Second" style="display:none"> World </div>
+                </div>
+            </div>
+        </div>                                                                                                                                         
+      </div>
+  </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="text-center">
+            <h4>{{company.company_name}}</h4> 
+            <h3>Balance Sheet</h3> 
+            <h6>Basis: Cash</h6> 
+            <h5>As of 13 May 2017</h5> <br>
+        </div>
+        <div class="table-responsive">
+            <div class="container-fluid"> 
+                <table class="table" style="border-color: white;">
+                    <thead>
+                        <th colspan="2" style="text-align: center; background-color: black; border-bottom: 1pt solid white;"><i>Liabilities &amp; Equities</i></th>
+                        <th colspan="2" style="text-align: center; background-color: black; border-bottom: 1pt solid white;"><i>Assets</i></th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="border_right"><span class="text-uppercase"><b>Current Liabilities</b></span> </td>
+                            <td colspan="2"  ><span class="text-uppercase"><b>Current Assets <hr></b></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Employee Reimbursements</td>
+                            <td class="right"><a href="#">4.724,000</a></td>
+                            <td  colspan="2">Bank <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td>• HMRC-PAYE ( 5670 )</td>
+                            <td class="right"><a href="#">-200,000</a></td>
+                            <td>• Bank Acc 1</td>
+                            <td class="right"><a href="#">-483.478,225</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Opening Balance Adjustments</td>
+                            <td class="right"><a href="#" >12.597,200</a></td>
+                            <td>• Bank Of America</td>
+                            <td class="right"><a href="#" >12.571,281</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Output VAT</td>
+                            <td class="right"><a href="#" >-9,200</a></td>
+                            <td>• Eur Bank Account</td>
+                            <td class="right"><a href="#">570,680</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Unearned Revenue</td>
+                            <td class="right"><a href="#">-21.330,000</a></td>
+                            <td>• New Acc 1</td>
+                            <td class="right"><a href="#">-8.758,890</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• VAT MOSS Payable</td>
+                            <td class="right"><a href="#">-16.687,180</a></td>
+                            <td class="right" colspan="2">Total&nbsp; &nbsp;-479.095,154<hr></td>
+                        </tr>
+
+                        <tr>
+                            <td >• VAT Payable <hr></td>
+                            <td class="right" ><a href="#">-67.545,420</a> <hr style="margin-left: -4vh;"></td>
+                            <td colspan="2">Cash <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td ></td>
+                            <td class="right">Total Current Liabilities &nbsp; &nbsp;-88.450,600 </td>
+                            <td>• Petty Cash</td>
+                            <td class="right"><a href="#">-1.057.645,419</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td ><span class="text-uppercase"><b>Other Liabilities</b></span></td>
+                            <td class="border_right"></td>
+                            <td>• Undeposited Funds</td>
+                            <td class="right"><a href="#">-6.993,690</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Tag Adjustments <hr></td>
+                            <td class="right"><a href="#" >0.00</a> <hr style="margin-left: -4vh;"></td>
+                            <td class="right" colspan="2">Total&nbsp;&nbsp;-1.064.639,109 <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="right">Total Other Liabilities&nbsp;&nbsp;;0.00</td>
+                            <td colspan="2"> Other Current Assets <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="text-uppercase"><b>Equities</b></span></td>
+                            <td class="border_right"></td>
+                            <td>• Advance Tax</td>
+                            <td class="right"><a href="#">100,990</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td>• Current Year Earnings</td>
+                            <td class="right"><a href="#">-692.708,544</a></td>
+                            <td>• Employee Advance</td>
+                            <td class="right"><a href="#">-891,951</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Opening Balance Offset</td>
+                            <td class="right"><a href="#">143,000</a></td>
+                            <td>• Input VAT</td>
+                            <td class="right"><a href="#">16,670</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td>• Owner's Equity</td>
+                            <td class="right"><a href="#">449,540</a></td>
+                            <td>• Sales to Customers (Cash)</td>
+                            <td class="right"><a href="#">18.588,706</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>• Retained Earnings <hr></td>
+                            <td class="right"><span>-749.554,743</span><hr style="margin-left: -4vh;"></td>
+                            <td class="right" colspan="2">Total&nbsp;&nbsp;17.814,415 <hr> </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="right">Total Equities&nbsp;&nbsp;-1.441.670,747</td>
+                            <td colspan="2">Other Assets <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>• Error ( Error ) </td>
+                            <td class="right"><a href="#">-100,990</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>• GoCardless Clearing</td>
+                            <td class="right"><a href="#">3,600</a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>• GoCardless Clearing - EUR</td>
+                            <td class="right"><a href="#">0,001</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>• GoCardless Clearing - GBP</td>
+                            <td class="right"><a href="#">0,000</a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>• Inventory Asset</td>
+                            <td class="right"><a href="#" >-10.502,000</a> </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td class="right" colspan="2">Total&nbsp;&nbsp;-10.599,389 <hr></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td></td>
+                            <td class="right">Total Current Assets&nbsp;&nbsp;-1.536.519,237</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td><span class="text-uppercase"><b>Fixed Assets</b></span></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>Furniture and Equipment</td>
+                            <td class="right"><a href="#">  5.197,890  </a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td>Fun ( 12 )</td>
+                            <td class="right"><a href="#">  0,000  </a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td><i>bugfix account  ( 1200 ) </i></td>
+                            <td class="right"><a href="#">1.200,000</a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td></td>
+                            <td class="right">Total for Fun&nbsp;&nbsp;<a href="#">1.200,000</a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td></td>
+                            <td class="right">Total for Furniture and Equipment&nbsp;&nbsp;<a href="#">6.397,890</a></td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td class="border_right"></td>
+                            <td></td>
+                            <td class="right">Total Fixed Assets&nbsp;&nbsp;6.397,890</td>
+                        </tr>
+
+                        <tr> 
+                            <td style="border-top: 1pt solid white;"><i>TOTAL LIABILITIES &amp; EQUITIES</i></td>
+                            <td class="right" style="border-top: 1pt solid white;"><i><span>-1.530.121,347</span></i></td>
+                            <td style="border-top: 1pt solid white;"><i>TOTAL ASSETS</i></td> 
+                            <td class="right" style="border-top: 1pt solid white;"><i><span>-1.530.121,347</span></i></td> 
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div > 
+                    <p>
+                        <small>**Amount is displayed in your base currency</small>&nbsp;
+                        <span class="badge text-semibold badge-success d-inline">INR</span>
+                    </p>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
