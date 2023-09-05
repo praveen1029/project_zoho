@@ -33,7 +33,33 @@
         border-bottom: 1pt dotted white;
     }
 
+    .dropdown-item:hover{
+        background-color: white;
+    }
+
   </style>
+
+  <script>
+        function display() {
+        window.print();
+    }
+
+    function exportToPDF(){
+        var content = document.getElementById('pdfdiv');
+        html2pdf()
+        .from(content)
+        .save('report.pdf')
+    }
+
+    // Function to save Excel using XLSX
+    function exportToExcel() {
+        var table = document.querySelector('table');
+        var ws = XLSX.utils.table_to_sheet(table);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'report.xlsx');
+    }
+  </script>
 
 <div class="container-fluid ">
     <div class="row topbar">
@@ -45,22 +71,29 @@
                 <option value="Three">Three</option>
             </select>
         </div>
-         <div class="col-md-6">
-            <div class="logo"><img src="" alt=""><a href="{% url 'load_customize_report_bs' %}">Customize Report</a></div>
+         <div class="col-md-7">
+            <div class="logo"><img src="" alt=""><a href="{% url 'load_customize_report_bs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></div>
             
         </div>
-        <div class=" col-md-2">
-            <div class="logo float-right"><img src="" alt=""><a>Print</a></div>
+        <div class="col-md-1"></div>
+        <div class=" col-md-1">
+            <button class="btn btn-light mr-2" onclick="display()"><i class="fa fa-print"></i>Print</button>
         </div>
-        <div class="col-md-2">
-            <div class="logo float-right"><img src="" alt=""><a>Export As</a></div>
+        <div class="col-md-1">
+            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class='fas fa-file-export'></i> Export
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="exportDropdown">
+                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
+                <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
+            </div>
         </div>
     </div>
-</div>
+</div><br><br>
 
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="pdfdiv">
         <div class="text-center">
             <h4>{{company.company_name}}</h4> 
             <h3>Balance Sheet</h3> 

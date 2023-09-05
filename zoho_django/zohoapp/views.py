@@ -9675,6 +9675,6 @@ def load_horizontal_balance_sheet1(request):
     return render(request,'horizontal_balance_sheet1.html', {"company":company})
 
 def load_customize_report_bs(request):
-    company = company_details.objects.get(user = request.user.id)
-    return render(request,'customize_report_bs.html', {"company":company})
+    customers = customer.objects.all()
+    return render(request,'customize_report_bs.html', {"customers":customers,"range":range(2,24)})
 
