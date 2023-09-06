@@ -4,34 +4,11 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 </head>
 
 <style>
-            .multiselect {
-            width: 200px;
-            position: relative;
-            user-select: none;
-            cursor: pointer;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .option {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-
-        .option:last-child {
-            border-bottom: none;
-        }
     /* Your existing styles */
 
     /* Custom styles for dropdowns and filter section */
@@ -77,6 +54,16 @@ a:active{
     height: 65vh;
     overflow: hidden;
 }
+
+.inputdiv{
+    background-color: white; 
+    color: #060606; 
+    width: 100%;
+    height: 5vh;
+    border-radius: 5px;
+    margin-bottom: 2vh;
+}
+
 #custom-dropdown-btn{
     background-color: white;
     width: 96%;
@@ -101,14 +88,14 @@ a:active{
 
 </style>
 <div class="container-fluid ">
-    <div class="row" style="background-color: grey;">
+    <div class="row" style="background-color: grey">
         <div class="col-md-11">
             <h1>Customize Report</h1>
         </div>
         <div class="col-md-1">
             <!-- Place the close button here -->
-            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button" style="background-color: grey;">
-                <i class="fa fa-times-circle" ></i>
+            <a href="{% url 'load_horizontal_balance_sheet' %}" class="btn  close-button" style="background-color: grey;">
+                <i class="fa fa-times-circle"></i>
             </a>
         </div>
     </div><br><br>
@@ -120,12 +107,9 @@ a:active{
                 <a class="nav-link cursor-pointer active text-white" href="#general">General</a>
             </div> 
     
-            <div class="nav-item">
-                <a class="nav-link cursor-pointer text-white" href="#columns">Show / Hide Columns</a>
-            </div>
         </div>
 
-        <div class="col-md-9 myDiv" id="general" style="display: none;">
+        <div class="col-md-9 myDiv" id="general">
             <label for="dateRangePicker">Date Options</label>
             <div class="custom-dropdown">
                 <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>
@@ -145,37 +129,6 @@ a:active{
                     </div>
                 </div>
             </div><br><br>
-
-            <div class="form-group">
-                <label for="CompareWith" >Compare With</label>
-                <select id="CompareWith" class="form-control text-dark bg-white">
-                    <option value="#" style="color: #060606;" selected>None</option>
-                    <option value="py" style="color: #060606;">Previous Year(s)</option>
-                    <option value="pp" style="color: #060606;">Previous Period(s)</option>
-                </select>
-            </div><br>
-
-            <div id="showpy" class="myd form-group">
-                <label for="Numofyears" >Number Of Year(s)</label>
-                <select id="Numofyears" class="form-control text-dark bg-white">
-                    <option value="1" style="color: #060606;" selected>1</option>
-                    {% for num in range %}
-                        <option value="{{num}}" style="color: #060606;">{{num}}</option>
-
-                    {% endfor %}
-                </select><br>
-            </div>
-
-            <div id="showpp" class="myd form-group">
-                <label for="Numofperiods" >Number Of Period(s)</label>
-                <select id="Numofperiods" class="form-control text-dark bg-white">
-                    <option value="1" style="color: #060606;" selected>1</option>
-                    {% for num in range %}
-                        <option value="{{num}}" style="color: #060606;">{{num}}</option>
-
-                    {% endfor %}
-                </select><br>
-            </div>
 
             <div class="form-group">
                 <label for="ReportBasis" >Report Basis</label>
@@ -272,13 +225,15 @@ a:active{
                             <option value="project7" style="color: #060606;" >Project-7</option>
                     </select>
                 </div>
-
                 <div class="col-md-4 form-group" id="showdepartment0" class="form-group" style="display: none;">
-                    <select  class="form-control text-dark bg-white">
-                        <option value="me" style="color: #060606;">Me</option>
-                        <option value="nms" style="color: #060606;">NMS</option>
-                        <option value="dep_zoho" style="color: #060606;">Zoho</option>
-                    </select>
+                    <div class="multiselect" id="multiselect">
+                        <div class="inputdiv">&nbsp;</div>
+                        <div class="dropdown-content" id="dropdown" style="background-color: white; color: black;">
+                            <div class="option" data-value="ME">ME</div>
+                            <div class="option" data-value="NMS">NMS</div>
+                            <div class="option" data-value="zoho">Zoho</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-4 form-group" id="showsegment0" class="form-group" style="display: none;">
@@ -303,71 +258,21 @@ a:active{
 
             <div id="AddMore" style="display: none;">
                 <button style="color: blue;" class="btn add-more">+ Add More</button>
-            </div><br><br>
+            </div><br><br><br>
             <div class="row">
                 <div class="col-md-4 d-flex">
                     <button class="btn" style="width: 100%; background-color: #007bff; margin-right: 2vh;">Run Report</button>
-                    <a class="btn" href="{% url 'load_balance_sheet' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-9 myDiv" id="columns" style="display: none;">
-            <div class="row" style="height: 100%;">
-                <div class="col-md-5" id="avlcol">
-                    <h1 >Available Columns</h1>
-                    <div class="colborder">
-                        <i class="fas fa-search" style="margin-left: 2vh;"></i><input id="searchbar" onkeyup="search_here()" type="text" name="search" style="width: 80%; margin: 2vh;"><br><br>
-                        <div class="row searchdiv" id="accountdiv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account <button  class="btn btn-light column_button" id="account">+</button></p>
-                        </div>
-                        <div class="row searchdiv " id="codediv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code<button  class="btn btn-light column_button" id="code">+</button></p>
-                        </div>
-                        <div class="row searchdiv " id="totaldiv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <button  class="btn btn-light column_button" id="total">+</button></p>
-                        </div>
-                        <div class="row searchdiv" id="datediv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date <button  class="btn btn-light column_button" id="date">+</button></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-1">
-                    <i class="fas fa-arrow-circle-right" style="margin-top: 40vh; margin-bottom: 40vh; margin-left: 2vh ;" ></i>
-                </div>
-                <div class="col-md-5" id="selcol">
-                    <h1>Selected Columns</h1>
-                    <div class="colborder">
-                        <br><br>
-                        <div class="row accountdivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account  (Reports) <button  class="btn btn-light column_button" id="minaccount">-</button></p>
-                        </div>
-                        <div class="row codedivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code (Reports) <button  class="btn btn-light column_button" id="mincode">-</button></p>
-                        </div>
-                        <div class="row totaldivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total (Reports) <button  class="btn btn-light column_button" id="mintotal">-</button></p>
-                        </div>
-                        <div class="row datedivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date  (Reports) <button class="btn btn-light column_button" id="mindate">-</button></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 d-flex">
-                    <button class="btn" style="width: 100%; background-color: #007bff; margin-right: 2vh;">Run Report</button>
-                    <a class="btn" href="{% url 'load_balance_sheet' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
+                    <a class="btn" href="{% url 'load_horizontal_balance_sheet' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
 
-    // Initialize Pikaday date picker
+// Initialize Pikaday date picker
 const picker = new Pikaday({
             field: document.getElementById('datepicker'),
             format: 'MM/DD/YYYY', // You can change the date format
@@ -505,58 +410,34 @@ const picker = new Pikaday({
         });
 
 
-function search_here() {
-            let input = document.getElementById('searchbar').value
-            input=input.toLowerCase();
-            let x = document.getElementsByClassName('searchdiv');
-            
-            for (i = 0; i < x.length; i++) {
-                if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                    x[i].style.display="none";
-                }
-                else {
-                    x[i].style.display="list-item";				
-                }
+
+
+
+//multiselect
+const multiselect = document.getElementById('multiselect');
+        const dropdown = document.getElementById('dropdown');
+
+        multiselect.addEventListener('click', () => {
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                option.classList.toggle('selected');
+                const selectedItems = Array.from(options)
+                    .filter(option => option.classList.contains('selected'))
+                    .map(option => option.dataset.value);
+                multiselect.firstElementChild.textContent = selectedItems.length > 0 ? selectedItems.join(', ') : ' ';
+            });
+        });
+
+        // Close the dropdown when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (!multiselect.contains(event.target)) {
+                dropdown.style.display = 'none';
             }
-        }
-
-$(document).ready(function(){
-    $("#account").click(function(){
-        $("#accountdiv").toggle();
-        $(".accountdivr").toggle();
-    });
-    $("#minaccount").click(function(){
-        $(".accountdivr").toggle();
-        $("#accountdiv").toggle();
-    });
-
-    $("#code").click(function(){
-        $("#codediv").toggle();
-        $(".codedivr").toggle();
-    });
-    $("#mincode").click(function(){
-        $(".codedivr").toggle();
-        $("#codediv").toggle();
-    });
-
-    $("#total").click(function(){
-        $("#totaldiv").toggle();
-        $(".totaldivr").toggle();
-    });
-    $("#mintotal").click(function(){
-        $(".totaldivr").toggle();
-        $("#totaldiv").toggle();
-    });
-
-    $("#date").click(function(){
-        $("#datediv").toggle();
-        $(".datedivr").toggle();
-    });
-    $("#mindate").click(function(){
-        $(".datedivr").toggle();
-        $("#datediv").toggle();
-    });
-});
+        });
 
 function selectfield(sel,sel_id){
         var id_val = sel_id.slice(-1);
@@ -596,6 +477,7 @@ function selectfield(sel,sel_id){
             $("#showdepartment"+id_val).hide();
             $("#showsegment"+id_val).show();
             $("#showproduct"+id_val).hide();
+            $("#ifempty_"+is_val).hide();
             segisempty("is",id_val)
         }
         
@@ -627,6 +509,7 @@ function selectfield(sel,sel_id){
 
     function segisempty(seg,seg_id){
         var seg_val = seg_id.slice(-1);
+        document.getElementById("demo").innerHTML= seg_val
         if(seg=="empty"){
             $("#showsegment"+seg_val).hide();
             $("#ifempty_"+seg_val).show();
@@ -702,6 +585,243 @@ function selectfield(sel,sel_id){
             }
         });
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".custom-list-item");
+        const contents = document.querySelectorAll(".custom-content");
+        // const availableItems = document.querySelectorAll("#originalColumn .items");
+        // const addButtons = document.querySelectorAll("#originalColumn .add");
+        // const selectedItems = document.querySelector("#addedColumn .item-list");
+        // const searchInput = document.getElementById("searchInput");
+        // const itemList = document.querySelector(".item-list");
+        const addFilterButton = document.getElementById("addFilter");
+        const filterRowContainer = document.querySelector(".filter-row");
+        const filterContainer = document.querySelector("#filterContainer");
+        // const availableItems = document.querySelectorAll("#originalColumn .items");
+        //                 const selectedItems = document.querySelector("#addedColumn .item-list");
+        const availableItems = document.querySelectorAll("#originalColumn .items");
+        const addButtons = document.querySelectorAll("#originalColumn .add");
+        const selectedItems = document.querySelector("#addedColumn .item-list");
+        const searchInput = document.getElementById("searchInput");
+        const itemList = document.querySelector(".item-list");
+        // //neww
+
+
+
+        // availableItems.forEach(item => {
+        //     const addButton = item.querySelector(".add");
+        //     addButton.addEventListener("click", () => {
+        //         const selectedItem = item.cloneNode(true);
+        //         const removeButton = selectedItem.querySelector(".add");
+        //         removeButton.textContent = "-";
+
+        //         // Remove the "+" event listener
+        //         removeButton.removeEventListener("click", addColumnListener);
+
+        //         selectedItems.appendChild(selectedItem);
+
+        //         // Add a click event to the new remove button
+        //         removeButton.addEventListener("click", () => {
+        //             selectedItems.removeChild(selectedItem);
+        //         });
+        //     });
+        // });
+
+        // // Add event listeners for drag-and-drop
+        // availableItems.forEach(item => {
+        //     item.addEventListener("dragstart", dragStart);
+        // });
+
+        // selectedItems.addEventListener("dragover", dragOver);
+        // selectedItems.addEventListener("drop", drop);
+
+        // // Drag start event handler
+        // function dragStart(event) {
+        //     event.dataTransfer.setData("text/plain", event.target.innerText);
+        // }
+
+        // // Drag over event handler
+        // function dragOver(event) {
+        //     event.preventDefault();
+        // }
+
+        // // Drop event handler
+        // function drop(event) {
+        //     event.preventDefault();
+        //     const itemName = event.dataTransfer.getData("text/plain");
+
+        //     // Create a new selected item element
+        //     const selectedItem = document.createElement("li");
+        //     selectedItem.classList.add("items");
+        //     selectedItem.textContent = itemName;
+
+        //     // Append the new selected item
+        //     selectedItems.appendChild(selectedItem);
+        // }
+
+        // links.forEach(link => {
+        //     link.addEventListener("click", () => {
+        //         const target = link.getAttribute("data-target");
+        //         contents.forEach(content => {
+        //             if (content.id === target) {
+        //                 content.style.display = "block";
+        //             } else {
+        //                 content.style.display = "none";
+        //             }
+        //         });
+        //     });
+        // });
+        // //new
+        // document.addEventListener("click", (event) => {
+        //     if (!searchInput.contains(event.target) && !itemList.contains(event.target)) {
+        //         itemList.style.display = "none";
+        //     }
+        // });
+
+        searchInput.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent the click event from propagating to document
+    itemList.style.display = "block"; // Show the item list
+});
+
+// Hide the item list when clicking outside the input and the list
+document.addEventListener("click", (event) => {
+    if (!searchInput.contains(event.target) && !itemList.contains(event.target)) {
+        itemList.style.display = "none";
+    }
+});
+addButtons.forEach((button, index) => {
+            button.addEventListener("click", () => {
+                const itemText = availableItems[index].querySelector(".item-text").textContent;
+                const listItem = document.createElement("li");
+                listItem.className = "items";
+                listItem.innerHTML = `<span class="item-text">${itemText}</span> <span class="remove">-</span>`;
+                selectedItems.appendChild(listItem);
+                availableItems[index].style.display = "none";
+
+                const removeButton = listItem.querySelector(".remove");
+                removeButton.addEventListener("click", () => {
+                    selectedItems.removeChild(listItem);
+                    availableItems[index].style.display = "flex";
+                });
+            });
+        });
+      
+
+        links.forEach((link, index) => {
+            link.addEventListener("click", () => {
+                links.forEach(link => {
+                    link.classList.remove("active-link");
+                });
+                link.classList.add("active-link");
+                contents.forEach(content => {
+                    content.style.display = "none";
+                });
+                const targetId = link.getAttribute("data-target");
+                const targetContent = document.getElementById(targetId);
+                targetContent.style.display = "block";
+            });
+        });
+
+        links.forEach((link, index) => {
+            link.addEventListener("click", () => {
+                links.forEach(link => {
+                    link.classList.remove("active-link");
+                });
+                link.classList.add("active-link");
+                contents.forEach(content => {
+                    content.style.display = "none";
+                });
+                const targetId = link.getAttribute("data-target");
+                const targetContent = document.getElementById(targetId);
+                targetContent.style.display = "block";
+            });
+        });
+
+
+
+        // Add event listeners for adding columns
+        availableItems.forEach(item => {
+            const addButton = item.querySelector(".add");
+            addButton.addEventListener("click", () => {
+                const selectedItem = item.cloneNode(true);
+                const removeButton = selectedItem.querySelector(".add");
+                removeButton.textContent = "-";
+
+                // Remove the "+" event listener
+                removeButton.removeEventListener("click", addColumnListener);
+
+                selectedItems.appendChild(selectedItem);
+
+                // Add a click event to the new remove button
+                removeButton.addEventListener("click", () => {
+                    selectedItems.removeChild(selectedItem);
+                });
+            });
+        });
+
+        addFilterButton.addEventListener("click", () => {
+            console.log("Add more button clicked");
+
+            const filterRow = document.createElement("div");
+            filterRow.className = "filter-row";
+            filterRow.innerHTML = `
+            <div class="filter-field">
+                <label for="filterSelectField">Select a Field:</label>
+                <select class="form-control">
+                    <!-- Options for filter fields -->
+                </select>
+            </div>
+            <div class="filter-field">
+                <label for="filterSelectColumn">Select a Column Field:</label>
+                <select class="form-control">
+                    <!-- Options for column fields -->
+                </select>
+            </div>
+            <div class="filter-action">
+                <button class="btn btn-danger">-</button>
+            </div>
+        `;
+
+            const removeFilterButton = filterRow.querySelector(".btn-danger");
+            removeFilterButton.addEventListener("click", () => {
+                filterContainer.removeChild(filterRow); // Remove the filter row from the container
+            });
+
+            filterContainer.insertBefore(filterRow, addFilterButton); // Insert the new filter row above the "Add more" button
+        });
+
+        // Initialize date range picker
+        $('#dateRangePicker').daterangepicker({
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, function (start, end, label) {
+            // Callback function when a date range is selected
+            console.log('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
+    // Drag start event handler
+    function dragStart(event) {
+        event.dataTransfer.setData("text/plain", event.target.innerText);
+    }
+
+    // Drop event handler
+    function drop(event) {
+        event.preventDefault();
+        const itemName = event.dataTransfer.getData("text/plain");
+
+        // Create a new selected item element
+        const selectedItem = document.createElement("li");
+        selectedItem.classList.add("items");
+        selectedItem.textContent = itemName;
+
+        // Append the new selected item
+        selectedItems.appendChild(selectedItem);
+    }
 
 
 </script>

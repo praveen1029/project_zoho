@@ -3,10 +3,36 @@
 {% block content %}
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 </head>
 
 <style>
+            .multiselect {
+            width: 200px;
+            position: relative;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .option {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .option:last-child {
+            border-bottom: none;
+        }
     /* Your existing styles */
 
     /* Custom styles for dropdowns and filter section */
@@ -15,51 +41,11 @@
         margin-bottom: 5px;
     }
 
-    .close-button {
-        position: fixed;
-        top: 70px;
-        right: 70px;
-    }
-
-    .form-control {
-        background-color: #000000;
-        color: white;
-    }
-
-    .dropdown-menu {
-        background-color: #060606;
-    }
-
-    .dropdown-item {
-        color: white;
-    }
-
-    /* Custom styles for filter section */
-    .filter-section {
-        margin-top: 20px;
-    }
-
-    .filter-row {
-        display: flex;
-        margin-bottom: 10px;
-    }
-
-    .filter-field {
-        flex: 1;
-        margin-right: 10px;
-    }
-
-    .filter-action {
-        margin-top: auto;
-    }
-    .column-transfer {
-        display: flex;
-        gap: 20px;
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        padding: 20px;
-        background-color: #060606;
-        border-radius: 5px;
+    .column_button{
+        height: 4vh;
+        width: 5vh;
+        float: right;
+        margin-right: 2vh;
     }
 
     a:hover{
@@ -83,16 +69,50 @@ a:active{
 .myd{
         display:none;
     } 
+
+.searchdiv{
+    display: list-item;	
+}
+.colborder{
+    border: 2px solid white;
+    height: 65vh;
+    overflow: hidden;
+}
+#custom-dropdown-btn{
+    background-color: white;
+    width: 96%;
+    height: 5vh;
+    text-align: left;
+}
+
+#date-options{
+    background-color: white;
+    width: 96%;
+    margin-top: 1vh;
+    margin-left: 4vh;
+}
+
+#date-options a{
+    color: #060606;
+}
+
+#date-options a:hover{
+    background-color: white;
+}
+
 </style>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
+<div class="container-fluid ">
+    <div class="row" style="background-color: grey;">
+        <div class="col-md-11">
+            <h1>Customize Report</h1>
+        </div>
+        <div class="col-md-1">
             <!-- Place the close button here -->
-            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button">
-                <i class="fa fa-times-circle"></i>
+            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button" style="background-color: grey;">
+                <i class="fa fa-times-circle" ></i>
             </a>
         </div>
-    </div>
+    </div><br><br>
 
 
     <div class="row row-container">
@@ -107,369 +127,176 @@ a:active{
         </div>
 
         <div class="col-md-9 myDiv" id="general" style="display: none;">
-
-            <p style="color: #eeebeb;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
-            
-            <button id="AddFilter" style="color: blue;" class="btn" style="display: block;">+ Add Filter</button>
-            <div class="row after-add-more" id="filterdiv" style="display: none;">                
-                <div class="col-md-4 form-group ">
-                    <div class="form-group ">
-                        <select id="field_0" class="form-control text-dark bg-white" onchange="selectfield(this.value,this.id)" >
-                            <option value="#" style="color: #060606;" selected="true" hidden>Select Field</option>
-                            <option class="dropdown-header" value="#" style="color: grey; font-size: large;" disabled >Project</option>
-                            <option value="project" style="color: #060606;" >&nbsp;&nbsp;&nbsp;Project</option>
-                            <option class="dropdown-header" value="#" style="color: grey; font-size: large;" disabled >Reporting Tag</option>
-                            <option value="department" style="color: #060606;" >&nbsp;&nbsp;&nbsp;Department</option>
-                            <option value="segments" style="color: #060606;" >&nbsp;&nbsp;&nbsp;9 Segments</option>
-                            <option value="products" style="color: #060606;" >&nbsp;&nbsp;&nbsp;8 Products</option>
-                        </select>
+            <label for="dateRangePicker">Date Options</label>
+            <div class="custom-dropdown">
+                <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>
+                <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                <div id="datepicker-container" style="display: none;">
+                    <div id="date-options" style="display: none;">
+                        <a class="date-option" href="#">Today</a><br>
+                        <a class="date-option" href="#">This Week</a><br>
+                        <a class="date-option" href="#">This Month</a><br>
+                        <a class="date-option" href="#">This Quarter</a><br>
+                        <a class="date-option" href="#">This Year</a><br>
+                        <a class="date-option" href="#">Yesterday</a><br>
+                        <a class="date-option" href="#">Previous Week</a><br>
+                        <a class="date-option" href="#">Previous Month</a><br>
+                        <a class="date-option" href="#">Previous Quarter</a><br>
+                        <a id="datepicker" href="#">Custom</a>
                     </div>
                 </div>
-
-                <div class="col-md-3 form-group" id="initial_comparator_0">
-                    <select id="first_comparator" class="form-control text-dark bg-white">
-                        <option value="#" style="color: #060606;" selected="true" hidden>Select Comparator</option>
-                        <option value="#" style="color: grey;" >No Result Found</option>
-                    </select>
+            </div><br><br>
+        </div>
+        
+        <div class="col-md-9 myDiv" id="columns" style="display: none;">
+            <div class="row" style="height: 100%;">
+                <div class="col-md-5" id="avlcol">
+                    <h1 >Available Columns</h1>
                 </div>
-
-                <div class="col-md-4 form-group" id = "final_comparator_proj_0" style="display: none;">
-                    <select id="last_comparator_proj" class="form-control text-dark bg-white">
-                        <option value="#" style="color: #060606;" selected="true" hidden>Select Comparator</option>
-                        <option value="is" style="color: #060606;" >Is</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4 form-group" id = "final_comparator_oth_0" style="display: none;">
-                    <select id="last_comparator_proj" class="form-control text-dark bg-white">
-                        <option value="#" style="color: #060606;" selected="true" hidden>Select Comparator</option>
-                        <option value="is" style="color: #060606;" >Is</option>
-                        <option value="empty" style="color: #060606;" >Is Empty</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4 form-group" id="showproject0" class="myd form-group" style="display: none;">
-                    <select id="SelectProject" class="form-control text-dark bg-white">
-                        <option value="#" style="color: #060606;" selected="true" hidden>Select Project</option>
-                            <option value="project1" style="color: #060606;" >Project-1</option>
-                            <option value="project2" style="color: #060606;" >Project-2</option>
-                            <option value="project3" style="color: #060606;" >Project-3</option>
-                            <option value="project4" style="color: #060606;" >Project-4</option>
-                            <option value="project5" style="color: #060606;" >Project-5</option>
-                            <option value="project6" style="color: #060606;" >Project-6</option>
-                            <option value="project7" style="color: #060606;" >Project-7</option>
-                    </select>
-                </div>
-            </div>
-
-            <div id="AddMore" style="display: none;">
-                <button style="color: blue;" class="btn add-more">+ Add More</button>
             </div>
         </div>
-
     </div>
 </div>
-<div id="demo"><p></p></div>
-
-
-
-
 
 <script>
 
-    function selectfield(sel,sel_id){
-        var id_val = sel_id.slice(-1);
-        if(sel=="project"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_proj_"+id_val).show();
-            $("#final_comparator_oth_"+id_val).hide();
-            $("#showdepartment"+id_val).hide();
-            $("#show"+sel+id_val).show();
-        }
-
-        if(sel=="department"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_oth_"+id_val).show();
-            $("#final_comparator_proj_"+id_val).hide();
-            $("#showproject"+id_val).hide();
-            $("#show"+sel+id_val).toggle();
-        }
-}
-
-
-
-$(document).ready(function(){
-    $('#CompareWith').on('change', function(){
-    	var demovalue = $(this).val(); 
-            $("div.myd").hide();
-            $("#show"+demovalue).show();
-    });
-});
-
-
-    $(document).ready(function(){
-        $("#AddFilter").click(function(){
-          $("#filterdiv").toggle();
-          $("#AddFilter").toggle();
-          $("#AddMore").toggle();
-        });
-      });
-
-
-    $(document).ready(function() {
-        $("body").on("click",".add-more",function(){ 
-            var length = $(".after-add-more").length
-            var html = $(".after-add-more").first().clone();      
-            $(".after-add-more").last().after(html);
-            html.find("#field_0").attr("id","field_"+length)
-            html.find("#initial_comparator_0").attr("id","initial_comparator_"+length)
-            html.find("#final_comparator_proj_0").attr("id","final_comparator_proj_"+length)
-            html.find("#showproject0").attr("id","showproject"+length)
-            html.find("#final_comparator_oth_0").attr("id","final_comparator_oth_"+length)
-        });
-
-        $("body").on("click",".remove",function(){ 
-            $(this).parents(".after-add-more").remove();
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const links = document.querySelectorAll(".custom-list-item");
-        const contents = document.querySelectorAll(".custom-content");
-        // const availableItems = document.querySelectorAll("#originalColumn .items");
-        // const addButtons = document.querySelectorAll("#originalColumn .add");
-        // const selectedItems = document.querySelector("#addedColumn .item-list");
-        // const searchInput = document.getElementById("searchInput");
-        // const itemList = document.querySelector(".item-list");
-        const addFilterButton = document.getElementById("addFilter");
-        const filterRowContainer = document.querySelector(".filter-row");
-        const filterContainer = document.querySelector("#filterContainer");
-        // const availableItems = document.querySelectorAll("#originalColumn .items");
-        //                 const selectedItems = document.querySelector("#addedColumn .item-list");
-        const availableItems = document.querySelectorAll("#originalColumn .items");
-        const addButtons = document.querySelectorAll("#originalColumn .add");
-        const selectedItems = document.querySelector("#addedColumn .item-list");
-        const searchInput = document.getElementById("searchInput");
-        const itemList = document.querySelector(".item-list");
-        // //neww
-
-
-
-        // availableItems.forEach(item => {
-        //     const addButton = item.querySelector(".add");
-        //     addButton.addEventListener("click", () => {
-        //         const selectedItem = item.cloneNode(true);
-        //         const removeButton = selectedItem.querySelector(".add");
-        //         removeButton.textContent = "-";
-
-        //         // Remove the "+" event listener
-        //         removeButton.removeEventListener("click", addColumnListener);
-
-        //         selectedItems.appendChild(selectedItem);
-
-        //         // Add a click event to the new remove button
-        //         removeButton.addEventListener("click", () => {
-        //             selectedItems.removeChild(selectedItem);
-        //         });
-        //     });
-        // });
-
-        // // Add event listeners for drag-and-drop
-        // availableItems.forEach(item => {
-        //     item.addEventListener("dragstart", dragStart);
-        // });
-
-        // selectedItems.addEventListener("dragover", dragOver);
-        // selectedItems.addEventListener("drop", drop);
-
-        // // Drag start event handler
-        // function dragStart(event) {
-        //     event.dataTransfer.setData("text/plain", event.target.innerText);
-        // }
-
-        // // Drag over event handler
-        // function dragOver(event) {
-        //     event.preventDefault();
-        // }
-
-        // // Drop event handler
-        // function drop(event) {
-        //     event.preventDefault();
-        //     const itemName = event.dataTransfer.getData("text/plain");
-
-        //     // Create a new selected item element
-        //     const selectedItem = document.createElement("li");
-        //     selectedItem.classList.add("items");
-        //     selectedItem.textContent = itemName;
-
-        //     // Append the new selected item
-        //     selectedItems.appendChild(selectedItem);
-        // }
-
-        // links.forEach(link => {
-        //     link.addEventListener("click", () => {
-        //         const target = link.getAttribute("data-target");
-        //         contents.forEach(content => {
-        //             if (content.id === target) {
-        //                 content.style.display = "block";
-        //             } else {
-        //                 content.style.display = "none";
-        //             }
-        //         });
-        //     });
-        // });
-        // //new
-        // document.addEventListener("click", (event) => {
-        //     if (!searchInput.contains(event.target) && !itemList.contains(event.target)) {
-        //         itemList.style.display = "none";
-        //     }
-        // });
-
-        searchInput.addEventListener("click", (event) => {
-    event.stopPropagation(); // Prevent the click event from propagating to document
-    itemList.style.display = "block"; // Show the item list
-});
-
-// Hide the item list when clicking outside the input and the list
-document.addEventListener("click", (event) => {
-    if (!searchInput.contains(event.target) && !itemList.contains(event.target)) {
-        itemList.style.display = "none";
-    }
-});
-addButtons.forEach((button, index) => {
-            button.addEventListener("click", () => {
-                const itemText = availableItems[index].querySelector(".item-text").textContent;
-                const listItem = document.createElement("li");
-                listItem.className = "items";
-                listItem.innerHTML = `<span class="item-text">${itemText}</span> <span class="remove">-</span>`;
-                selectedItems.appendChild(listItem);
-                availableItems[index].style.display = "none";
-
-                const removeButton = listItem.querySelector(".remove");
-                removeButton.addEventListener("click", () => {
-                    selectedItems.removeChild(listItem);
-                    availableItems[index].style.display = "flex";
-                });
-            });
-        });
-      
-
-        links.forEach((link, index) => {
-            link.addEventListener("click", () => {
-                links.forEach(link => {
-                    link.classList.remove("active-link");
-                });
-                link.classList.add("active-link");
-                contents.forEach(content => {
-                    content.style.display = "none";
-                });
-                const targetId = link.getAttribute("data-target");
-                const targetContent = document.getElementById(targetId);
-                targetContent.style.display = "block";
-            });
-        });
-
-        links.forEach((link, index) => {
-            link.addEventListener("click", () => {
-                links.forEach(link => {
-                    link.classList.remove("active-link");
-                });
-                link.classList.add("active-link");
-                contents.forEach(content => {
-                    content.style.display = "none";
-                });
-                const targetId = link.getAttribute("data-target");
-                const targetContent = document.getElementById(targetId);
-                targetContent.style.display = "block";
-            });
-        });
-
-
-
-        // Add event listeners for adding columns
-        availableItems.forEach(item => {
-            const addButton = item.querySelector(".add");
-            addButton.addEventListener("click", () => {
-                const selectedItem = item.cloneNode(true);
-                const removeButton = selectedItem.querySelector(".add");
-                removeButton.textContent = "-";
-
-                // Remove the "+" event listener
-                removeButton.removeEventListener("click", addColumnListener);
-
-                selectedItems.appendChild(selectedItem);
-
-                // Add a click event to the new remove button
-                removeButton.addEventListener("click", () => {
-                    selectedItems.removeChild(selectedItem);
-                });
-            });
-        });
-
-        addFilterButton.addEventListener("click", () => {
-            console.log("Add more button clicked");
-
-            const filterRow = document.createElement("div");
-            filterRow.className = "filter-row";
-            filterRow.innerHTML = `
-            <div class="filter-field">
-                <label for="filterSelectField">Select a Field:</label>
-                <select class="form-control">
-                    <!-- Options for filter fields -->
-                </select>
-            </div>
-            <div class="filter-field">
-                <label for="filterSelectColumn">Select a Column Field:</label>
-                <select class="form-control">
-                    <!-- Options for column fields -->
-                </select>
-            </div>
-            <div class="filter-action">
-                <button class="btn btn-danger">-</button>
-            </div>
-        `;
-
-            const removeFilterButton = filterRow.querySelector(".btn-danger");
-            removeFilterButton.addEventListener("click", () => {
-                filterContainer.removeChild(filterRow); // Remove the filter row from the container
-            });
-
-            filterContainer.insertBefore(filterRow, addFilterButton); // Insert the new filter row above the "Add more" button
-        });
-
-        // Initialize date range picker
-        $('#dateRangePicker').daterangepicker({
-            ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    // Initialize Pikaday date picker
+const picker = new Pikaday({
+            field: document.getElementById('datepicker'),
+            format: 'MM/DD/YYYY', // You can change the date format
+            onSelect: function(date) {
+                
+                // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
+                document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+                document.getElementById('datepicker-container').style.display = 'none';
+                document.getElementById('date-options').style.display = 'none';
             }
-        }, function (start, end, label) {
-            // Callback function when a date range is selected
-            console.log('A date range was chosen: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
-    });
-    // Drag start event handler
-    function dragStart(event) {
-        event.dataTransfer.setData("text/plain", event.target.innerText);
-    }
 
-    // Drop event handler
-    function drop(event) {
-        event.preventDefault();
-        const itemName = event.dataTransfer.getData("text/plain");
+        // Handle custom dropdown button click
+        const customDropdownBtn = document.getElementById('custom-dropdown-btn');
+        const datepickerContainer = document.getElementById('datepicker-container');
+        const dateOptions = document.getElementById('date-options');
 
-        // Create a new selected item element
-        const selectedItem = document.createElement("li");
-        selectedItem.classList.add("items");
-        selectedItem.textContent = itemName;
+        customDropdownBtn.addEventListener('click', function() {
+            if (datepickerContainer.style.display === 'none') {
+                datepickerContainer.style.display = 'block';
+                dateOptions.style.display = 'block';
+            } else {
+                datepickerContainer.style.display = 'none';
+                dateOptions.style.display = 'none';
+            }
+        });
 
-        // Append the new selected item
-        selectedItems.appendChild(selectedItem);
-    }
+        // Close date picker if clicking outside
+        document.addEventListener('click', function(event) {
+            if (!datepickerContainer.contains(event.target) && event.target !== customDropdownBtn) {
+                datepickerContainer.style.display = 'none';
+                dateOptions.style.display = 'none';
+            }
+        });
+
+        // Add date option handlers
+        const dateOptionButtons = document.querySelectorAll('.date-option');
+        
+        dateOptionButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const optionText = button.textContent;
+                switch (optionText) {
+                    case 'Today':
+                        picker.setDate(new Date());
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Today";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Week':
+                        // Set date to the start of the week (Sunday)
+                        const today = new Date();
+                        today.setDate(today.getDate() - today.getDay());
+                        picker.setDate(today);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Week";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Month':
+                        // Set date to the 1st day of the current month
+                        const firstDayOfMonth = new Date();
+                        firstDayOfMonth.setDate(1);
+                        picker.setDate(firstDayOfMonth);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Month";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Quarter':
+                        // Calculate the start date of the current quarter
+                        const quarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3;
+                        const firstDayOfQuarter = new Date(new Date().getFullYear(), quarterStartMonth, 1);
+                        picker.setDate(firstDayOfQuarter);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Quarter";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';                        
+                        break;
+
+                    case 'This Year':
+                        // Set date to January 1st of the current year
+                        const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
+                        picker.setDate(firstDayOfYear);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Year";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Yesterday':
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        picker.setDate(yesterday);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Yesterday";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Week':
+                        // Set date to the start of the previous week (Sunday)
+                        const prevWeekStart = new Date();
+                        prevWeekStart.setDate(prevWeekStart.getDate() - prevWeekStart.getDay() - 7);
+                        picker.setDate(prevWeekStart);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Week";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Month':
+                        // Set date to the 1st day of the previous month
+                        const prevMonth = new Date();
+                        prevMonth.setDate(1);
+                        prevMonth.setMonth(prevMonth.getMonth() - 1);
+                        picker.setDate(prevMonth);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Month";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Quarter':
+                        // Calculate the start date of the previous quarter
+                        const prevQuarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3 - 3;
+                        const prevQuarterStart = new Date(new Date().getFullYear(), prevQuarterStartMonth, 1);
+                        picker.setDate(prevQuarterStart);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Quarter";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+                        
+                    default:
+                        break;
+                }
+                document.getElementById('datepicker-container').style.display = 'none';
+                document.getElementById('date-options').style.display = 'none';
+            });
+        });
+
 
 
 </script>

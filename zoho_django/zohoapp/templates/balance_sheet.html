@@ -2,6 +2,12 @@
 {% block content %}
 {% load static %}
 
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+</head>
+
 <style>
     .container-fluid {
         -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -36,6 +42,28 @@
     .dropdown-item:hover{
         background-color: white;
     }
+    #custom-dropdown-btn{
+    background-color: white;
+    width: 96%;
+    height: 5vh;
+    text-align: left;
+}
+
+#date-options{
+    background-color: white;
+    width: 96%;
+    margin-top: 1vh;
+    margin-left: 4vh;
+}
+
+#date-options a{
+    color: #060606;
+}
+
+#date-options a:hover{
+    background-color: white;
+}
+
 
   </style>
 
@@ -59,23 +87,172 @@
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
         XLSX.writeFile(wb, 'report.xlsx');
     }
+// Initialize Pikaday date picker
+const picker = new Pikaday({
+            field: document.getElementById('datepicker'),
+            format: 'MM/DD/YYYY', // You can change the date format
+            onSelect: function(date) {
+                
+                // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
+                document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+                document.getElementById('datepicker-container').style.display = 'none';
+                document.getElementById('date-options').style.display = 'none';
+            }
+        });
+
+        // Handle custom dropdown button click
+        const customDropdownBtn = document.getElementById('custom-dropdown-btn');
+        const datepickerContainer = document.getElementById('datepicker-container');
+        const dateOptions = document.getElementById('date-options');
+
+        customDropdownBtn.addEventListener('click', function() {
+            if (datepickerContainer.style.display === 'none') {
+                datepickerContainer.style.display = 'block';
+                dateOptions.style.display = 'block';
+            } else {
+                datepickerContainer.style.display = 'none';
+                dateOptions.style.display = 'none';
+            }
+        });
+
+        // Close date picker if clicking outside
+        document.addEventListener('click', function(event) {
+            if (!datepickerContainer.contains(event.target) && event.target !== customDropdownBtn) {
+                datepickerContainer.style.display = 'none';
+                dateOptions.style.display = 'none';
+            }
+        });
+
+        // Add date option handlers
+        const dateOptionButtons = document.querySelectorAll('.date-option');
+        
+        dateOptionButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const optionText = button.textContent;
+                switch (optionText) {
+                    case 'Today':
+                        picker.setDate(new Date());
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Today";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Week':
+                        // Set date to the start of the week (Sunday)
+                        const today = new Date();
+                        today.setDate(today.getDate() - today.getDay());
+                        picker.setDate(today);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Week";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Month':
+                        // Set date to the 1st day of the current month
+                        const firstDayOfMonth = new Date();
+                        firstDayOfMonth.setDate(1);
+                        picker.setDate(firstDayOfMonth);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Month";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'This Quarter':
+                        // Calculate the start date of the current quarter
+                        const quarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3;
+                        const firstDayOfQuarter = new Date(new Date().getFullYear(), quarterStartMonth, 1);
+                        picker.setDate(firstDayOfQuarter);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Quarter";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';                        
+                        break;
+
+                    case 'This Year':
+                        // Set date to January 1st of the current year
+                        const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
+                        picker.setDate(firstDayOfYear);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "This Year";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Yesterday':
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        picker.setDate(yesterday);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Yesterday";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Week':
+                        // Set date to the start of the previous week (Sunday)
+                        const prevWeekStart = new Date();
+                        prevWeekStart.setDate(prevWeekStart.getDate() - prevWeekStart.getDay() - 7);
+                        picker.setDate(prevWeekStart);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Week";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Month':
+                        // Set date to the 1st day of the previous month
+                        const prevMonth = new Date();
+                        prevMonth.setDate(1);
+                        prevMonth.setMonth(prevMonth.getMonth() - 1);
+                        picker.setDate(prevMonth);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Month";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+
+                    case 'Previous Quarter':
+                        // Calculate the start date of the previous quarter
+                        const prevQuarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3 - 3;
+                        const prevQuarterStart = new Date(new Date().getFullYear(), prevQuarterStartMonth, 1);
+                        picker.setDate(prevQuarterStart);
+                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Quarter";
+                        // document.getElementById('datepicker-container').style.display = 'none';
+                        // document.getElementById('date-options').style.display = 'none';
+                        break;
+                        
+                    default:
+                        break;
+                }
+                document.getElementById('datepicker-container').style.display = 'none';
+                document.getElementById('date-options').style.display = 'none';
+            });
+        });
+
+    
   </script>
 
 <div class="container-fluid ">
     <div class="row topbar">
         <div class="col-md-2">
-            <select id="myselection">
-                <option>Select Option</option>
-                <option value="One">One</option>
-                <option value="Two">Two</option>
-                <option value="Three">Three</option>
-            </select>
+            <label for="dateRangePicker">Date Options</label>
+            <div class="custom-dropdown">
+                <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>
+                <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                <div id="datepicker-container" style="display: none;">
+                    <div id="date-options" style="display: none;">
+                        <a class="date-option" href="#">Today</a><br>
+                        <a class="date-option" href="#">This Week</a><br>
+                        <a class="date-option" href="#">This Month</a><br>
+                        <a class="date-option" href="#">This Quarter</a><br>
+                        <a class="date-option" href="#">This Year</a><br>
+                        <a class="date-option" href="#">Yesterday</a><br>
+                        <a class="date-option" href="#">Previous Week</a><br>
+                        <a class="date-option" href="#">Previous Month</a><br>
+                        <a class="date-option" href="#">Previous Quarter</a><br>
+                        <a id="datepicker" href="#">Custom</a>
+                    </div>
+                </div>
+            </div><br><br>
         </div>
-         <div class="col-md-7">
-            <div class="logo"><img src="" alt=""><a href="{% url 'load_customize_report_bs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></div>
-            
+         <div class="col-md-8" >
+            <button class="btn btn-light"><a class="text-dark" href="{% url 'load_customize_report_bs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
         </div>
-        <div class="col-md-1"></div>
         <div class=" col-md-1">
             <button class="btn btn-light mr-2" onclick="display()"><i class="fa fa-print"></i>Print</button>
         </div>
@@ -101,12 +278,12 @@
             <h5>As of 13 May 2017</h5> <br>
             <div class="table-responsive">
                 <div class="container-fluid tableFixHead"> 
-                    <table class="table">
+                    <table class="table" style=" border: 2px solid white;">
                         <thead>
                             <tr>  
-                                <th style="color: white; background-color: black; font-size: large;">Account </th>  
-                                <th style="color: white; background-color: black; font-size: large;">Account Code </th> 
-                                <th style="color: white; background-color: black; font-size: large; text-align: right;">13 May 2017</th> 
+                                <th style="color: white; background-color: grey; font-size: large; border-bottom: 2px solid white;">Account </th>  
+                                <th style="color: white; background-color: grey; font-size: large; border-bottom: 2px solid white;">Account Code </th> 
+                                <th style="color: white; background-color: grey; font-size: large; text-align: right; border-bottom: 2px solid white;">13 May 2017</th> 
                             </tr>
                         </thead> 
                         <tbody> 
@@ -367,12 +544,13 @@
                                 </tr>
                             </tr>
                         </tbody>
-                    </table>
-                <div>
-                <p>
-                    <small>**Amount is displayed in your base currency</small>&nbsp;
-                    <span class="badge text-semibold badge-success d-inline">INR</span>
-                </p>
+                    </table><br>
+                <div style="float: left;">
+                    <p>
+                        <small>**Amount is displayed in your base currency</small>&nbsp;
+                        <span class="badge text-semibold badge-success d-inline">INR</span>
+                    </p>
+                </div>
             </div> 
         </div>
     </div>
