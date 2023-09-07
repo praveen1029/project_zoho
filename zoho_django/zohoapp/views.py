@@ -9194,6 +9194,8 @@ def itemdata_bills(request):
     return JsonResponse({"status": " not", 'rate': rate})
     return redirect('/')
 
+
+
 def create_purchase_bill(request):
     cur_user = request.user
     user = User.objects.get(id=cur_user.id)
@@ -9664,18 +9666,15 @@ def load_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
     return render(request,'balance_sheet.html', {"company":company})
 
+def load_customize_report_bs(request):
+    return render(request,'customize_report_bs.html', {"range":range(2,24)})
+
+    
 
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
     return render(request,'horizontal_balance_sheet.html', {"company":company})
-
-def load_horizontal_balance_sheet1(request):
-    company = company_details.objects.get(user = request.user.id)
-    return render(request,'horizontal_balance_sheet1.html', {"company":company})
-
-def load_customize_report_bs(request):
-    return render(request,'customize_report_bs.html', {"range":range(2,24)})
 
 def load_customize_report_hbs(request):
     return render(request,'customize_report_hbs.html')

@@ -4,33 +4,44 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
 </head>
 
 <style>
+
+    th i{
+        font-size: 150%;
+        color: white;
+    }
+
     .container-fluid {
         -ms-overflow-style: none;  /* Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
+
     .container-fluid::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
     }
+
     .tableFixHead {
       overflow-y: auto; 
       height: 500px;
     }
+
     .tableFixHead thead th {
       position: sticky; 
       top: 0px; 
     }
+
     table {
       width: 100%;
     }
+
     th,td {
       text-align: left;
       color: white;
     }
+    
     table, tr, td {
         border: none;
     }
@@ -42,210 +53,64 @@
     .dropdown-item:hover{
         background-color: white;
     }
+
     #custom-dropdown-btn{
-    background-color: white;
-    width: 96%;
-    height: 5vh;
-    text-align: left;
-}
+        background-color: white;
+        width: 96%;
+        height: 4vh;
+        text-align: left;
+    }
 
-#date-options{
-    background-color: white;
-    width: 96%;
-    margin-top: 1vh;
-    margin-left: 4vh;
-}
+    #date-options{
+        background-color: white;
+        width: 96%;
+        margin-top: 1vh;
+        margin-left: 4vh;
+        border-radius: 10px;
+    }
 
-#date-options a{
-    color: #060606;
-}
+    #date-options a{
+        color: #060606;
+    }
 
-#date-options a:hover{
-    background-color: white;
-}
+    .div-option:hover{
+        background-color: #007bff;
+    }
 
+    #date-options a:hover{
+        background-color: white;
+    }
+    .dropdown-item:hover{
+        background-color: white;
+    }
+
+    tr.detail-row,#furminus, #funminus,#totalfur,#totalfun{
+        display: none;
+    }
 
   </style>
 
-  <script>
-        function display() {
-        window.print();
-    }
-
-    function exportToPDF(){
-        var content = document.getElementById('pdfdiv');
-        html2pdf()
-        .from(content)
-        .save('report.pdf')
-    }
-
-    // Function to save Excel using XLSX
-    function exportToExcel() {
-        var table = document.querySelector('table');
-        var ws = XLSX.utils.table_to_sheet(table);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        XLSX.writeFile(wb, 'report.xlsx');
-    }
-// Initialize Pikaday date picker
-const picker = new Pikaday({
-            field: document.getElementById('datepicker'),
-            format: 'MM/DD/YYYY', // You can change the date format
-            onSelect: function(date) {
-                
-                // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
-                document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
-                document.getElementById('datepicker-container').style.display = 'none';
-                document.getElementById('date-options').style.display = 'none';
-            }
-        });
-
-        // Handle custom dropdown button click
-        const customDropdownBtn = document.getElementById('custom-dropdown-btn');
-        const datepickerContainer = document.getElementById('datepicker-container');
-        const dateOptions = document.getElementById('date-options');
-
-        customDropdownBtn.addEventListener('click', function() {
-            if (datepickerContainer.style.display === 'none') {
-                datepickerContainer.style.display = 'block';
-                dateOptions.style.display = 'block';
-            } else {
-                datepickerContainer.style.display = 'none';
-                dateOptions.style.display = 'none';
-            }
-        });
-
-        // Close date picker if clicking outside
-        document.addEventListener('click', function(event) {
-            if (!datepickerContainer.contains(event.target) && event.target !== customDropdownBtn) {
-                datepickerContainer.style.display = 'none';
-                dateOptions.style.display = 'none';
-            }
-        });
-
-        // Add date option handlers
-        const dateOptionButtons = document.querySelectorAll('.date-option');
-        
-        dateOptionButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const optionText = button.textContent;
-                switch (optionText) {
-                    case 'Today':
-                        picker.setDate(new Date());
-                        // document.getElementById('custom-dropdown-btn').textContent =  "Today";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'This Week':
-                        // Set date to the start of the week (Sunday)
-                        const today = new Date();
-                        today.setDate(today.getDate() - today.getDay());
-                        picker.setDate(today);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "This Week";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'This Month':
-                        // Set date to the 1st day of the current month
-                        const firstDayOfMonth = new Date();
-                        firstDayOfMonth.setDate(1);
-                        picker.setDate(firstDayOfMonth);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "This Month";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'This Quarter':
-                        // Calculate the start date of the current quarter
-                        const quarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3;
-                        const firstDayOfQuarter = new Date(new Date().getFullYear(), quarterStartMonth, 1);
-                        picker.setDate(firstDayOfQuarter);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "This Quarter";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';                        
-                        break;
-
-                    case 'This Year':
-                        // Set date to January 1st of the current year
-                        const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
-                        picker.setDate(firstDayOfYear);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "This Year";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'Yesterday':
-                        const yesterday = new Date();
-                        yesterday.setDate(yesterday.getDate() - 1);
-                        picker.setDate(yesterday);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "Yesterday";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'Previous Week':
-                        // Set date to the start of the previous week (Sunday)
-                        const prevWeekStart = new Date();
-                        prevWeekStart.setDate(prevWeekStart.getDate() - prevWeekStart.getDay() - 7);
-                        picker.setDate(prevWeekStart);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Week";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'Previous Month':
-                        // Set date to the 1st day of the previous month
-                        const prevMonth = new Date();
-                        prevMonth.setDate(1);
-                        prevMonth.setMonth(prevMonth.getMonth() - 1);
-                        picker.setDate(prevMonth);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Month";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-
-                    case 'Previous Quarter':
-                        // Calculate the start date of the previous quarter
-                        const prevQuarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3 - 3;
-                        const prevQuarterStart = new Date(new Date().getFullYear(), prevQuarterStartMonth, 1);
-                        picker.setDate(prevQuarterStart);
-                        // document.getElementById('custom-dropdown-btn').textContent =  "Previous Quarter";
-                        // document.getElementById('datepicker-container').style.display = 'none';
-                        // document.getElementById('date-options').style.display = 'none';
-                        break;
-                        
-                    default:
-                        break;
-                }
-                document.getElementById('datepicker-container').style.display = 'none';
-                document.getElementById('date-options').style.display = 'none';
-            });
-        });
-
-    
-  </script>
-
+  
 <div class="container-fluid ">
     <div class="row topbar">
         <div class="col-md-2">
-            <label for="dateRangePicker">Date Options</label>
             <div class="custom-dropdown">
-                <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>
-                <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                <div class="d-flex">
+                    <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
+                    <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                </div>
                 <div id="datepicker-container" style="display: none;">
                     <div id="date-options" style="display: none;">
-                        <a class="date-option" href="#">Today</a><br>
-                        <a class="date-option" href="#">This Week</a><br>
-                        <a class="date-option" href="#">This Month</a><br>
-                        <a class="date-option" href="#">This Quarter</a><br>
-                        <a class="date-option" href="#">This Year</a><br>
-                        <a class="date-option" href="#">Yesterday</a><br>
-                        <a class="date-option" href="#">Previous Week</a><br>
-                        <a class="date-option" href="#">Previous Month</a><br>
-                        <a class="date-option" href="#">Previous Quarter</a><br>
-                        <a id="datepicker" href="#">Custom</a>
+                        <a class="date-option" href="#"><div class="div-option">Today</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Week</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Month</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Year</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
+                        <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
                     </div>
                 </div>
             </div><br><br>
@@ -271,24 +136,27 @@ const picker = new Pikaday({
 
 <div class="container-fluid">
     <div class="row" id="pdfdiv">
-        <div class="text-center">
-            <h4>{{company.company_name}}</h4> 
-            <h3>Balance Sheet</h3> 
-            <h6>Basis: Cash</h6> 
-            <h5>As of 13 May 2017</h5> <br>
+        <div >
+            <h3 style="text-align: center;">{{company.company_name}}</h3> 
+            <h1 style="text-align: center;">Balance Sheet</h1> 
+            <h6 style="text-align: center;">Basis: Cash</h6> 
+            <h6 style="text-align: center;">As of 13 May 2017</h6> <br>
+            
+            <button id="openDropdown" onclick="opendrop()" style="margin-left: 3vh;">Expand All</button>
+            <button id="closeDropdown" onclick="closedrop()" style="margin-left: 3vh;">Collapse All</button><br><br><br>
             <div class="table-responsive">
                 <div class="container-fluid tableFixHead"> 
-                    <table class="table" style=" border: 2px solid white;">
+                    <table class="table" style=" border: 1px solid white;">
                         <thead>
                             <tr>  
-                                <th style="color: white; background-color: grey; font-size: large; border-bottom: 2px solid white;">Account </th>  
-                                <th style="color: white; background-color: grey; font-size: large; border-bottom: 2px solid white;">Account Code </th> 
-                                <th style="color: white; background-color: grey; font-size: large; text-align: right; border-bottom: 2px solid white;">13 May 2017</th> 
+                                <th style="color: white; background-color: black; font-size: large; border-bottom: 1px solid white;"><i>Account </i></th>  
+                                <th style="color: white; background-color: black; font-size: large; border-bottom: 1px solid white;"><i>Account Code</i> </th> 
+                                <th style="color: white; background-color: black; font-size: large; text-align: right; border-bottom: 1px solid white;"><i>Total</i></th> 
                             </tr>
                         </thead> 
                         <tbody> 
                             <tr> 
-                                <td><span style="font-size: large;">ASSETS</span></td>
+                                <td><span style="font-size: large;"><b>ASSETS</b></span></td>
                             </tr>  
                             <tr>  
                                 <td>Current Assets</td>
@@ -414,42 +282,55 @@ const picker = new Pikaday({
                                     <td>&nbsp;</td>
                                 </tr>  
                                 <tr> 
-                                    <td>  <a href="#"> Furniture and Equipment </a> </td>
+                                    <td>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
+                                        <a href="#"> Furniture and Equipment </a> 
+                                    </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 5.197,890 </a> </td> 
+                                    <td style="text-align: right;" id="furvalue"> <a href="#" > 5.197,890 </a> </td> 
+                                    <td style="text-align: right;" id="totalfur"> <a href="#"> 6.397,890 </a> </td> 
                                 </tr> 
-                                <tr> 
-                                    <td>  &nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> Fun </a> </td>
+                                <tr class="detail-row" id="furdiv1"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
+                                        <a href="#"> Fun </a> </td>
                                     <td>12</td>
-                                    <td style="text-align: right;"><a href="#"> 0,000 </a> </td> 
+                                    <td style="text-align: right;" id="funvalue"><a href="#"> 0,000 </a> </td> 
+                                    <td style="text-align: right;" id="totalfun"><a href="#"> 1.200,000 </a> </td> 
                                 </tr> 
-                                <tr> 
-                                    <td>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="#"> bugfix account </a> </td>
+                                <tr class="detail-row" id="fundiv1"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#"> bugfix account </a> 
+                                    </td>
                                     <td>1200</td>
                                     <td style="text-align: right;"><a href="#"> 1.200,000 </a> </td> 
                                 </tr> 
-                                <tr> 
+                                <tr class="detail-row" id="fundiv2"> 
                                     <td class="allow-border"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> </td>
                                     <td class="allow-border">12</td>
                                     <td style="text-align: right;" class="allow-border"><a href="#">1.200,000</a> </td> 
                                 </tr> 
-                                <tr> 
+                                <tr class="detail-row" id="furdiv2"> 
                                     <td class="allow-border"><strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> </td>
                                     <td class="allow-border"></td>
-                                    <td style="text-align: right;" class="allow-border"><a href="#">6.397,890</a> </td> 
+                                    <td style="text-align: right;" class="allow-border" ><a href="#">6.397,890</a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Fixed Assets</b></td>
                                     <td class="allow-border">&nbsp;</td>
                                     <td style="text-align: right;" class="allow-border">  6.397,890  </td> 
-                                </tr>   
+                                </tr>      
                                 <tr> 
                                     <td>TOTAL ASSETS</td>
                                     <td>&nbsp;</td>
                                     <td  style="text-align: right;" class="allow-border">  -1.530.121,347  </td> 
                                 </tr>
                                 <tr> 
-                                    <td><span style="font-size: large;">LIABILITIES &amp; EQUITIES</span></td> 
+                                    <td><span style="font-size: large;"><b>LIABILITIES &amp; EQUITIES</b></span></td> 
                                 </tr>  
                                 <tr>  
                                     <td>Current Liabilities</td> 
@@ -545,6 +426,7 @@ const picker = new Pikaday({
                             </tr>
                         </tbody>
                     </table><br>
+                </div>
                 <div style="float: left;">
                     <p>
                         <small>**Amount is displayed in your base currency</small>&nbsp;
@@ -555,4 +437,227 @@ const picker = new Pikaday({
         </div>
     </div>
 </div>
+
+<script>
+
+    function opendrop(){
+        $(".detail-row").show()
+        $("#furplus").hide()
+        $("#furminus").show()
+        $("#funplus").hide()
+        $("#funminus").show()
+        $("#totalfur").hide()
+        $("#furvalue").show()
+        $("#totalfun").show()
+        $("#funvalue").hide()
+    }
+
+    function closedrop(){
+        $(".detail-row").hide()
+        $("#furplus").show()
+        $("#furminus").hide()
+        $("#funplus").show()
+        $("#funminus").hide()
+        $("#totalfur").show()
+        $("#furvalue").hide()
+    }
+
+
+    function openfur(){
+        $("#furdiv1").show()
+        $("#furdiv2").show()
+        $("#furplus").hide()
+        $("#furminus").show()
+        $("#totalfur").hide()
+        $("#furvalue").show()
+        $("#totalfun").show()
+        $("#funvalue").hide()
+    }
+
+    function closefur(){
+        $("#furdiv1").hide()
+        $("#furdiv2").hide()
+        $("#furplus").show()
+        $("#furminus").hide()
+        $("#totalfur").show()
+        $("#furvalue").hide()
+    }
+
+    function openfun(){
+        $("#fundiv1").show()
+        $("#fundiv2").show()
+        $("#funplus").hide()
+        $("#funminus").show()
+        $("#totalfun").hide()
+        $("#funvalue").show()
+    }
+
+    function closefun(){
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
+        $("#funplus").show()
+        $("#funminus").hide()
+        $("#totalfun").show()
+        $("#funvalue").hide()
+    }
+
+    function display() {
+        window.print();
+    }
+
+    function exportToPDF(){
+        var content = document.getElementById('pdfdiv');
+        html2pdf()
+        .from(content)
+        .save('report.pdf')
+    }
+
+    // Function to save Excel using XLSX
+    function exportToExcel() {
+        var table = document.querySelector('table');
+        var ws = XLSX.utils.table_to_sheet(table);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'report.xlsx');
+    }
+
+    // Initialize Pikaday date picker
+    const picker = new Pikaday({
+        field: document.getElementById('datepicker'),
+        format: 'MM/DD/YYYY', // You can change the date format
+        onSelect: function(date) {
+            
+            // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
+            document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+            document.getElementById('datepicker-container').style.display = 'none';
+            document.getElementById('date-options').style.display = 'none';
+        }
+    });
+
+    // Handle custom dropdown button click
+    const customDropdownBtn = document.getElementById('custom-dropdown-btn');
+    const datepickerContainer = document.getElementById('datepicker-container');
+    const dateOptions = document.getElementById('date-options');
+
+    customDropdownBtn.addEventListener('click', function() {
+        if (datepickerContainer.style.display === 'none') {
+            datepickerContainer.style.display = 'block';
+            dateOptions.style.display = 'block';
+        } else {
+            datepickerContainer.style.display = 'none';
+            dateOptions.style.display = 'none';
+        }
+    });
+
+    // Close date picker if clicking outside
+    document.addEventListener('click', function(event) {
+        if (!datepickerContainer.contains(event.target) && event.target !== customDropdownBtn) {
+            datepickerContainer.style.display = 'none';
+            dateOptions.style.display = 'none';
+        }
+    });
+
+    // Add date option handlers
+    const dateOptionButtons = document.querySelectorAll('.date-option');
+    
+    dateOptionButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const optionText = button.textContent;
+            switch (optionText) {
+                case 'Today':
+                    picker.setDate(new Date());
+                    // document.getElementById('custom-dropdown-btn').textContent =  "Today";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'This Week':
+                    // Set date to the start of the week (Sunday)
+                    const today = new Date();
+                    today.setDate(today.getDate() - today.getDay());
+                    picker.setDate(today);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "This Week";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'This Month':
+                    // Set date to the 1st day of the current month
+                    const firstDayOfMonth = new Date();
+                    firstDayOfMonth.setDate(1);
+                    picker.setDate(firstDayOfMonth);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "This Month";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'This Quarter':
+                    // Calculate the start date of the current quarter
+                    const quarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3;
+                    const firstDayOfQuarter = new Date(new Date().getFullYear(), quarterStartMonth, 1);
+                    picker.setDate(firstDayOfQuarter);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "This Quarter";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';                        
+                    break;
+
+                case 'This Year':
+                    // Set date to January 1st of the current year
+                    const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
+                    picker.setDate(firstDayOfYear);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "This Year";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'Yesterday':
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    picker.setDate(yesterday);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "Yesterday";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'Previous Week':
+                    // Set date to the start of the previous week (Sunday)
+                    const prevWeekStart = new Date();
+                    prevWeekStart.setDate(prevWeekStart.getDate() - prevWeekStart.getDay() - 7);
+                    picker.setDate(prevWeekStart);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Week";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'Previous Month':
+                    // Set date to the 1st day of the previous month
+                    const prevMonth = new Date();
+                    prevMonth.setDate(1);
+                    prevMonth.setMonth(prevMonth.getMonth() - 1);
+                    picker.setDate(prevMonth);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Month";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+
+                case 'Previous Quarter':
+                    // Calculate the start date of the previous quarter
+                    const prevQuarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3 - 3;
+                    const prevQuarterStart = new Date(new Date().getFullYear(), prevQuarterStartMonth, 1);
+                    picker.setDate(prevQuarterStart);
+                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Quarter";
+                    // document.getElementById('datepicker-container').style.display = 'none';
+                    // document.getElementById('date-options').style.display = 'none';
+                    break;
+                    
+                default:
+                    break;
+            }
+            document.getElementById('datepicker-container').style.display = 'none';
+            document.getElementById('date-options').style.display = 'none';
+        });
+    });
+
+</script>
+
 {% endblock %}
