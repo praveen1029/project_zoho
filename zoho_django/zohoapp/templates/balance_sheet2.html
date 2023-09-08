@@ -10,40 +10,45 @@
 
 <style>
 
-    th i{
-        font-size: 150%;
-        color: white;
-    }
-
-    .container-fluid {
+    tbody {
         -ms-overflow-style: none;  /* Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
 
-    .container-fluid::-webkit-scrollbar { 
-        display: none;  /* Safari and Chrome */
+    tbody::-webkit-scrollbar { 
+        display: none;
     }
 
-    .tableFixHead {
-      overflow-y: auto; 
-      height: 500px;
+    tbody {
+        height:400px;
+        overflow:auto;
+        overflow-x:hidden;
+        display:block;
+        width:100%;
     }
 
-    .tableFixHead thead th {
-      position: sticky; 
-      top: 0px; 
+    tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
     }
 
-    table {
-      width: 100%;
+    thead {
+        display:table;
+        width:100%;
+        position: sticky; 
+        top: 0px; 
+        font-size: 5vh; 
+        color: white;
     }
+
 
     th,td {
       text-align: left;
       color: white;
     }
     
-    table, tr, td {
+    table,td {
         border: none;
     }
 
@@ -99,6 +104,8 @@
         color: blue;
     }
 
+    
+
   </style>
 
 
@@ -148,21 +155,20 @@
         </div>
     </div>
 
-    <div class="row" id="pdfdiv">
+    <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh;">
         <div >
             <h3 style="text-align: center;">{{company.company_name}}</h3> 
             <h1 style="text-align: center;">Balance Sheet</h1> 
             <h6 style="text-align: center;">Basis: Cash</h6> 
             <h6 style="text-align: center;">As of 13 May 2017</h6> <br>
-            
             <div class="table-responsive">
                 <div class="container-fluid tableFixHead"> 
-                    <table class="table" style=" border: 1px solid white;">
+                    <table class="table" >
                         <thead>
-                            <tr>  
-                                <th style="color: white; background-color: black; font-size: large; border-bottom: 1px solid white;"><i>Account </i></th>  
-                                <th style="color: white; background-color: black; font-size: large; border-bottom: 1px solid white;"><i>Account Code</i> </th> 
-                                <th style="color: white; background-color: black; font-size: large; text-align: right; border-bottom: 1px solid white;"><i>Total</i></th> 
+                            <tr >  
+                                <th class="bg-dark" style="border-bottom: 2px solid white;">ACCOUNT </th>  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; text-align: center;">ACCOUNT CODE  </th> 
+                                <th class="bg-dark" style=" border-bottom: 2px solid white; text-align: right;">TOTAL  </th> 
                             </tr>
                         </thead> 
                         <tbody> 
@@ -178,12 +184,12 @@
                                 <td>&nbsp;</td>
                             </tr>  
                             {% for bank in banks %}
-                            <tr> 
-                                <td><a href="#"> {{bank.bnk_name }} </a> </td>
-                                <td></td>
-                                <!-- <td style="text-align: right;"> <a href="#"> {{bank.opening_bal}} </a> </td>  -->
-                                <td style="text-align: right;"> <a href="#"> 0 </a> </td> 
-                            </tr> 
+                                <tr> 
+                                    <td><a href="#"> {{bank.bnk_name }} </a> </td>
+                                    <td></td>
+                                    <!-- <td style="text-align: right;"> <a href="#"> {{bank.opening_bal}} </a> </td>  -->
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td> 
+                                </tr> 
                             {% endfor %}
 
                             {% if banks %}
@@ -191,10 +197,10 @@
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <!-- <td class="allow-border" style="text-align: right;"> {{acc_bal}}  </td>  -->
-                                    <td class="allow-border" style="text-align: right;"> 0  </td> 
+                                    <td class="allow-border" style="text-align: right;"> 0,000  </td> 
                                 </tr> 
                             {% endif %}
-                            
+
                             <tr>  
                                 <td>Cash</td> 
                                 <td>&nbsp;</td>
@@ -202,17 +208,17 @@
                             <tr> 
                                 <td><a href="#"> Petty Cash </a> </td>
                                 <td></td>
-                                <td style="text-align: right;"> <a href="#"> -1.057.645,419 </a> </td> 
+                                <td style="text-align: right;"> <a href="#"> 0,000 </a> </td> 
                             </tr>  
                             <tr> 
                                 <td><a href="#"> Undeposited Funds </a> </td>
                                 <td></td>
-                                <td style="text-align: right;"> <a href="#"> -6.993,690 </a> </td> 
+                                <td style="text-align: right;"> <a href="#"> 0,000</a> </td> 
                             </tr>  
                             <tr> 
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="allow-border" style="text-align: right;">  -1.064.639,109  </td> 
+                                <td class="allow-border" style="text-align: right;"> 0,000 </td> 
                             </tr> 
                             <tr>  
                                 <td>Other Current Assets</td> 
@@ -220,27 +226,27 @@
                                 <tr> 
                                     <td><a href="#"> Advance Tax </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 100,990 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> Employee Advance </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> -891,951 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> Input VAT </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 16,670 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#">0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> Sales to Customers (Cash) </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 18.588,706 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#">0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
-                                    <td class="allow-border" style="text-align: right;">  17.814,415  </td> 
+                                    <td class="allow-border" style="text-align: right;">  0,000  </td> 
                                 </tr> 
                                 <tr>  
                                     <td>Other Assets</td> 
@@ -249,17 +255,17 @@
                                 <tr> 
                                     <td><a href="#"> Error </a> </td>
                                     <td>Error</td>
-                                    <td style="text-align: right;"> <a href="#"> -100,990 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> GoCardless Clearing </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 3,600 </a> </td> 
+                                    <td style="text-align: right;"> <a href="#">0,000</a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> GoCardless Clearing - EUR </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 0,001 </a> </td>
+                                    <td style="text-align: right;"> <a href="#"> 0,000</a> </td>
                                 </tr>  
                                 <tr> 
                                     <td><a href="#"> GoCardless Clearing - GBP </a> </td>
@@ -269,17 +275,17 @@
                                 <tr> 
                                     <td> <a href="#"> Inventory Asset </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> -10.502,000 </a> </td> 
+                                    <td style="text-align: right;"><a href="#">0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
-                                    <td style="text-align: right;" class="allow-border">  -10.599,389  </td> 
+                                    <td style="text-align: right;" class="allow-border"> 0,000  </td> 
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Current Assets</b></td>
                                     <td class="allow-border">&nbsp;</td>
-                                    <td style="text-align: right;" class="allow-border">-1.536.519,237  </td> 
+                                    <td style="text-align: right;" class="allow-border">0,000  </td> 
                                 </tr>  
                                 <tr>  
                                     <td>Fixed Assets</td> 
@@ -292,8 +298,8 @@
                                         <a href="#"> Furniture and Equipment </a> 
                                     </td>
                                     <td></td>
-                                    <td style="text-align: right;" id="furvalue"> <a href="#" > 5.197,890 </a> </td> 
-                                    <td style="text-align: right;" id="totalfur"> <a href="#"> 6.397,890 </a> </td> 
+                                    <td style="text-align: right;" id="furvalue"> <a href="#" >0,000 </a> </td> 
+                                    <td style="text-align: right;" id="totalfur"> <a href="#">0,000 </a> </td> 
                                 </tr> 
                                 <tr class="detail-row" id="furdiv1"> 
                                     <td>  
@@ -303,7 +309,7 @@
                                         <a href="#"> Fun </a> </td>
                                     <td>12</td>
                                     <td style="text-align: right;" id="funvalue"><a href="#"> 0,000 </a> </td> 
-                                    <td style="text-align: right;" id="totalfun"><a href="#"> 1.200,000 </a> </td> 
+                                    <td style="text-align: right;" id="totalfun"><a href="#"> 0,000</a> </td> 
                                 </tr> 
                                 <tr class="detail-row" id="fundiv1"> 
                                     <td>  
@@ -311,27 +317,27 @@
                                         <a href="#"> bugfix account </a> 
                                     </td>
                                     <td>1200</td>
-                                    <td style="text-align: right;"><a href="#"> 1.200,000 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000</a> </td> 
                                 </tr> 
                                 <tr class="detail-row" id="fundiv2"> 
                                     <td class="allow-border"><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> </td>
                                     <td class="allow-border">12</td>
-                                    <td style="text-align: right;" class="allow-border"><a href="#">1.200,000</a> </td> 
+                                    <td style="text-align: right;" class="allow-border"><a href="#">0,000</a> </td> 
                                 </tr> 
                                 <tr class="detail-row" id="furdiv2"> 
                                     <td class="allow-border"><strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> </td>
                                     <td class="allow-border"></td>
-                                    <td style="text-align: right;" class="allow-border" ><a href="#">6.397,890</a> </td> 
+                                    <td style="text-align: right;" class="allow-border" ><a href="#">0,000</a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Fixed Assets</b></td>
                                     <td class="allow-border">&nbsp;</td>
-                                    <td style="text-align: right;" class="allow-border">  6.397,890  </td> 
+                                    <td style="text-align: right;" class="allow-border">  0,000  </td> 
                                 </tr>      
                                 <tr> 
                                     <td>TOTAL ASSETS</td>
                                     <td>&nbsp;</td>
-                                    <td  style="text-align: right;" class="allow-border">  -1.530.121,347  </td> 
+                                    <td  style="text-align: right;" class="allow-border"> 0,000 </td> 
                                 </tr>
                                 <tr> 
                                     <td><span style="font-size: large;"><b>LIABILITIES &amp; EQUITIES</b></span></td> 
@@ -343,42 +349,42 @@
                                 <tr> 
                                     <td><a href="#"> Employee Reimbursements </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> 4.724,000 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000 </a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> HMRC-PAYE </a> </td>
                                     <td>5670</td>
-                                    <td style="text-align: right;"><a href="#"> -200,000 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000</a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> Opening Balance Adjustments </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> 12.597,200 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000 </a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> Output VAT </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> -9,200 </a> </td> 
+                                    <td style="text-align: right;"><a href="#">0,000 </a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> Unearned Revenue </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> -21.330,000 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000</a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> VAT MOSS Payable </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> -16.687,180 </a> </td> 
+                                    <td style="text-align: right;"><a href="#">0,000</a> </td> 
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> VAT Payable </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> -67.545,420 </a> </td> 
+                                    <td style="text-align: right;"><a href="#"> 0,000 </a> </td> 
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Current Liabilities</b></td>
                                     <td class="allow-border">&nbsp;</td>
-                                    <td style="text-align: right;" class="allow-border">  -88.450,600  </td> 
+                                    <td style="text-align: right;" class="allow-border">  0,000 </td> 
                                 </tr>  
                                 <tr>  
                                     <td > Other Liabilities</td> 
@@ -387,12 +393,12 @@
                                 <tr> 
                                     <td><a href="#"> Tag Adjustments </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"><a href="#"> 0.00 </a> </td>
+                                    <td style="text-align: right;"><a href="#">0,000 </a> </td>
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Other Liabilities</b></td>
                                     <td class="allow-border">&nbsp;</td>
-                                    <td style="text-align: right;" class="allow-border">  0.00  </td>
+                                    <td style="text-align: right;" class="allow-border">  0,000  </td>
                                 </tr>  
                                 <tr>  
                                     <td>Equities</td><td>&nbsp;</td>
@@ -400,42 +406,44 @@
                                 <tr> 
                                     <td>   <a href="#"> Current Year Earnings </a></td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> -692.708,544 </a> </td>
+                                    <td style="text-align: right;"> <a href="#">0,000 </a> </td>
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> Opening Balance Offset </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 143,000 </a> </td>
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td>
                                 </tr> 
                                 <tr> 
                                     <td><a href="#"> Owner's Equity </a> </td>
                                     <td></td>
-                                    <td style="text-align: right;"> <a href="#"> 449,540 </a> </td>
+                                    <td style="text-align: right;"> <a href="#"> 0,000 </a> </td>
                                 </tr> 
                                 <tr> 
                                     <td>  Retained Earnings  </td>
                                     <td></td>
-                                    <td style="text-align: right;">  -749.554,743  </td>
+                                    <td style="text-align: right;"> 0,000  </td>
                                 </tr>  
                                 <tr> 
                                     <td class="allow-border"><b>Total Equities</b></td>
                                     <td class="allow-border">&nbsp;</td>
-                                    <td class="allow-border" style="text-align: right;">  -1.441.670,747  </td>
+                                    <td class="allow-border" style="text-align: right;">  0,000  </td>
                                 </tr>   
                                 <tr> 
                                     <td>&nbsp;</td>
                                     <td>TOTAL LIABILITIES &amp; EQUITIES</td>
-                                    <td style="text-align: right; border-bottom: 1pt double white;">  -1.530.121,347  </td>
+                                    <td style="text-align: right; border-bottom: 1pt double white;"> 0,000 </td>
                                 </tr>
                             </tr>
-                        </tbody>
-                    </table><br>
-                    <div style="float: left;">
-                        <p>
-                            <small>**Amount is displayed in your base currency</small>&nbsp;
-                            <span class="badge text-semibold badge-success d-inline">INR</span>
-                        </p>
-                    </div>
+                            <tr >
+                                <td colspan="3">
+                                    <p>
+                                        <small>**Amount is displayed in your base currency</small>&nbsp;
+                                        <span class="badge text-semibold badge-success d-inline">INR</span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody><br>
+                    </table>
                 </div>
             </div> 
         </div>

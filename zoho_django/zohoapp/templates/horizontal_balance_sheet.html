@@ -99,10 +99,20 @@
         background-color:transparent;
     }
 
+    .close-button{
+        font-size: 4vh; 
+        margin-top: -1vh; 
+        font-weight: 100;
+    }
+
+    .close-button:hover{
+        color: blue;
+    }
+
 </style>
 
-<div class="container-fluid ">
-    <div class="row topbar">
+<div class="container-fluid">
+    <div class="row">
         <div class="col-md-2">
             <div class="custom-dropdown">
                 <div class="d-flex">
@@ -125,15 +135,13 @@
                 </div>
             </div><br><br>
         </div>
-         <div class="col-md-7">
-            <a class="btn btn-light" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a>
-            
-        </div>
-        <div class="col-md-1"></div>
+         <div class="col-md-6" >
+            <button class="btn btn-light"><a class="text-dark" href="{% url 'load_customize_report_bs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class=" col-md-1">
-            <button class="btn btn-light mr-2" onclick="display()"><i class="fa fa-print"></i>Print</button>
-        </div>
-        <div class="col-md-1">
+            <button class="btn btn-light mr-2" onclick="display()" style="width: 13vh;"><i class="fa fa-print"></i>Print</button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col-md-1" >
             <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class='fas fa-file-export'></i> Export
             </button>
@@ -141,16 +149,18 @@
                 <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
                 <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
             </div>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col-md-1">
+            <a href="{% url 'report_inventory_view' %}" class="btn  close-button">
+               <span >X</span> 
+            </a>
         </div>
     </div>
-</div><br><br>
 
-
-<div class="container-fluid">
     <div class="row">
         <div class="text-center">
             <h3>{{company.company_name}}</h3> 
-            <h1>Balance Sheet</h1> 
+            <h1>Horizontal Balance Sheet</h1> 
             <h6>Basis: Cash</h6> 
             <h6>As of 13 May 2017</h6> <br>
         </div>
@@ -398,7 +408,7 @@
                         </tr>
 
                     </tbody>
-                </table>
+                </table><br>
                 <div > 
                     <p>
                         <small>**Amount is displayed in your base currency</small>&nbsp;
@@ -469,6 +479,10 @@
     }
 
     // Initialize Pikaday date picker
+    const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var nowDate = new Date(); 
+    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format

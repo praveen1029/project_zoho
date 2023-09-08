@@ -8705,7 +8705,6 @@ def credits_statement(request,id):
     sale_order=Vendor_Credits.objects.all()
     company=company_details.objects.get(user_id=request.user.id)
     
-    
     context={
         'sale':sales,
         'saleitem':saleitem,
@@ -9595,7 +9594,6 @@ def customize_report1(request):
     }
     return render(request, 'customize_report1.html', {'items': items, 'customers': customers})
     
-    
 def customerAtoZ_bills(request):
     user = request.user
     bills = PurchaseBills.objects.filter(user=user).order_by('customer_name')
@@ -9664,7 +9662,17 @@ def cust_Attach_files(request,id):
 ############### BALANCE SHEET ################## 
 def load_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
-    return render(request,'balance_sheet.html', {"company":company})
+    banks = banking.objects.filter(user=request.user.id)
+    acc_bal = 0
+    for bank in banks:
+        acc_bal += bank.opening_bal
+    return render(request,'balance_sheet.html', {"banks":banks,"company":company,"acc_bal":acc_bal})
+
+def load_balance_sheet1(request):
+    return render(request,'balance_sheet1.html')
+
+def load_balance_sheet2(request):
+    return render(request,'balance_sheet2.html')
 
 def load_customize_report_bs(request):
     return render(request,'customize_report_bs.html', {"range":range(2,24)})

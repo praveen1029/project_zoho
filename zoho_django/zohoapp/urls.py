@@ -457,6 +457,8 @@ urlpatterns = [
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 
     path('load_balance_sheet/',views.load_balance_sheet,name='load_balance_sheet'),
+    path('load_balance_sheet1/',views.load_balance_sheet1,name='load_balance_sheet1'),
+    path('load_balance_sheet2/',views.load_balance_sheet2,name='load_balance_sheet2'),
     path('load_horizontal_balance_sheet/',views.load_horizontal_balance_sheet,name='load_horizontal_balance_sheet'),
     path('load_customize_report_bs/',views.load_customize_report_bs,name='load_customize_report_bs'),
     path('load_customize_report_hbs/',views.load_customize_report_hbs,name='load_customize_report_hbs'),

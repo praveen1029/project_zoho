@@ -79,7 +79,7 @@
     .inputdiv{
         background-color: white; 
         color: #060606; 
-        width: 100%;
+        width:39vh;
         height: 5vh;
         border-radius: 5px;
         margin-bottom: 1vh;
@@ -88,6 +88,7 @@
     }
 
     .dropdown-content{
+        width:39vh;
         border-radius: 10px; 
     }
 
@@ -123,6 +124,15 @@
         border: 2px solid black;
     }
 
+    .close-button{
+        font-size: 4vh; 
+        font-weight: 100;
+    }
+
+    .close-button:hover{
+        color: blue;
+    }
+
 </style>
 
 <div class="container-fluid ">
@@ -131,8 +141,8 @@
             <h1>Customize Report</h1>
         </div>
         <div class="col-md-1">
-            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button" style="background-color: grey; margin-top: 1vh;">
-                <i class="fa fa-times-circle" ></i>
+            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button" >
+                X
             </a>
         </div>
     </div><br><br>
@@ -298,10 +308,10 @@
                     </select>
                 </div>
 
-                <div class="col-md-4 form-group" id="showdepartment0" class="form-group" style="display: none;">
-                    <div class="multiselect" id="multiselect">
-                        <div class="inputdiv">&nbsp;</div>
-                        <div class="dropdown-content" id="dropdown" style="background-color: white; color: black;">
+                <div class="col-md-4 form-group " id="showdepartment0" class="form-group" style="display: none;">
+                    <div class="multiselect" id="multiselect0">
+                        <div class="inputdiv" id="inputdiv0" onclick="multiselectfun(this.id)">&nbsp;</div>
+                        <div class="dropdown-content" id="dropdown0" style="background-color: white; color: black;">
                             <div class="option" data-value="ME">ME</div>
                             <div class="option" data-value="NMS">NMS</div>
                             <div class="option" data-value="zoho">Zoho</div>
@@ -311,20 +321,20 @@
 
                 <div class="col-md-4 form-group" id="showsegment0" class="form-group" style="display: none;">
                     <select  class="form-control text-dark bg-white">
+                        <option value="#" style="color: #060606;" selected hidden></option>
                         <option value="seg_zoho" style="color: #060606;">Zoho</option>
                     </select>
                 </div>
 
                 <div class="col-md-4 form-group" id="showproduct0" class="form-group" style="display: none;">
                     <select  class="form-control text-dark bg-white">
+                        <option value="#" style="color: #060606;" selected hidden></option>
                         <option value="books" style="color: #060606;">Zoho Books</option>
                     </select>
                 </div>
 
                 <div class="col-md-4 form-group" id="ifempty_0" class="form-group" style="display: none;">
-                    <select  class="form-control text-dark bg-white">
-                        <option value="#" style="color: #060606;" hidden >Empty</option>
-                    </select>
+                    <input value="Empty" style="width: 39vh; height: 5vh; border-radius: 5px;" readonly>
                 </div>
             </div>
 
@@ -396,6 +406,10 @@
 <script>
 
     // Initialize Pikaday date picker
+    const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var nowDate = new Date(); 
+    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format
@@ -532,31 +546,39 @@
         });
     });
 
+    function multiselectfun(mul_id){
         //multiselect
-    const multiselect = document.getElementById('multiselect');
-    const dropdown = document.getElementById('dropdown');
+        var mul_val = mul_id.slice(-1);
+        const multiselect = document.getElementById("multiselect"+mul_val);
+        const dropdown = document.getElementById('dropdown'+mul_val);
 
-    multiselect.addEventListener('click', () => {
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    });
-
-    const options = document.querySelectorAll('.option');
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            option.classList.toggle('selected');
-            const selectedItems = Array.from(options)
-                .filter(option => option.classList.contains('selected'))
-                .map(option => option.dataset.value);
-            multiselect.firstElementChild.textContent = selectedItems.length > 0 ? selectedItems.join(', ') : ' ';
+        multiselect.addEventListener('click', () => {
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
         });
-    });
 
-    // Close the dropdown when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (!multiselect.contains(event.target)) {
-            dropdown.style.display = 'none';
-        }
-    });
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                option.classList.toggle('selected');
+                const selectedItems = Array.from(options)
+                    .filter(option => option.classList.contains('selected'))
+                    .map(option => option.dataset.value);
+                    i=0
+                    if(selectedItems.length > 0){
+                        document.getElementById("inputdiv"+mul_val).innerHTML = selectedItems.join(', ')
+                    }else{
+                        document.getElementById("inputdiv"+mul_val).innerHTML = ' '
+                    }
+            });
+        });
+
+        // Close the dropdown when clicking outside of it
+        window.addEventListener('click', (event) => {
+            if (!multiselect.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+    };
 
 
     function search_here() {
@@ -733,6 +755,9 @@
             html.find("#showdepartment0").attr("id","showdepartment"+length)
             html.find("#showsegment0").attr("id","showsegment"+length)
             html.find("#showproduct0").attr("id","showproduct"+length)
+            html.find("#multiselect0").attr("id","multiselect"+length)
+            html.find("#dropdown0").attr("id","dropdown"+length)
+            html.find("#inputdiv0").attr("id","inputdiv"+length)
             html.find("#final_comparator_proj_0").attr("id","final_comparator_proj_"+length)
             html.find("#final_comparator_dep_0").attr("id","final_comparator_dep_"+length)
             html.find("#final_comparator_seg_0").attr("id","final_comparator_seg_"+length)
@@ -744,6 +769,12 @@
             html.find("#ifempty_0").attr("id","ifempty_"+length)
 
             $("#ifempty_"+length).hide();
+            $("#showproject"+length).hide();
+            $("#showproject"+length).hide();
+            $("#showdepartment"+length).hide();
+            $("#showsegment"+length).hide();
+            $("#showproduct"+length).hide();
+            document.getElementById("inputdiv"+length).innerHTML=" "
         });
 
         $("body").on("click",".remove",function(){ 
