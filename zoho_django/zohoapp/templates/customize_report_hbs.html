@@ -67,7 +67,7 @@
 
     #custom-dropdown-btn{
         background-color: white;
-        width: 96%;
+        width: 61%;
         height: 5vh;
         text-align: left;
     }
@@ -78,19 +78,17 @@
 
     #date-options{
         background-color: white;
-        width: 96%;
+        width: 61%;
         margin-top: 1vh;
-        margin-left: 4vh;
         border-radius: 10px;
+        margin-left: 4vh;
     }
 
     #date-options a{
         color: #060606;
     }
 
-    .menudiv{
-        border: 2px solid black;
-    }
+
 
     .div-option:hover{
         background-color: #007bff;
@@ -98,7 +96,8 @@
 
     
     .close-button{
-        font-size: 4vh; 
+        font-size: 2vh;
+        margin-top: 1vh; 
         font-weight: 100;
     }
 
@@ -106,80 +105,149 @@
         color: blue;
     }
 
+    .multi-line {
+        position: relative;
+        width: 50%;
+    }
+
+    /* Style for the custom dropdown button */
+    .multi-line button {
+        width: 100%;
+        height: 5vh;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        text-align: left;
+    }
+
+    /* Style for the dropdown content */
+    .multi-line .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 95%;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    /* Style for the dropdown options */
+    .multi-line .dropdown-option {
+        padding: 10px;
+        white-space: pre-line; /* Allows for line breaks in option text */
+        cursor: pointer;
+    }
+
+    /* Show the dropdown content when the button is clicked */
+    .custom-dropdown.active .dropdown-content {
+        display: block;
+    }
+
+
 </style>
 
 <div class="container-fluid ">
-    <div class="row" style="background-color: grey">
+    <div class="row">
         <div class="col-md-11">
-            <h1>Customize Report</h1>
+            <h1 class="text-uppercase">Customize Report</h1>
         </div>
         <div class="col-md-1">
-            <a href="{% url 'load_horizontal_balance_sheet' %}" class="btn  close-button" >
+            <a href="{% url 'load_horizontal_balance_sheet' %}" class="btn  btn-light close-button" >
                 X
             </a>
         </div>
-    </div><br><br>
+        </div><br><br>
 
 
     <div class="row row-container">
-        <div class="col-md-3 menudiv"><br>
+        <div class="col-md-3"><br>
             <div class="nav-item " id="general">
                 <a class="nav-link cursor-pointer active text-white" >General</a>
             </div> <br>
         </div>
 
-        <div class="col-md-9 myDiv" id="generaldiv">
-            <label for="dateRangePicker">Date Options</label>
+        <div class="col-md-9 myDiv" id="generaldiv"><br>
             <div class="custom-dropdown">
-                <div class="d-flex">
-                    <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
-                    <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="dateRangePicker" style="font-size: medium;">Date Options</label>
+                    </div>
+                    <div class="col-md-9 d-flex">
+                        <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
+                        <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                    </div>
                 </div>
-                <div id="datepicker-container" style="display: none;">
-                    <div id="date-options" style="display: none;">
-                        <a class="date-option" href="#"><div class="div-option">Today</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Year</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
-                        <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        <div id="datepicker-container" style="display: none;">
+                            <div id="date-options" style="display: none;">
+                                <a class="date-option" href="#"><div class="div-option">Today</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Week</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Month</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Year</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
+                                <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div><br><br>
-
             <div class="form-group">
-                <label for="ReportBasis" >Report Basis</label>
-                <select id="ReportBasis" class="form-control text-dark bg-white">
-                    <option value="#" style="color: #060606;" selected></option>
-                    <option value="Accrual" style="color: #060606;">Accrual</option>
-                    <option value="Cash" style="color: #060606;">Cash</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="ReportBasis" style="font-size: medium; margin-top: 1vh;" >Report Basis</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="ReportBasis" class="form-control text-dark bg-white">
+                            <option value="#" style="color: #060606;" selected hidden></option>
+                            <option value="Accrual" style="color: #060606;">Accrual</option>
+                            <option value="Cash" style="color: #060606;">Cash</option>
+                        </select>
+                    </div>
+                </div>
             </div><br>
 
             <div class="form-group">
-                <label for="FilterAccounts" >Filter Accounts</label>
-                <select id="FilterAccounts" class="form-control text-dark bg-white">
-                    <option value="ZeroBalance" style="color: #060606;" selected>
-                        Accounts With Zero Balance. Filter every account except the ones with zero-balance.
-                    </option>
-                    <option value="AlAcc" style="color: #060606;">
-                        All Accounts. Filter all accounts, including the ones with zero-balance.
-                    </option>
-                    <option value="WithTrans" style="color: #060606;">
-                        Accounts With Transaction. Filter the transactions that were created during the specific period.
-                    </option>
-                </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="FilterAccounts" style="margin-top: 1vh; font-size: medium;">Filter Accounts</label>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="FilterAccounts" style="margin-top: 1vh; font-size: medium;">Filter Accounts</label>
+                            </div>
+                            <div class="col-md-9 custom-dropdown multi-line">
+                                <button id="filteracc" onclick="toggleDropdown()">Select an option</button>
+                                <div class="dropdown-content">
+                                    <div value="ZeroBalance" class="dropdown-option text-dark" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
+                                        Accounts Without Zero Balance. <br> <span style="font-size: small;">Filter every account except the ones with zero-balance.</span>
+                                    </div>
+                                    <div value="AlAcc" class="dropdown-option text-dark" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
+                                        All Accounts. <br><span style="font-size: small;">Filter all accounts, including the ones with zero-balance.</span>
+                                    </div>
+                                    <div value="WithTrans" class="dropdown-option text-dark" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
+                                        Accounts With Transaction. <br> <span style="font-size: small;">Filter the transactions that were created during the specific period.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr>
 
-            <h6 style="color: aliceblue;">Advanced Filters</h6>
-            <p style="color: #eeebeb;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
+            <h6 style="color: aliceblue;" style="font-size: medium;">Advanced Filters</h6>
+            <p style="color: #eeebeb; font-size: medium;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
             
-            <button id="AddFilter" style="color: blue;" class="btn" style="display: block;">+ Add Filter</button>
+            <button id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</button>
             <div class="row after-add-more" id="filterdiv" style="display: none;">           
                 <div class="col-md-4 form-group ">
                     <div class="form-group d-flex">
@@ -279,7 +347,7 @@
 
 
             <div id="AddMore" style="display: none;">
-                <button style="color: blue;" class="btn add-more">+ Add More</button>
+                <button style="color: rgb(184, 121, 4);" class="btn add-more">+ Add More</button>
             </div><br><br><br>
             <div class="row">
                 <div class="col-md-4 d-flex">
@@ -293,6 +361,21 @@
 
 
 <script>
+
+    let selectedOption = "";
+
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.multi-line');
+        dropdown.classList.toggle('active');
+    }
+
+    function selectOption(optionText) {
+        selectedOption = optionText;
+        var index = selectedOption.indexOf("\n");  // Gets the first index where a space occours
+        var optionstring = selectedOption.slice(0, index);
+        document.querySelector('#filteracc').textContent = optionstring;
+        toggleDropdown();
+    }
 
     // Initialize Pikaday date picker
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];

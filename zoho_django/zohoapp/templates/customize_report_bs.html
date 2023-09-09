@@ -94,7 +94,7 @@
 
     #custom-dropdown-btn{
         background-color: white;
-        width: 96%;
+        width: 61%;
         height: 5vh;
         text-align: left;
     }
@@ -105,10 +105,10 @@
 
     #date-options{
         background-color: white;
-        width: 96%;
+        width: 61%;
         margin-top: 1vh;
-        margin-left: 4vh;
         border-radius: 10px;
+        margin-left: 4vh;
     }
 
     #date-options a{
@@ -120,12 +120,9 @@
         background-color: #007bff;
     }
 
-    .menudiv{
-        border: 2px solid black;
-    }
-
     .close-button{
-        font-size: 4vh; 
+        font-size: 2vh;
+        margin-top: 1vh; 
         font-weight: 100;
     }
 
@@ -133,25 +130,65 @@
         color: blue;
     }
 
+    .multi-line {
+            position: relative;
+            width: 50%;
+        }
+
+        /* Style for the custom dropdown button */
+        .multi-line button {
+            width: 100%;
+            height: 5vh;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        /* Style for the dropdown content */
+        .multi-line .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 95%;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        /* Style for the dropdown options */
+        .multi-line .dropdown-option {
+            padding: 10px;
+            white-space: pre-line; /* Allows for line breaks in option text */
+            cursor: pointer;
+        }
+
+        /* Show the dropdown content when the button is clicked */
+        .custom-dropdown.active .dropdown-content {
+            display: block;
+        }
+
+
 </style>
 
-<div class="container-fluid ">
-    <div class="row" style="background-color: grey;">
-        <div class="col-md-11">
-            <h1>Customize Report</h1>
-        </div>
-        <div class="col-md-1">
-            <a href="{% url 'load_balance_sheet' %}" class="btn  close-button" >
-                X
-            </a>
-        </div>
+<div class="row" >
+    <div class="col-md-11">
+        <h1 class="text-uppercase">Customize Report</h1>
+    </div>
+    <div class="col-md-1">
+        <a href="{% url 'load_balance_sheet' %}" class="btn  btn-light close-button" >
+            X
+        </a>
+    </div>
     </div><br><br>
 
     <div class="row row-container">
-        <div class="col-md-3 menudiv"><br>
-            <div class="nav-item" id="general_colour" style="background-color: #007bff;">
+        <div class="col-md-3"><br>
+            <div class="nav-item" id="general_colour" style="background-color: #007bff">
                 <a class="nav-link cursor-pointer text-white" href="#" onclick="general()">General</a>
-            </div> <br>
+            </div><hr> 
     
             <div class="nav-item" id="column_colour">
                 <a class="nav-link cursor-pointer text-white" href="#" onclick="column()">Show / Hide Columns</a>
@@ -159,88 +196,130 @@
         </div>
 
         <div class="col-md-9 myDiv" id="generaldiv" style="display: block;">
-            <label for="dateRangePicker">Date Options</label>
             <div class="custom-dropdown">
-                <div class="d-flex">
-                    <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
-                    <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="dateRangePicker" style="font-size: medium;">Date Options</label>
+                    </div>
+                    <div class="col-md-9 d-flex">
+                        <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
+                        <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
+                    </div>
                 </div>
-                <div id="datepicker-container" style="display: none;">
-                    <div id="date-options" style="display: none;">
-                        <a class="date-option" href="#"><div class="div-option">Today</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Year</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
-                        <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        <div id="datepicker-container" style="display: none;">
+                            <div id="date-options" style="display: none;">
+                                <a class="date-option" href="#"><div class="div-option">Today</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Week</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Month</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
+                                <a class="date-option" href="#"><div class="div-option">This Year</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
+                                <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
+                                <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div><br><br>
 
             <div class="form-group">
-                <label for="CompareWith" >Compare With</label>
-                <select id="CompareWith" class="form-control text-dark bg-white">
-                    <option value="#" style="color: #060606;" selected>None</option>
-                    <option value="py" style="color: #060606;">Previous Year(s)</option>
-                    <option value="pp" style="color: #060606;">Previous Period(s)</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="CompareWith" style="font-size: medium; margin-top: 1vh;">Compare With</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="CompareWith" class="form-control text-dark bg-white">
+                            <option value="#" style="color: #060606;" selected hidden>None</option>
+                            <option value="py" style="color: #060606;" >Previous Year(s)</option>
+                            <option value="pp" style="color: #060606;" >Previous Period(s)</option>
+                        </select>
+                    </div>
+                </div>
             </div><br>
 
             <div id="showpy" class="myd form-group">
-                <label for="Numofyears" >Number Of Year(s)</label>
-                <select id="Numofyears" class="form-control text-dark bg-white">
-                    <option value="1" style="color: #060606;" selected>1</option>
-                    {% for num in range %}
-                        <option value="{{num}}" style="color: #060606;">{{num}}</option>
-
-                    {% endfor %}
-                </select><br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="Numofyears"  style="font-size: medium; margin-top: 1vh;">Number Of Year(s)</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="Numofyears" class="form-control text-dark bg-white">
+                            <option value="1" style="color: #060606;" selected>1</option>
+                            {% for num in range %}
+                                <option value="{{num}}" style="color: #060606;">{{num}}</option>
+        
+                            {% endfor %}
+                        </select><br>
+                    </div>
+                </div>
             </div>
 
             <div id="showpp" class="myd form-group">
-                <label for="Numofperiods" >Number Of Period(s)</label>
-                <select id="Numofperiods" class="form-control text-dark bg-white">
-                    <option value="1" style="color: #060606;" selected>1</option>
-                    {% for num in range %}
-                        <option value="{{num}}" style="color: #060606;">{{num}}</option>
-
-                    {% endfor %}
-                </select><br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="Numofperiods"  style="font-size: medium; margin-top: 1vh;">Number Of Period(s)</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="Numofperiods" class="form-control text-dark bg-white">
+                            <option value="1" style="color: #060606;" selected>1</option>
+                            {% for num in range %}
+                                <option value="{{num}}" style="color: #060606;">{{num}}</option>
+        
+                            {% endfor %}
+                        </select><br>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="ReportBasis" >Report Basis</label>
-                <select id="ReportBasis" class="form-control text-dark bg-white">
-                    <option value="#" style="color: #060606;" selected></option>
-                    <option value="Accrual" style="color: #060606;">Accrual</option>
-                    <option value="Cash" style="color: #060606;">Cash</option>
-                </select>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="ReportBasis" style="font-size: medium; margin-top: 1vh;" >Report Basis</label>
+                    </div>
+                    <div class="col-md-6">
+                        <select id="ReportBasis" class="form-control text-dark bg-white">
+                            <option value="#" style="color: #060606;" selected hidden></option>
+                            <option value="Accrual" style="color: #060606;">Accrual</option>
+                            <option value="Cash" style="color: #060606;">Cash</option>
+                        </select>
+                    </div>
+                </div>
             </div><br>
 
             <div class="form-group">
-                <label for="FilterAccounts" >Filter Accounts</label>
-                <select id="FilterAccounts" class="form-control text-dark bg-white">
-                    <option value="ZeroBalance" style="color: #060606;" selected>
-                        Accounts With Zero Balance. Filter every account except the ones with zero-balance.
-                    </option>
-                    <option value="AlAcc" style="color: #060606;">
-                        All Accounts. Filter all accounts, including the ones with zero-balance.
-                    </option>
-                    <option value="WithTrans" style="color: #060606;">
-                        Accounts With Transaction. Filter the transactions that were created during the specific period.
-                    </option>
-                </select>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="FilterAccounts" style="margin-top: 1vh; font-size: medium;">Filter Accounts</label>
+                        </div>
+                        <div class="col-md-9 custom-dropdown multi-line">
+                            <button id="filteracc" onclick="toggleDropdown()">Select an option</button>
+                            <div class="dropdown-content">
+                                <div value="ZeroBalance" class="dropdown-option text-dark" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
+                                    Accounts Without Zero Balance. <br> <span style="font-size: small;">Filter every account except the ones with zero-balance.</span>
+                                </div>
+                                <div value="AlAcc" class="dropdown-option text-dark" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
+                                    All Accounts. <br><span style="font-size: small;">Filter all accounts, including the ones with zero-balance.</span>
+                                </div>
+                                <div value="WithTrans" class="dropdown-option text-dark" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
+                                    Accounts With Transaction. <br> <span style="font-size: small;">Filter the transactions that were created during the specific period.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr>
 
-            <h6 style="color: aliceblue;">Advanced Filters</h6>
-            <p style="color: #eeebeb;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
+            <h6 style="color: aliceblue; font-size: medium;">Advanced Filters</h6>
+            <p style="color: #eeebeb; font-size: medium;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
             
-            <button id="AddFilter" style="color: blue;" class="btn" style="display: block;">+ Add Filter</button>
+            <button id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</button>
             <div class="row after-add-more" id="filterdiv" style="display: none;">           
                 <div class="col-md-4 form-group ">
                     <div class="form-group d-flex">
@@ -340,7 +419,7 @@
 
 
             <div id="AddMore" style="display: none;">
-                <button style="color: blue;" class="btn add-more">+ Add More</button>
+                <button style="color: rgb(184, 121, 4);" class="btn add-more">+ Add More</button>
             </div><br><br>
             <div class="row">
                 <div class="col-md-4 d-flex">
@@ -350,23 +429,35 @@
             </div>
         </div>
         
-        <div class="col-md-9 myDiv" id="columndiv" style="display: none;">
-            <div class="row" style="height: 100%;">
+        <div class="col-md-9 myDiv" id="columndiv" style="display: none;"><br><br>
+            <div class="row" style="height: 100%;;">
                 <div class="col-md-5" id="avlcol">
-                    <h1 >Available Columns</h1>
-                    <div class="colborder">
+                    <div class="colborder bg-dark"><br>
+                        <h3 class="text-uppercase"  style="text-align: center; color: grey;">Available Columns</h3>
                         <i class="fas fa-search" style="margin-left: 2vh;"></i><input id="searchbar" onkeyup="search_here()" type="text" name="search" style="width: 80%; margin: 2vh;"><br><br>
                         <div class="row searchdiv" id="accountdiv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account <button  class="btn btn-light column_button" id="account">+</button></p>
+                            <p style="font-size: medium; padding-top: 2vh; padding-bottom: 2vh;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account 
+                                <button  class="btn btn-light column_button" id="account">+</button>
+                            </p>
                         </div>
                         <div class="row searchdiv " id="codediv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code<button  class="btn btn-light column_button" id="code">+</button></p>
+                            <p style="font-size: medium; padding-top: 2vh; padding-bottom: 2vh;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code
+                                <button  class="btn btn-light column_button" id="code">+</button>
+                            </p>
                         </div>
                         <div class="row searchdiv " id="totaldiv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total <button  class="btn btn-light column_button" id="total">+</button></p>
+                            <p style="font-size: medium; padding-top: 2vh; padding-bottom: 2vh;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total 
+                                <button  class="btn btn-light column_button" id="total">+</button>
+                            </p>
                         </div>
                         <div class="row searchdiv" id="datediv" style="display: block;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date <button  class="btn btn-light column_button" id="date">+</button></p>
+                            <p style="font-size: medium; padding-top: 2vh; padding-bottom: 2vh;">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date 
+                                <button  class="btn btn-light column_button" id="date">+</button>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -375,20 +466,32 @@
                     <i class="fas fa-arrow-circle-right" style="margin-top: 40vh; margin-bottom: 40vh; margin-left: 2vh ;" ></i>
                 </div>
                 <div class="col-md-5" id="selcol">
-                    <h1>Selected Columns</h1>
-                    <div class="colborder">
+                    <div class="colborder bg-dark"><br>
+                        <h3 class="text-uppercase" style="text-align: center; color: grey;">Selected Columns</h3>
                         <br><br>
                         <div class="row accountdivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account  (Reports) <button  class="btn btn-light column_button" id="minaccount">-</button></p>
+                            <p style="font-size: medium; padding-top: 1vh; ">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account  (Reports) 
+                                <button  class="btn btn-light column_button" id="minaccount">-</button>
+                            </p>
                         </div>
                         <div class="row codedivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code (Reports) <button  class="btn btn-light column_button" id="mincode">-</button></p>
+                            <p style="font-size: medium; padding-top: 1vh; ">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account Code (Reports) 
+                                <button  class="btn btn-light column_button" id="mincode">-</button>
+                            </p>
                         </div>
                         <div class="row totaldivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total (Reports) <button  class="btn btn-light column_button" id="mintotal">-</button></p>
+                            <p style="font-size: medium; padding-top: 1vh; ">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total (Reports) 
+                                <button  class="btn btn-light column_button" id="mintotal">-</button>
+                            </p>
                         </div>
                         <div class="row datedivr" style="display: none;">
-                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date  (Reports) <button class="btn btn-light column_button" id="mindate">-</button></p>
+                            <p style="font-size: medium; padding-top: 1vh; ">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Year To Date  (Reports) 
+                                <button class="btn btn-light column_button" id="mindate">-</button>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -404,6 +507,21 @@
 </div>
 
 <script>
+
+    let selectedOption = "";
+
+    function toggleDropdown() {
+        const dropdown = document.querySelector('.multi-line');
+        dropdown.classList.toggle('active');
+    }
+
+    function selectOption(optionText) {
+        selectedOption = optionText;
+        var index = selectedOption.indexOf("\n");  // Gets the first index where a space occours
+        var optionstring = selectedOption.slice(0, index);
+        document.querySelector('#filteracc').textContent = optionstring;
+        toggleDropdown();
+    }
 
     // Initialize Pikaday date picker
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];

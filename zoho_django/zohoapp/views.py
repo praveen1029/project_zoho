@@ -9682,7 +9682,11 @@ def load_customize_report_bs(request):
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
-    return render(request,'horizontal_balance_sheet.html', {"company":company})
+    banks = banking.objects.filter(user=request.user.id)
+    acc_bal = 0
+    for bank in banks:
+        acc_bal += bank.opening_bal
+    return render(request,'horizontal_balance_sheet.html', {"banks":banks,"company":company,"acc_bal":acc_bal})
 
 def load_customize_report_hbs(request):
     return render(request,'customize_report_hbs.html')
