@@ -10,7 +10,7 @@
 
 <style>
 
-tbody {
+    tbody {
         -ms-overflow-style: none;  /* Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
@@ -18,8 +18,9 @@ tbody {
     tbody::-webkit-scrollbar { 
         display: none;
     }
+    
 
-    tbody {
+    .table tbody {
         height:400px;
         overflow:auto;
         overflow-x:hidden;
@@ -84,7 +85,7 @@ tbody {
 
     #date-options{
         background-color: white;
-        width: 96%;
+        width: 83%;
         margin-top: 1vh;
         margin-left: 4vh;
         border-radius: 10px;
@@ -112,6 +113,22 @@ tbody {
     .close-button{
         font-size: 2vh; 
         font-weight: 100;
+    }
+
+    @media print{
+        body{
+            visibility: hidden;
+        }
+        #pdfdiv{
+            visibility: visible;
+            width: auto;
+            height: auto;
+            overflow: visible;  
+        }
+
+        table.baltable{
+            font-size: 20px;
+        }
     }
 
   </style>
@@ -164,307 +181,642 @@ tbody {
         </div>
     </div>
 
-    <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh; width: 77vw;" >
-        <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3> 
-        <h1 style="text-align: center;">Balance Sheet</h1> 
-        <h6 style="text-align: center;">Basis: Cash</h6> 
-        <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
-        <div class="table-responsive">
-            <div class="container-fluid tableFixHead"> 
-                <table class="table">
-                    <thead>
-                        <tr >  
-                            <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">ACCOUNT </th>  
-                            <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                ACCOUNT CODE  
-                            </th> 
-                            <th class="bg-dark" style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">TOTAL  </th> 
-                        </tr>
-                    </thead> 
-                    <tbody> 
-                        <tr> 
-                            <td><span style="font-size: large;">ASSETS</span></td>
-                        </tr>  
-                        <tr>  
-                            <td style="font-size: medium;">Current Assets</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr>  
-                            <td style="font-size: medium;">Bank</td> 
-                            <td>&nbsp;</td>
-                        </tr>  
-                        {% for bank in banks %}
-                            <tr> 
-                                <td><a href="#"> {{bank.bnk_name }} </a> </td>
-                                <td></td>
-                                <!-- <td style="text-align: right;"> <a href="#"> {{bank.opening_bal}} </a> </td>  -->
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                            </tr> 
-                        {% endfor %}
-
-                        {% if banks %}
-                            <tr> 
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                {% if acc_bal %}
-                                    <!-- <td class="allow-border" style="text-align: right;"> {{acc_bal}}  </td>  -->
+    <div class="row">
+        <div class="row bg-dark" style="border-radius: 3vh; width: 77vw;" >
+            <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3> 
+            <h1 style="text-align: center;">Balance Sheet</h1> 
+            <h6 style="text-align: center;">Basis: Cash</h6> 
+            {% if newdate %}
+                <h6 style="text-align: center;">As of <span >&nbsp;{{newdate}}</span></h6> <br>
+            {% else %}
+                <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
+            {% endif %}
+            <div class="table-responsive">
+                <div class="container-fluid "> 
+                    <table class="table" >
+                        <thead>
+                            <tr >  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">ACCOUNT </th>  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ACCOUNT CODE  
+                                </th> 
+                                {% if newdate %}
+                                    <th class="bg-dark"  style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">{{newdate}}</th> 
                                 {% else %}
-                                    <td class="allow-border" style="text-align: right;"> 0 </td> 
+                                    <th class="bg-dark" id="tbhd" style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">TOTAL  </th> 
                                 {% endif %}
-                            </tr> 
-                        {% endif %}
-
-                        <tr>  
-                            <td style="font-size: medium;">Cash</td> 
-                            <td>&nbsp;</td>
-                        </tr>  
-                        <tr> 
-                            <td><a href="#"> Petty Cash </a> </td>
-                            <td></td>
-                            <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                        </tr>  
-                        <tr> 
-                            <td><a href="#"> Undeposited Funds </a> </td>
-                            <td></td>
-                            <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                        </tr>  
-                        <tr> 
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td class="allow-border" style="text-align: right;"> 0</td> 
-                        </tr> 
-                        <tr>  
-                            <td style="font-size: medium;">Other Current Assets</td> 
-                            <td>&nbsp;</td></tr>  
-                            <tr> 
-                                <td><a href="#"> Advance Tax </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Employee Advance </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Input VAT </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#">0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Sales to Customers (Cash) </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#">0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="allow-border" style="text-align: right;">  0 </td> 
-                            </tr> 
-                            <tr>  
-                                <td style="font-size: medium;">Other Assets</td> 
-                                <td>&nbsp;</td>
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Error </a> </td>
-                                <td style="text-align: center;">Error</td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> GoCardless Clearing </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#">0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> GoCardless Clearing - EUR </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td>
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> GoCardless Clearing - GBP </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td> <a href="#"> Inventory Asset </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#">0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td style="text-align: right;" class="allow-border"> 0 </td> 
-                            </tr>  
-                            <tr> 
-                                <td class="allow-border" style="font-size: medium;"><b>Total Current Assets</b></td>
-                                <td class="allow-border">&nbsp;</td>
-                                <td style="text-align: right;" class="allow-border">0 </td> 
-                            </tr>  
-                            <tr>  
-                                <td style="font-size: medium;">Fixed Assets</td> 
-                                <td>&nbsp;</td>
-                            </tr>  
-                            <tr> 
-                                <td>
-                                    <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
-                                    <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
-                                    <a href="#"> Furniture and Equipment </a> 
-                                </td>
-                                <td></td>
-                                <td style="text-align: right;" id="furvalue" style="display: none;"> <a href="#" >0</a> </td> 
-                                <td style="text-align: right;" id="totalfur"> <a href="#">0</a> </td> 
-                            </tr> 
-                            <tr id="furdiv1" style="display: none;"> 
-                                <td>  
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
-                                    <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
-                                    <a href="#"> Fun </a> 
-                                </td>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: right;" id="funvalue"><a href="#"> 0</a> </td> 
-                                <td style="text-align: right;" id="totalfun"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr id="fundiv1" style="display: none;"> 
-                                <td>  
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="#"> bugfix account </a> 
-                                </td>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr id="fundiv2" style="display: none;"> 
-                                <td class="allow-border" style="font-size: medium;" >
-                                    <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> 
-                                </td>
-                                <td class="allow-border" style="text-align: center;">0</td>
-                                <td style="text-align: right;" class="allow-border"><a href="#">0</a> </td> 
-                            </tr> 
-                            <tr id="furdiv2" style="display: none;"> 
-                                <td class="allow-border" style="font-size: medium;">
-                                    <strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> 
-                                </td>
-                                <td class="allow-border"></td>
-                                <td style="text-align: right;" class="allow-border" ><a href="#">0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td class="allow-border" style="font-size: medium;"><b>Total Fixed Assets</b></td>
-                                <td class="allow-border">&nbsp;</td>
-                                <td style="text-align: right;" class="allow-border">  0 </td> 
-                            </tr>      
-                            <tr> 
-                                <td>&nbsp;</td>
-                                <td style="font-size: medium; text-align: center;">TOTAL ASSETS</td>
-                                <td  style="text-align: right;" class="allow-border"> 0</td> 
                             </tr>
+                        </thead> 
+                        <tbody> 
                             <tr> 
-                                <td><span style="font-size: large;">LIABILITIES &amp; EQUITIES</span></td> 
+                                <td><span style="font-size: large;">ASSETS</span></td>
                             </tr>  
                             <tr>  
-                                <td style="font-size: medium;">Current Liabilities</td> 
+                                <td style="font-size: medium;">Current Assets</td>
                                 <td>&nbsp;</td>
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Employee Reimbursements </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> HMRC-PAYE </a> </td>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> Opening Balance Adjustments </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> Output VAT </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#">0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> Unearned Revenue </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> VAT MOSS Payable </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#">0</a> </td> 
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> VAT Payable </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#"> 0</a> </td> 
-                            </tr>  
-                            <tr> 
-                                <td class="allow-border" style="font-size: medium;"><b>Total Current Liabilities</b></td>
-                                <td class="allow-border">&nbsp;</td>
-                                <td style="text-align: right;" class="allow-border">  0</td> 
-                            </tr>  
-                            <tr>  
-                                <td style="font-size: medium;"> Other Liabilities</td> 
-                                <td>&nbsp;</td>
-                            </tr>  
-                            <tr> 
-                                <td><a href="#"> Tag Adjustments </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"><a href="#">0</a> </td>
-                            </tr>  
-                            <tr> 
-                                <td class="allow-border" style="font-size: medium;"><b>Total Other Liabilities</b></td>
-                                <td class="allow-border">&nbsp;</td>
-                                <td style="text-align: right;" class="allow-border">  0 </td>
-                            </tr>  
-                            <tr>  
-                                <td style="font-size: medium;">Equities</td>
-                                <td>&nbsp;</td>
-                            </tr>  
-                            <tr> 
-                                <td>   <a href="#"> Current Year Earnings </a></td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#">0</a> </td>
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> Opening Balance Offset </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td>
-                            </tr> 
-                            <tr> 
-                                <td><a href="#"> Owner's Equity </a> </td>
-                                <td></td>
-                                <td style="text-align: right;"> <a href="#"> 0</a> </td>
-                            </tr> 
-                            <tr> 
-                                <td style="font-size: medium;">  Retained Earnings  </td>
-                                <td></td>
-                                <td style="text-align: right;"> 0 </td>
-                            </tr>  
-                            <tr> 
-                                <td class="allow-border" style="font-size: medium;"><b>Total Equities</b></td>
-                                <td class="allow-border">&nbsp;</td>
-                                <td class="allow-border" style="text-align: right;">  0 </td>
-                            </tr>   
-                            <tr> 
-                                <td>&nbsp;</td>
-                                <td style="text-align: center; font-size: medium;">TOTAL LIABILITIES &amp; EQUITIES</td>
-                                <td style="text-align: right; border-bottom: 1pt double white;"> 0</td>
                             </tr>
-                        </tr>
-                    </tbody><br>
-                </table>
-                <div>
-                    <p>
-                        <small>**Amount is displayed in your base currency</small>&nbsp;
-                        <span class="badge text-semibold badge-success d-inline">INR</span>
-                    </p>
+                            <tr>  
+                                <td style="font-size: medium;">Bank</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Bank Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Bank Of America </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Eur Bank Account </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> New Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+    
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0 </td> 
+                            </tr> 
+    
+                            <tr>  
+                                <td style="font-size: medium;">Cash</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Petty Cash </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Undeposited Funds </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0</td> 
+                            </tr> 
+                            <tr>  
+                                <td style="font-size: medium;">Other Current Assets</td> 
+                                <td>&nbsp;</td></tr>  
+                                <tr> 
+                                    <td><a href="#"> Advance Tax </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Advance </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Input VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Sales to Customers (Cash) </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td> 
+                                </tr> 
+                                <tr>  
+                                    <td style="font-size: medium;">Other Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Error </a> </td>
+                                    <td style="text-align: center;">Error</td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - EUR </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - GBP </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td> <a href="#"> Inventory Asset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border"> 0 </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">0 </td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Fixed Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
+                                        <a href="#"> Furniture and Equipment </a> 
+                                    </td>
+                                    <td></td>
+                                    <td style="text-align: right;" id="furvalue" style="display: none;"> <a href="#" >0</a> </td> 
+                                    <td style="text-align: right;" id="totalfur"> <a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
+                                        <a href="#"> Fun </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;" id="funvalue"><a href="#"> 0</a> </td> 
+                                    <td style="text-align: right;" id="totalfun"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#"> bugfix account </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;" >
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> 
+                                    </td>
+                                    <td class="allow-border" style="text-align: center;">0</td>
+                                    <td style="text-align: right;" class="allow-border"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;">
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> 
+                                    </td>
+                                    <td class="allow-border"></td>
+                                    <td style="text-align: right;" class="allow-border" ><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Fixed Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td> 
+                                </tr>      
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="font-size: medium; text-align: center;">TOTAL ASSETS</td>
+                                    <td  style="text-align: right;" class="allow-border"> 0</td> 
+                                </tr>
+                                <tr> 
+                                    <td><span style="font-size: large;">LIABILITIES &amp; EQUITIES</span></td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Current Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Reimbursements </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> HMRC-PAYE </a> </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Output VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Unearned Revenue </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT MOSS Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0</td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;"> Other Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Tag Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Other Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td>
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Equities</td>
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>   <a href="#"> Current Year Earnings </a></td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Offset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Owner's Equity </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td style="font-size: medium;">  Retained Earnings  </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> 0 </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Equities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td>
+                                </tr>   
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: center; font-size: medium;">TOTAL LIABILITIES &amp; EQUITIES</td>
+                                    <td style="text-align: right; border-bottom: 1pt double white;"> 0</td>
+                                </tr>
+                            </tr>
+                        </tbody><br>
+                    </table>
+                    <div>
+                        <p>
+                            <small>**Amount is displayed in your base currency</small>&nbsp;
+                            <span class="badge text-semibold badge-success d-inline">INR</span>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </div> 
+            </div> 
+        </div>
+    </div><br><br>
+
+    <!-- This row is the same balance sheet as above but ony used for print purpose any change made above should be made here also -->
+    <div class="row" style="display: none;">
+        <div class="row bg-dark" id="pdfdiv" >
+            <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3> 
+            <h1 style="text-align: center;">Balance Sheet</h1> 
+            <h6 style="text-align: center;">Basis: Cash</h6> 
+            {% if newdate %}
+                <h6 style="text-align: center;">As of <span >&nbsp;{{newdate}}</span></h6> <br>
+            {% else %}
+                <h6 style="text-align: center;">As of <span id="todaydatep"></span></h6> <br>
+            {% endif %}
+            <div class="table-responsive">
+                <div class="container-fluid "> 
+                    <table >
+                        <thead>
+                            <tr >  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">ACCOUNT </th>  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">
+                                    ACCOUNT CODE  
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </th> 
+                                {% if newdate %}
+                                <th class="bg-dark"  style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">{{newdate}}</th> 
+                            {% else %}
+                                <th class="bg-dark" id="tbhdp" style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">TOTAL  </th> 
+                            {% endif %}
+                            </tr>
+                        </thead> 
+                        <tbody> 
+                            <tr> 
+                                <td><span style="font-size: large;">ASSETS</span></td>
+                            </tr>  
+                            <tr>  
+                                <td style="font-size: medium;">Current Assets</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>  
+                                <td style="font-size: medium;">Bank</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Bank Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Bank Of America </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Eur Bank Account </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> New Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+    
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0 </td> 
+                            </tr> 
+    
+                            <tr>  
+                                <td style="font-size: medium;">Cash</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Petty Cash </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Undeposited Funds </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0</td> 
+                            </tr> 
+                            <tr>  
+                                <td style="font-size: medium;">Other Current Assets</td> 
+                                <td>&nbsp;</td></tr>  
+                                <tr> 
+                                    <td><a href="#"> Advance Tax </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Advance </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Input VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Sales to Customers (Cash) </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td> 
+                                </tr> 
+                                <tr>  
+                                    <td style="font-size: medium;">Other Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Error </a> </td>
+                                    <td style="text-align: center;">Error</td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - EUR </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - GBP </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td> <a href="#"> Inventory Asset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border"> 0 </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">0 </td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Fixed Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
+                                        <a href="#"> Furniture and Equipment </a> 
+                                    </td>
+                                    <td></td>
+                                    <td style="text-align: right;" id="furvalue" style="display: none;"> <a href="#" >0</a> </td> 
+                                    <td style="text-align: right;" id="totalfur"> <a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
+                                        <a href="#"> Fun </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;" id="funvalue"><a href="#"> 0</a> </td> 
+                                    <td style="text-align: right;" id="totalfun"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#"> bugfix account </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;" >
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> 
+                                    </td>
+                                    <td class="allow-border" style="text-align: center;">0</td>
+                                    <td style="text-align: right;" class="allow-border"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;">
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> 
+                                    </td>
+                                    <td class="allow-border"></td>
+                                    <td style="text-align: right;" class="allow-border" ><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Fixed Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td> 
+                                </tr>      
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="font-size: medium; text-align: center;">TOTAL ASSETS</td>
+                                    <td  style="text-align: right;" class="allow-border"> 0</td> 
+                                </tr>
+                                <tr> 
+                                    <td><span style="font-size: large;">LIABILITIES &amp; EQUITIES</span></td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Current Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Reimbursements </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> HMRC-PAYE </a> </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Output VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Unearned Revenue </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT MOSS Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0</td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;"> Other Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Tag Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Other Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td>
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Equities</td>
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>   <a href="#"> Current Year Earnings </a></td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Offset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Owner's Equity </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td style="font-size: medium;">  Retained Earnings  </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> 0 </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Equities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td>
+                                </tr>   
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: center; font-size: medium;">TOTAL LIABILITIES &amp; EQUITIES</td>
+                                    <td style="text-align: right; border-bottom: 1pt double white;"> 0</td>
+                                </tr>
+                            </tr>
+                        </tbody><br>
+                    </table>
+                    <div>
+                        <p>
+                            <small>**Amount is displayed in your base currency</small>&nbsp;
+                            <span class="badge text-semibold badge-success d-inline">INR</span>
+                        </p>
+                    </div>
+                </div>
+            </div> 
+        </div>
     </div>
 </div>
 
@@ -511,7 +863,11 @@ function openfur(){
     }
 
     function display() {
+        var printContents = document.getElementById("pdfdiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
         window.print();
+        document.body.innerHTML = originalContents;
     }
 
     function exportToPDF(){
@@ -534,8 +890,14 @@ function openfur(){
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var nowDate = new Date(); 
-    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+    var formdate = "{{newdate}}";
+    if(formdate){
+        document.getElementById('custom-dropdown-btn').innerHTML= formdate
+    }else{
+        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+    };
     document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
+    document.getElementById('todaydatep').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format
@@ -543,6 +905,9 @@ function openfur(){
             
             // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
             document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+            document.getElementById('tbhd').textContent = picker.toString().slice(4)  
+            document.getElementById('tbhdp').textContent = picker.toString().slice(4)  
+            document.getElementById('todaydate').innerHTML= picker.toString().slice(4) 
             document.getElementById('datepicker-container').style.display = 'none';
             document.getElementById('date-options').style.display = 'none';
         }

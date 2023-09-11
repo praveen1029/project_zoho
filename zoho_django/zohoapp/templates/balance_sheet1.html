@@ -108,9 +108,6 @@
         color: blue;
     }
 
-    #funplus a:hover{
-        background-color: transparent;
-    }
     table a{
         color:white
     }
@@ -120,7 +117,9 @@
         background-color: transparent;
     }
 
-
+    .customize:hover{
+        background-color: transparent;
+    }
 
 </style>
 
@@ -148,11 +147,11 @@
                 </div>
             </div><br><br>
         </div>
-            <div class="col-md-6" >
-            <button class="btn btn-light"><a class="text-dark" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
+        <div class="col-md-6" >
+            <button class="btn btn-light"><a class="text-dark customize" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class=" col-md-2 d-flex " >
-            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">Print</i></button>
+            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">&nbsp;Print</i></button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
                 <i class='fas fa-file-export'></i> Export
@@ -171,265 +170,6 @@
         </div>
     </div>
 
-    <div class="row bg-dark" id="pdfdiv"  style="border-radius: 3vh; width: 77vw;" >
-        <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3> 
-        <h1 style="text-align: center;">Horizontal Balance Sheet</h1> 
-        <h6 style="text-align: center;">Basis: Cash</h6> 
-        <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
-        <div class="table-responsive">
-            <div class="container-fluid"> 
-                <table class="table" style="border-color: white;" >
-                    <thead>
-                        <th colspan="2" style="text-align: center; border-bottom: 1pt solid white; font-size: 3vh;">LIABILITIES &amp; EQUITIES</th>
-                        <th colspan="2" style="text-align: center; border-bottom: 1pt solid white; font-size: 3vh;">ASSETS</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" class="border_right"><span class="text-uppercase" style="font-size: large;">Current Liabilities</span> </td>
-                            <td colspan="2"  ><span class="text-uppercase" style="font-size: large;">Current Assets <hr></span></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Employee Reimbursements</td>
-                            <td class="right"><a href="#">4.724,000</a></td>
-                            <td  colspan="2" style="font-size: medium;">Bank <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td>• HMRC-PAYE ( 5670 )</td>
-                            <td class="right"><a href="#">-200,000</a></td>
-                            <td>• Bank Acc 1</td>
-                            <td class="right"><a href="#">-483.478,225</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Opening Balance Adjustments</td>
-                            <td class="right"><a href="#" >12.597,200</a></td>
-                            <td>• Bank Of America</td>
-                            <td class="right"><a href="#" >12.571,281</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Output VAT</td>
-                            <td class="right"><a href="#" >-9,200</a></td>
-                            <td>• Eur Bank Account</td>
-                            <td class="right"><a href="#">570,680</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Unearned Revenue</td>
-                            <td class="right"><a href="#">-21.330,000</a></td>
-                            <td>• New Acc 1</td>
-                            <td class="right"><a href="#">-8.758,890</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• VAT MOSS Payable</td>
-                            <td class="right"><a href="#">-16.687,180</a></td>
-                            <td class="right" colspan="2">Total&nbsp; &nbsp;-479.095,154<hr></td>
-                        </tr>
-
-                        <tr>
-                            <td >• VAT Payable <hr></td>
-                            <td class="right" ><a href="#">-67.545,420</a> <hr style="margin-left: -4vh;"></td>
-                            <td colspan="2" style="font-size: medium;">Cash <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td ></td>
-                            <td class="right">Total Current Liabilities &nbsp; &nbsp;-88.450,600 </td>
-                            <td>• Petty Cash</td>
-                            <td class="right"><a href="#">-1.057.645,419</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td ><span class="text-uppercase" style="font-size: medium;">Other Liabilities</span></td>
-                            <td class="border_right"></td>
-                            <td>• Undeposited Funds</td>
-                            <td class="right"><a href="#">-6.993,690</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Tag Adjustments <hr></td>
-                            <td class="right"><a href="#" >0.00</a> <hr style="margin-left: -4vh;"></td>
-                            <td class="right" colspan="2">Total&nbsp;&nbsp;-1.064.639,109 <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="right">Total Other Liabilities&nbsp;&nbsp;;0.00</td>
-                            <td colspan="2" style="font-size: medium;"> Other Current Assets <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="text-uppercase" style="font-size: large;">Equities</span></td>
-                            <td class="border_right"></td>
-                            <td>• Advance Tax</td>
-                            <td class="right"><a href="#">100,990</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td>• Current Year Earnings</td>
-                            <td class="right"><a href="#">-692.708,544</a></td>
-                            <td>• Employee Advance</td>
-                            <td class="right"><a href="#">-891,951</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Opening Balance Offset</td>
-                            <td class="right"><a href="#">143,000</a></td>
-                            <td>• Input VAT</td>
-                            <td class="right"><a href="#">16,670</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td>• Owner's Equity</td>
-                            <td class="right"><a href="#">449,540</a></td>
-                            <td>• Sales to Customers (Cash)</td>
-                            <td class="right"><a href="#">18.588,706</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>• Retained Earnings <hr></td>
-                            <td class="right"><span>-749.554,743</span><hr style="margin-left: -4vh;"></td>
-                            <td class="right" colspan="2">Total&nbsp;&nbsp;17.814,415 <hr> </td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="right">Total Equities&nbsp;&nbsp;-1.441.670,747</td>
-                            <td colspan="2" style="font-size: medium;">Other Assets <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>• Error ( Error ) </td>
-                            <td class="right"><a href="#">-100,990</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>• GoCardless Clearing</td>
-                            <td class="right"><a href="#">3,600</a></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>• GoCardless Clearing - EUR</td>
-                            <td class="right"><a href="#">0,001</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>• GoCardless Clearing - GBP</td>
-                            <td class="right"><a href="#">0,000</a></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>• Inventory Asset</td>
-                            <td class="right"><a href="#" >-10.502,000</a> </td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td class="right" colspan="2">Total&nbsp;&nbsp;-10.599,389 <hr></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td></td>
-                            <td class="right">Total Current Assets&nbsp;&nbsp;-1.536.519,237</td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td><span class="text-uppercase" style="font-size: large;">Fixed Assets</span></td>
-                            <td></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>
-                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
-                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
-                                Furniture and Equipment
-                            </td>
-                            <td class="right" id="furvalue"><a href="#">  5.197,890  </a></td>
-                            <td class="right" id="totalfur"><a href="#">  6.397,890  </a></td>
-                        </tr>
-
-                        <tr id="furdiv1">
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
-                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
-                                Fun ( 12 )
-                            </td>
-                            <td class="right" id="funvalue"><a href="#">  0,000  </a></td>
-                            <td class="right" id="totalfun"><a href="#"> 1.200,000  </a></td>
-                        </tr>
-
-                        <tr id="fundiv1">
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <i>bugfix account  ( 1200 ) </i>
-                            </td>
-                            <td class="right"><a href="#">1.200,000</a></td>
-                        </tr>
-
-                        <tr id="fundiv2">
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td></td>
-                            <td class="right">Total for Fun&nbsp;&nbsp;<a href="#">1.200,000</a></td>
-                        </tr>
-
-                        <tr id="furdiv2">
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td></td>
-                            <td class="right">Total for Furniture and Equipment&nbsp;&nbsp;<a href="#">6.397,890</a></td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td class="border_right"></td>
-                            <td></td>
-                            <td class="right">Total Fixed Assets&nbsp;&nbsp;6.397,890</td>
-                        </tr>
-
-                        <tr> 
-                            <td style="border-top: 1pt solid white; font-size: large;">TOTAL LIABILITIES &amp; EQUITIES</td>
-                            <td class="right" style="border-top: 1pt solid white; font-size: large;"><span>-1.530.121,347</span></td>
-                            <td style="border-top: 1pt solid white; font-size: large;">TOTAL ASSETS</td> 
-                            <td class="right" style="border-top: 1pt solid white; font-size: large;"><span>-1.530.121,347</span></td> 
-                        </tr>
-
-                    </tbody>
-                </table><br>
-                <div > 
-                    <p>
-                        <small>**Amount is displayed in your base currency</small>&nbsp;
-                        <span class="badge text-semibold badge-success d-inline">INR</span>
-                    </p>
-                </div> 
-            </div>
-        </div>
-    </div>
 </div>
 
 
@@ -441,6 +181,10 @@
         $("#furminus").show()
         $("#totalfur").hide()
         $("#furvalue").show()
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
+        $("#funplus").show()
+        $("#funminus").hide()
     }
 
     function closefur(){
@@ -450,6 +194,8 @@
         $("#furminus").hide()
         $("#totalfur").show()
         $("#furvalue").hide()
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
     }
 
     function openfun(){
@@ -471,7 +217,11 @@
     }
 
     function display() {
+        var printContents = document.getElementById("pdfdiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
         window.print();
+        document.body.innerHTML = originalContents;
     }
 
     function exportToPDF(){
@@ -494,8 +244,13 @@
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var nowDate = new Date(); 
-    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
-    document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
+    var formdate = "{{newdate}}";
+    
+    if(formdate){
+        document.getElementById('custom-dropdown-btn').innerHTML= formdate
+    }else{
+        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+    };
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format

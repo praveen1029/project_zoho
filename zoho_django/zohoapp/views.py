@@ -9662,31 +9662,33 @@ def cust_Attach_files(request,id):
 ############### BALANCE SHEET ################## 
 def load_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
-    banks = banking.objects.filter(user=request.user.id)
-    acc_bal = 0
-    for bank in banks:
-        acc_bal += bank.opening_bal
-    return render(request,'balance_sheet.html', {"banks":banks,"company":company,"acc_bal":acc_bal})
+    return render(request,'balance_sheet.html', {"company":company})
 
 def load_balance_sheet1(request):
-    return render(request,'balance_sheet1.html')
+    return render(request,'balance_sheet1.html', {"range":range(2,24),})
 
 def load_balance_sheet2(request):
-    return render(request,'balance_sheet2.html')
+    return render(request,'balance_sheet2.html', {"range":range(2,24)})
 
 def load_customize_report_bs(request):
     return render(request,'customize_report_bs.html', {"range":range(2,24)})
+
+def update_balancesheet(request):
+    if request.method=='POST':
+        newdate= request.POST.get('newdate', False)
+        return render(request,'balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
+
+def update_hbalancesheet(request):
+    if request.method=='POST':
+        newdate= request.POST.get('newdate', False)
+        return render(request,'horizontal_balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
 
     
 
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
-    banks = banking.objects.filter(user=request.user.id)
-    acc_bal = 0
-    for bank in banks:
-        acc_bal += bank.opening_bal
-    return render(request,'horizontal_balance_sheet.html', {"banks":banks,"company":company,"acc_bal":acc_bal})
+    return render(request,'horizontal_balance_sheet.html', {"company":company})
 
 def load_customize_report_hbs(request):
     return render(request,'customize_report_hbs.html')

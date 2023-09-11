@@ -147,11 +147,11 @@
                 </div>
             </div><br><br>
         </div>
-            <div class="col-md-6" >
+        <div class="col-md-6" >
             <button class="btn btn-light"><a class="text-dark customize" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class=" col-md-2 d-flex " >
-            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">Print</i></button>
+            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">&nbsp;Print</i></button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
                 <i class='fas fa-file-export'></i> Export
@@ -172,248 +172,258 @@
 
     <div class="row">
         <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh; width: 77vw;">
-        <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3>
-        <h1 style="text-align: center;">Horizontal Balance Sheet</h1>
-        <h6 style="text-align: center;">Basis: Cash</h6>
-        <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br><br>
-        <div class="table-responsive">
-            <div class="container-fluid">
-                <table class="table" style="border-color: white;">
-                    <tbody>
-                        <tr>
-                            <td style="vertical-align: top; width: 50%;">
-                                <div class="text-uppercase" style="text-align: center; color: grey; font-size: 3vh;">
-                                    Liabilities &amp; Equities  
-                                    <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
-                                </div>
-                                <div> 
-                                    <span class="text-uppercase" style="font-size: large;">Current Liabilities</span>
-                                    <div><br><br>
-                                        <div>
-                                            • Employee Reimbursements 
-                                            <a style="float: right;"href="#">0</a> 
-                                        </div><br>
-                                        <div>
-                                            • HMRC-PAYE (0 ) 
-                                            <a style="float: right;" href="#">0</a>
-                                        </div><br>
-                                        <div>
-                                            • Opening Balance Adjustments 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><br>
-                                        <div>
-                                            • Output VAT 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><br>
-                                        <div>
-                                            • Unearned Revenue 
-                                            <a style="float: right;" href="#">0</a>
-                                        </div><br>
-                                        <div>
-                                            • VAT MOSS Payable 
-                                            <a style="float: right;" href="#">0</a>
-                                        </div><br>
-                                        <div>
-                                            • VAT Payable 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><hr>
-                                        <div class="text-right text-uppercase " style=" float: right;"> 
-                                            Total Current Liabilities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
-                                        </div><br><br>
+            <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3>
+            <h1 style="text-align: center;">Horizontal Balance Sheet</h1>
+            <h6 style="text-align: center;">Basis: Cash</h6>
+            {% if newdate %}
+                <h6 style="text-align: center;">As of <span >&nbsp;{{newdate}}</span></h6> <br>
+            {% else %}
+                <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
+            {% endif %}
+            <div class="table-responsive">
+                <div class="container-fluid">
+                    <table class="table" style="border-color: white;">
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align: top; width: 50%;">
+                                    <div class="text-uppercase" style="text-align: center; color: grey; font-size: 3vh;">
+                                        Liabilities &amp; Equities  
+                                        <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
                                     </div>
-                                </div>
-                                <div> 
-                                    <span class="text-uppercase" style="font-size: large;"><br>Other Liabilities</span>
-                                    <div>
+                                    <div> 
+                                        <span class="text-uppercase" style="font-size: large;">Current Liabilities</span>
                                         <div><br><br>
-                                            • Tag Adjustments 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><hr>
-                                        <div class="text-right text-uppercase " style=" float: right;"> 
-                                            Total Other Liabilities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
-                                        </div><br><br><br>
-                                    </div>
-                                </div>
-                                <div> 
-                                    <span class="text-uppercase" style="font-size: large;">Equities</span>
-                                    <div>
-                                        <div><br><br>
-                                            • Current Year Earnings 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><br>
-                                        <div>
-                                            • Opening Balance Offset 
-                                            <a style="float: right;" href="#">0</a>
-                                        </div><br>
-                                        <div>
-                                            • Owner's Equity 
-                                            <a style="float: right;" href="#">0</a> 
-                                        </div><br>
-                                        <div>
-                                            • Retained Earnings <span style="float: right;">0</span>
-                                        </div><hr>
-                                        <div class="text-right text-uppercase " style=" float: right;"> 
-                                            Total Equities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                            <div>
+                                                • Employee Reimbursements 
+                                                <a style="float: right;"href="#">0</a> 
+                                            </div><br>
+                                            <div>
+                                                • HMRC-PAYE (0 ) 
+                                                <a style="float: right;" href="#">0</a>
+                                            </div><br>
+                                            <div>
+                                                • Opening Balance Adjustments 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><br>
+                                            <div>
+                                                • Output VAT 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><br>
+                                            <div>
+                                                • Unearned Revenue 
+                                                <a style="float: right;" href="#">0</a>
+                                            </div><br>
+                                            <div>
+                                                • VAT MOSS Payable 
+                                                <a style="float: right;" href="#">0</a>
+                                            </div><br>
+                                            <div>
+                                                • VAT Payable 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><hr>
+                                            <div class="text-right text-uppercase " style=" float: right;"> 
+                                                Total Current Liabilities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+                                            </div><br><br>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
+                                    <div> 
+                                        <span class="text-uppercase" style="font-size: large;"><br>Other Liabilities</span>
+                                        <div>
+                                            <div><br><br>
+                                                • Tag Adjustments 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><hr>
+                                            <div class="text-right text-uppercase " style=" float: right;"> 
+                                                Total Other Liabilities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                            </div><br><br><br>
+                                        </div>
+                                    </div>
+                                    <div> 
+                                        <span class="text-uppercase" style="font-size: large;">Equities</span>
+                                        <div>
+                                            <div><br><br>
+                                                • Current Year Earnings 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><br>
+                                            <div>
+                                                • Opening Balance Offset 
+                                                <a style="float: right;" href="#">0</a>
+                                            </div><br>
+                                            <div>
+                                                • Owner's Equity 
+                                                <a style="float: right;" href="#">0</a> 
+                                            </div><br>
+                                            <div>
+                                                • Retained Earnings <span style="float: right;">0</span>
+                                            </div><hr>
+                                            <div class="text-right text-uppercase " style=" float: right;"> 
+                                                Total Equities&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
 
-                            <td style=" border-left: 1pt solid white; width: 50%;">
-                                <div class="text-uppercase"  style="text-align: center; color: grey; font-size: 3vh;">
-                                    Assets
-                                    <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
-                                </div>
-                                <div> 
-                                    <span class="text-uppercase" style="font-size: large;">Current Assets</span><hr>
-                                    <div>
-                                        <div><br>
-                                            <div style="font-size: medium;"  > Bank </div><hr>
-                                            {% for bank in banks %}
+                                <td style=" border-left: 1pt solid white; width: 50%;">
+                                    <div class="text-uppercase"  style="text-align: center; color: grey; font-size: 3vh;">
+                                        Assets
+                                        <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
+                                    </div>
+                                    <div> 
+                                        <span class="text-uppercase" style="font-size: large;">Current Assets</span><hr>
+                                        <div>
+                                            <div><br>
+                                                <div style="font-size: medium;"  > Bank </div><hr>
                                                 <div>
-                                                    • {{bank.bnk_name }}
-                                                    <!-- <a style="float: right;" href="#">{{bank.opening_bal}}</a>  -->
+                                                    • Bank Acc 1
                                                     <a style="float: right;" href="#">0</a> 
                                                 </div><br>
-                                            {% endfor %}
+                                                <div>
+                                                    • Bank Of America
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • Eur Bank Acc
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • New Acc 1
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
 
-                                            {% if banks %}
                                                 <div class="text-right" style=" float: right;">
-                                                    {% if acc_ball  %}
-                                                        Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{acc_ball}}
-                                                    {% else %}
                                                         Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
-                                                    {% endif %}
                                                 </div><br><br>
                                                 <p style="border-bottom: 1px dotted white; "></p>
-                                            {% endif %}
 
-                                        </div>
-                                        <div>
-                                            <div style="font-size: medium;" > Cash </div><hr>
+                                            </div>
                                             <div>
-                                                • Petty Cash 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
+                                                <div style="font-size: medium;" > Cash </div><hr>
+                                                <div>
+                                                    • Petty Cash 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • Undeposited Funds 
+                                                    <a style="float: right;" href="#">0</a>
+                                                </div><br>
+                                                <div class="text-right" style=" float: right;">
+                                                    Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+                                                </div><br><br>
+                                                <p style="border-bottom: 1px dotted white; "></p>
+                                            </div>
                                             <div>
-                                                • Undeposited Funds 
-                                                <a style="float: right;" href="#">0</a>
-                                            </div><br>
-                                            <div class="text-right" style=" float: right;">
-                                                Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
-                                            </div><br><br>
-                                            <p style="border-bottom: 1px dotted white; "></p>
-                                        </div>
-                                        <div>
-                                            <div style="font-size: medium;" > Other Current Assets </div><br>
+                                                <div style="font-size: medium;" > Other Current Assets </div><br>
+                                                <div>
+                                                    • Advance Tax 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • Employee Advance 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • Input VAT 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • Sales to Customers (Cash) 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div class="text-right" style=" float: right;">
+                                                    Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+                                                </div><br><br>
+                                                <p style="border-bottom: 1px dotted white; "></p>
+                                            </div>
                                             <div>
-                                                • Advance Tax 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div>
-                                                • Employee Advance 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div>
-                                                • Input VAT 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div>
-                                                • Sales to Customers (Cash) 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div class="text-right" style=" float: right;">
-                                                Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
-                                            </div><br><br>
-                                            <p style="border-bottom: 1px dotted white; "></p>
-                                        </div>
-                                        <div>
-                                            <div style="font-size: medium;" > Other Assets </div><br>
-                                            <div>
-                                                • Error ( Error ) 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div>
-                                                • GoCardless Clearing 
-                                                <a style="float: right;" href="#">0</a> 
-                                            </div><br>
-                                            <div>
-                                                • GoCardless Clearing - EUR 
-                                                <a style="float: right;" href="#">0</a>
-                                            </div><br>
-                                            <div>
-                                                • GoCardless Clearing - GBP 
-                                                <a style="float: right;" href="#">0</a>
-                                            </div><br>
-                                            <div>
-                                                • Inventory Asset 
-                                                <a style="float: right;" href="#">0</a>
-                                            </div><br>
-                                            <div class="text-right" style="float: right;">
-                                                Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
-                                            </div><br><br>
-                                            <p style="border-bottom: 1px dotted white; "></p>
-                                        </div>
-                                        <div class="text-right text-uppercase " style=" float: right;"> 
-                                            Total Current Assets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
-                                        </div><br><br><br>
-                                    </div>
-                                </div>
-                                <div> 
-                                    <span class="text-uppercase" style="font-size: large;">Fixed Assets</span><br><br><br>
-                                    <div>
-                                        <div> 
-                                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
-                                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
-                                                Furniture and Equipment
-                                            <a href="#" style="float: right;" id="furvalue">  0 </a>
-                                            <a href="#" style="float: right;"  id="totalfur">  0 </a>
-                                        </div><br><br>
-                                        <div id="furdiv1"> 
-                                            &nbsp;&nbsp;&nbsp;&nbsp; 
-                                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
-                                            <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
-                                            Fun ( 0 ) 
-                                            <a style="float: right;" href="#" id="funvalue"> 0 </a>
-                                            <a style="float: right;" href="#" id="totalfun"> 0 </a>
-                                        </div><br>
-                                        <div id="fundiv1">
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            bugfix account (0) 
-                                            <a style="float: right;" href="#">0</a>
-                                        </div><br>
-                                        <div style=" float: right;" id="fundiv2"> 
-                                            Total for Fun
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                            <a href="#">0</a>
-                                        </div><br><br>
-                                        <div style=" float: right;" id="furdiv2"> 
-                                            Total for Furniture and Equipment
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                                            <a href="#" style="float: right;">0</a>
-                                        </div><br><br>
-                                        <div class="text-right text-uppercase " style=" float: right;"> 
-                                            Total Fixed Assets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                                <div style="font-size: medium;" > Other Assets </div><br>
+                                                <div>
+                                                    • Error ( Error ) 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • GoCardless Clearing 
+                                                    <a style="float: right;" href="#">0</a> 
+                                                </div><br>
+                                                <div>
+                                                    • GoCardless Clearing - EUR 
+                                                    <a style="float: right;" href="#">0</a>
+                                                </div><br>
+                                                <div>
+                                                    • GoCardless Clearing - GBP 
+                                                    <a style="float: right;" href="#">0</a>
+                                                </div><br>
+                                                <div>
+                                                    • Inventory Asset 
+                                                    <a style="float: right;" href="#">0</a>
+                                                </div><br>
+                                                <div class="text-right" style="float: right;">
+                                                    Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0
+                                                </div><br><br>
+                                                <p style="border-bottom: 1px dotted white; "></p>
+                                            </div>
+                                            <div class="text-right text-uppercase " style=" float: right;"> 
+                                                Total Current Assets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                            </div><br><br><br>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: large; width: 50%; border-top:1pt solid white;" > 
-                                TOTAL LIABILITIES &amp; EQUITIES <span style="float: right;"></span>
-                            </td>
-                            <td style="font-size: large; width: 50%; border-left: 1pt solid white; border-top:1pt solid white;" > 
-                                TOTAL ASSETS <span style="float: right;">0</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table><br>
-                <div>
-                    <p>
-                        <small>**Amount is displayed in your base currency</small>&nbsp;
-                        <span class="badge text-semibold badge-success d-inline">INR</span>
-                    </p>
+                                    <div> 
+                                        <span class="text-uppercase" style="font-size: large;">Fixed Assets</span><br><br><br>
+                                        <div>
+                                            <div> 
+                                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
+                                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
+                                                    Furniture and Equipment
+                                                <a href="#" style="float: right;" id="furvalue">  0 </a>
+                                                <a href="#" style="float: right;"  id="totalfur">  0 </a>
+                                            </div><br><br>
+                                            <div id="furdiv1"> 
+                                                &nbsp;&nbsp;&nbsp;&nbsp; 
+                                                &nbsp;&nbsp;&nbsp;&nbsp; 
+                                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
+                                                <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
+                                                Fun ( 0 ) 
+                                                <a style="float: right;" href="#" id="funvalue"> 0 </a>
+                                                <a style="float: right;" href="#" id="totalfun"> 0 </a>
+                                            </div><br>
+                                            <div id="fundiv1">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                bugfix account (0) 
+                                                <a style="float: right;" href="#">0</a>
+                                            </div><br>
+                                            <div style=" float: right;" id="fundiv2"> 
+                                                Total for Fun
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                                <a href="#">0</a>
+                                            </div><br><br>
+                                            <div style=" float: right;" id="furdiv2"> 
+                                                Total for Furniture and Equipment
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                                <a href="#" style="float: right;">0</a>
+                                            </div><br><br>
+                                            <div class="text-right text-uppercase " style=" float: right;"> 
+                                                Total Fixed Assets&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: large; width: 50%; border-top:1pt solid white;" > 
+                                    TOTAL LIABILITIES &amp; EQUITIES <span style="float: right;"></span>
+                                </td>
+                                <td style="font-size: large; width: 50%; border-left: 1pt solid white; border-top:1pt solid white;" > 
+                                    TOTAL ASSETS <span style="float: right;">0</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><br>
+                    <div>
+                        <p>
+                            <small>**Amount is displayed in your base currency</small>&nbsp;
+                            <span class="badge text-semibold badge-success d-inline">INR</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -429,9 +439,10 @@
         $("#furminus").show()
         $("#totalfur").hide()
         $("#furvalue").show()
-        $("#fundiv1").show()
-        $("#fundiv2").show()
-
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
+        $("#funplus").show()
+        $("#funminus").hide()
     }
 
     function closefur(){
@@ -464,7 +475,11 @@
     }
 
     function display() {
+        var printContents = document.getElementById("pdfdiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
         window.print();
+        document.body.innerHTML = originalContents;
     }
 
     function exportToPDF(){
@@ -487,7 +502,13 @@
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var nowDate = new Date(); 
-    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+    var formdate = "{{newdate}}";
+    
+    if(formdate){
+        document.getElementById('custom-dropdown-btn').innerHTML= formdate
+    }else{
+        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+    };
     document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
@@ -496,6 +517,7 @@
             
             // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
             document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+            document.getElementById('todaydate').textContent =  picker.toString().slice(4);
             document.getElementById('datepicker-container').style.display = 'none';
             document.getElementById('date-options').style.display = 'none';
         }

@@ -462,6 +462,8 @@ urlpatterns = [
     path('load_horizontal_balance_sheet/',views.load_horizontal_balance_sheet,name='load_horizontal_balance_sheet'),
     path('load_customize_report_bs/',views.load_customize_report_bs,name='load_customize_report_bs'),
     path('load_customize_report_hbs/',views.load_customize_report_hbs,name='load_customize_report_hbs'),
+    path('update_balancesheet/',views.update_balancesheet,name='update_balancesheet'),
+    path('update_hbalancesheet/',views.update_hbalancesheet,name='update_hbalancesheet'),
     
     
     
