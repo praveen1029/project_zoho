@@ -169,7 +169,22 @@
     .custom-dropdown.active .dropdown-content {
         display: block;
     }
+    #AddFilter:hover, #addmore_btn:hover{
+        background-color: transparent;
+    }
 
+     #remove_btn:hover,#filteracc:hover{
+        background-color: #f8f9fa;
+    }
+
+    #multi{
+        color: black;
+    }
+
+    #multi:hover{
+        background-color: #007bff;
+        color: white;
+    }
 
 </style>
 
@@ -189,7 +204,7 @@
     <div class="row row-container">
         <div class="col-md-3"><br>
             <div class="nav-item " id="general">
-                <a class="nav-link cursor-pointer active text-white" >General</a>
+                <a class="nav-link cursor-pointer active" style="background-color: grey; color: black;">General</a>
             </div> <br>
         </div>
 
@@ -251,15 +266,15 @@
                                     <label for="FilterAccounts" style="margin-top: 1vh; font-size: medium;">Filter Accounts</label>
                                 </div>
                                 <div class="col-md-9 custom-dropdown multi-line">
-                                    <button id="filteracc" onclick="toggleDropdown()">Select an option</button>
+                                    <a class="btn btn-light" id="filteracc" onclick="toggleDropdown()" style="width: 100%; height: 5vh; text-align: left;">Select an option</a>
                                     <div class="dropdown-content">
-                                        <div value="ZeroBalance" class="dropdown-option text-dark" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
+                                        <div value="ZeroBalance" id="multi" class="dropdown-option text-dark" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
                                             Accounts Without Zero Balance. <br> <span style="font-size: small;">Filter every account except the ones with zero-balance.</span>
                                         </div>
-                                        <div value="AlAcc" class="dropdown-option text-dark" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
+                                        <div value="AlAcc" id="multi" class="dropdown-option text-dark" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
                                             All Accounts. <br><span style="font-size: small;">Filter all accounts, including the ones with zero-balance.</span>
                                         </div>
-                                        <div value="WithTrans" class="dropdown-option text-dark" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
+                                        <div value="WithTrans" id="multi" class="dropdown-option text-dark" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
                                             Accounts With Transaction. <br> <span style="font-size: small;">Filter the transactions that were created during the specific period.</span>
                                         </div>
                                     </div>
@@ -273,7 +288,7 @@
                 <h6 style="color: aliceblue;" style="font-size: medium;">Advanced Filters</h6>
                 <p style="color: #eeebeb; font-size: medium;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
                 
-                <button id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</button>
+                <a id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</a>
                 <div class="row after-add-more" id="filterdiv" style="display: none;">           
                     <div class="col-md-4 form-group ">
                         <div class="form-group d-flex">
@@ -371,18 +386,18 @@
                     </div>
     
                     <div class="col-md-1">
-                        <button class="btn btn-light remove" style="height: 5vh;">-</button>&nbsp;
+                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;">-</a>&nbsp;
                     </div>
                 </div>
     
     
                 <div id="AddMore" style="display: none;">
-                    <button style="color: rgb(184, 121, 4);" class="btn add-more">+ Add More</button>
+                    <a style="color: rgb(184, 121, 4);" class="btn add-more" id="addmore_btn">+ Add More</a>
                 </div><br><br><br>
                 <div class="row">
                     <div class="col-md-4 d-flex">
-                        <button class="btn" style="width: 100%; background-color: #007bff; margin-right: 2vh;">Run Report</button>
-                        <a class="btn" href="{% url 'load_customize_report_hbs' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
+                        <button class="btn btn-success" style="width: 100%; background-color: transparent; margin-right: 2vh;">Run Report</button>
+                        <a class="btn btn-danger" href="{% url 'load_customize_report_hbs' %}" style="width: 100%; background-color: transparent;">Cancel</a>
                     </div>
                 </div>
             </form>

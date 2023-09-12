@@ -9678,13 +9678,6 @@ def update_balancesheet(request):
         newdate= request.POST.get('newdate', False)
         return render(request,'balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
 
-def update_hbalancesheet(request):
-    if request.method=='POST':
-        newdate= request.POST.get('newdate', False)
-        return render(request,'horizontal_balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
-
-    
-
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
@@ -9693,3 +9686,7 @@ def load_horizontal_balance_sheet(request):
 def load_customize_report_hbs(request):
     return render(request,'customize_report_hbs.html')
 
+def update_hbalancesheet(request):
+    if request.method=='POST':
+        newdate= request.POST.get('newdate', False)
+        return render(request,'horizontal_balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})

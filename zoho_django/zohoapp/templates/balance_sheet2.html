@@ -1,318 +1,588 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
+{% load static %}
 
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+    
 </head>
 
 <style>
-    .multiselect {
-        width: 200px;
-        position: relative;
-        user-select: none;
-        cursor: pointer;
+
+    tbody {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
     }
 
-    .dropdown-content {
+    tbody::-webkit-scrollbar { 
         display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 200px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
+    }
+    
+
+    .table tbody {
+        height:400px;
+        overflow:auto;
+        overflow-x:hidden;
+        display:block;
+        width:100%;
+        table-layout: fixed;
+    }
+    
+    tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
     }
 
-    .option {
-        border-bottom: 1px solid #ddd;
-        cursor: pointer;
+    thead {
+        display:table;
+        width:100%;
+        position: sticky; 
+        top: 0px; 
+        font-size: 5vh; 
+        color: white;
     }
 
-    .option:last-child {
-        border-bottom: none;
+
+    th,td {
+      text-align: left;
+      color: white;
+    }
+    
+    table,td {
+        border: none;
+        
     }
 
-    .form-group label {
-        color: beige;
-        margin-bottom: 5px;
+    table a{
+        color:white
     }
 
-    .column_button{
-        height: 4vh;
-        width: 5vh;
-        float: right;
-        margin-right: 2vh;
+    table a:hover{
+        color:rgb(184, 121, 4)
     }
 
-    .row-container a:hover{
-        background-color:#007bff;
-        color:#007bff;
+    table tr:hover{
+        background-color: rgba(29,31,33,255)
     }
 
-    .row-container a:active{
-        background-color: #007bff;
+    .allow-border{
+        border-bottom: 1pt dotted white;
     }
 
-    .ui-dateRangePicker {
-        background: #333;
-        border: 1px solid #555;
-        color: #EEE;
-    }
 
-    .myd{
-        display:none;
-    } 
-
-    .searchdiv{
-        display: list-item;	
-    }
-
-    .colborder{
-        border: 2px solid white;
-        height: 50vh;
-        overflow: hidden;
-    }
-
-    .searchdiv:hover{
-        background-color: rgba(29,31,33,255);
-    }
-
-    .accountdivr:hover, .codedivr:hover,.totaldivr:hover,.datedivr:hover{
-        background-color: rgba(29,31,33,255);
-    }
-
-    .outerborder{
-        padding: 20px;
-        border: 2px solid white;
-    }
-
-    .inputdiv{
-        background-color: white; 
-        color: #060606; 
-        width:39vh;
-        height: 5vh;
-        border-radius: 5px;
-        margin-bottom: 1vh;
-        padding-top: 1vh;
-        padding-left: 2vh;
-    }
-
-    .dropdown-content{
-        width:39vh;
-        border-radius: 10px; 
+    .dropdown-item:hover{
+        background-color: white;
     }
 
     #custom-dropdown-btn{
         background-color: white;
-        width: 61%;
-        height: 5vh;
+        width: 96%;
+        height: 4vh;
         text-align: left;
-    }
-
-    .dropdown-content .option:hover{
-        background-color: #007bff;
     }
 
     #date-options{
         background-color: white;
-        width: 61%;
+        width: 83%;
         margin-top: 1vh;
-        border-radius: 10px;
         margin-left: 4vh;
+        border-radius: 10px;
     }
 
     #date-options a{
         color: #060606;
     }
 
-
     .div-option:hover{
         background-color: #007bff;
     }
 
+    #date-options a:hover{
+        background-color: white;
+    }
+    .dropdown-item:hover{
+        background-color: white;
+    }
+
+    tr.detail-row,#furminus, #funminus,#totalfur,#totalfun{
+        display: none;
+    }
+
     .close-button{
-        font-size: 2vh;
-        margin-top: 1vh; 
+        font-size: 2vh; 
         font-weight: 100;
     }
 
-    .close-button:hover{
-        color: blue;
+    @media print{
+        body{
+            visibility: hidden;
+        }
+        #pdfdiv{
+            visibility: visible;
+            width: auto;
+            height: auto;
+            overflow: visible;  
+        }
+
+        table.baltable{
+            font-size: 20px;
+        }
     }
 
-    .multi-line {
-        position: relative;
-        width: 50%;
-    }
-
-    /* Style for the custom dropdown button */
-    .multi-line button {
-        width: 100%;
-        height: 5vh;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        text-align: left;
-    }
-
-    /* Style for the dropdown content */
-    .multi-line .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        width: 95%;
-        max-height: 150px;
-        overflow-y: auto;
-    }
-
-    /* Style for the dropdown options */
-    .multi-line .dropdown-option {
-        white-space: pre-line; /* Allows for line breaks in option text */
-        cursor: pointer;
-    }
-
-    /* Show the dropdown content when the button is clicked */
-    .custom-dropdown.active .dropdown-content {
-        display: block;
-    }
+  </style>
 
 
-</style>
-
-<div class="row" >
-    <div class="col-md-11">
-        <h1 class="text-uppercase">Customize Report</h1>
-    </div>
-    <div class="col-md-1">
-        <a href="{% url 'load_balance_sheet' %}" class="btn  btn-light close-button" >
-            X
-        </a>
-    </div>
-    </div><br><br>
-
-    <div class="row row-container">
-
-        <div class="col-md-9 myDiv" id="generaldiv" style="display: block;">
-            <form method='post' class='post-form' action="{% url 'update_bal' %}" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="custom-dropdown">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="dateRangePicker" style="font-size: medium;">Date Options</label>
-                        </div>
-                        <div class="col-md-9 d-flex">
-                            <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
-                            <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark">&nbsp;</a>
-                            <input type="text" name="newdate" id="date_input" style="display: none;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-9">
-                            <div id="datepicker-container" style="display: none;">
-                                <div id="date-options" style="display: none;">
-                                    <a class="date-option" href="#"><div class="div-option">Today</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">This Week</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">This Month</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">This Year</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
-                                    <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
-                                    <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><br><br>
-    
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="CompareWith" style="font-size: medium; margin-top: 1vh;">Compare With</label>
-                        </div>
-                        <div class="col-md-6">
-                            <select id="CompareWith" class="form-control text-dark bg-white">
-                                <option value="none" style="color: #060606;" selected >None</option>
-                                <option value="py" style="color: #060606;" >Previous Year(s)</option>
-                                <option value="pp" style="color: #060606;" >Previous Period(s)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div><br>
-    
-                <div id="showpy" class="myd form-group">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="Numofyears"  style="font-size: medium; margin-top: 1vh;">Number Of Year(s)</label>
-                        </div>
-                        <div class="col-md-6">
-                            <select id="Numofyears" class="form-control text-dark bg-white">
-                                <option value="1" style="color: #060606;" selected>1</option>
-                                {% for num in range %}
-                                    <option value="{{num}}" style="color: #060606;">{{num}}</option>
-                                {% endfor %}
-                            </select><br>
-                        </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="custom-dropdown">
+                <div class="d-flex">
+                    <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
+                    <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark" style="font-size: 1vw; height: 30px;"></a>
+                </div>
+                <div id="datepicker-container" style="display: none;">
+                    <div id="date-options" style="display: none;">
+                        <a class="date-option" href="#"><div class="div-option">Today</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Week</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Month</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
+                        <a class="date-option" href="#"><div class="div-option">This Year</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
+                        <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
+                        <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
                     </div>
                 </div>
-                <button onclick="temp()"></button>
-                <div id="demo"><p></p></div>
-                <div class="row">
-                    <div class="col-md-4 d-flex">
-                        <button class="btn"  style="width: 100%; background-color: #007bff; margin-right: 2vh;" >Run Report</button>
-                        <a class="btn" href="{% url 'load_customize_report_bs' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
-                    </div>
-                </div>
+            </div><br><br>
+        </div>
+        <div class="col-md-6" >
+            <button class="btn btn-light"><a class="text-dark" href="{% url 'load_customize_report_bs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class=" col-md-2 d-flex " >            
+            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
+                <i class="fa fa-print">&nbsp;Print</i>
+            </button>
+            <div class="dropdown-menu" id="printdrop" aria-labelledby="exportDropdown1">
+                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
+                <a class="dropdown-item" href="#" onclick="display()">Print</a>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
+                <i class='fas fa-file-export'></i> Export
+            </button>
+            <div class="dropdown-menu " aria-labelledby="exportDropdown2">
+                <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
             </div>
-            </form>
-            
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <div class="col-md-1">
+            <a href="{% url 'report_inventory_view' %}" class="btn btn-light close-button">
+               X 
+            </a>
+        </div>
     </div>
+
+    <div class="row " style="width: 77vw;">
+        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh;" >
+            <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3> 
+            <h1 style="text-align: center;">Balance Sheet</h1> 
+            <h6 style="text-align: center;">Basis: Cash</h6> 
+            <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
+            <div class="table-responsive">
+                <div class="container-fluid "> 
+                    <table class="table" >
+                        <thead>
+                            <tr >  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">ACCOUNT </th>  
+                                <th class="bg-dark" style="border-bottom: 2px solid white; font-size: 3vh;">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ACCOUNT CODE  
+                                </th> 
+                                <th class="bg-dark" id="tbhd" style=" border-bottom: 2px solid white; text-align: right; font-size: 3vh;">TOTAL  </th> 
+                            </tr>
+                        </thead> 
+                        <tbody> 
+                            <tr> 
+                                <td><span style="font-size: large;">ASSETS</span></td>
+                            </tr>  
+                            <tr>  
+                                <td style="font-size: medium;">Current Assets</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>  
+                                <td style="font-size: medium;">Bank</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Bank Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Bank Of America </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> Eur Bank Account </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+                            <tr> 
+                                <td><a href="#"> New Acc 1 </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr> 
+    
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0 </td> 
+                            </tr> 
+    
+                            <tr>  
+                                <td style="font-size: medium;">Cash</td> 
+                                <td>&nbsp;</td>
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Petty Cash </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td><a href="#"> Undeposited Funds </a> </td>
+                                <td></td>
+                                <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                            </tr>  
+                            <tr> 
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="allow-border" style="text-align: right;"> 0</td> 
+                            </tr> 
+                            <tr>  
+                                <td style="font-size: medium;">Other Current Assets</td> 
+                                <td>&nbsp;</td></tr>  
+                                <tr> 
+                                    <td><a href="#"> Advance Tax </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Advance </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Input VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Sales to Customers (Cash) </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td> 
+                                </tr> 
+                                <tr>  
+                                    <td style="font-size: medium;">Other Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Error </a> </td>
+                                    <td style="text-align: center;">Error</td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - EUR </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> GoCardless Clearing - GBP </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td> <a href="#"> Inventory Asset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border"> 0 </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">0 </td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Fixed Assets</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furplus" onclick="openfur()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="furminus" onclick="closefur()">-</a>
+                                        <a href="#"> Furniture and Equipment </a> 
+                                    </td>
+                                    <td></td>
+                                    <td style="text-align: right;" id="furvalue" style="display: none;"> <a href="#" >0</a> </td> 
+                                    <td style="text-align: right;" id="totalfur"> <a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funplus" onclick="openfun()">+</a>
+                                        <a class="btn" style="border: 2px solid white; font-size: x-small;" id="funminus" onclick="closefun()">-</a>
+                                        <a href="#"> Fun </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;" id="funvalue"><a href="#"> 0</a> </td> 
+                                    <td style="text-align: right;" id="totalfun"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv1" style="display: none;"> 
+                                    <td>  
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#"> bugfix account </a> 
+                                    </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr id="fundiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;" >
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total for Fun </strong> 
+                                    </td>
+                                    <td class="allow-border" style="text-align: center;">0</td>
+                                    <td style="text-align: right;" class="allow-border"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr id="furdiv2" style="display: none;"> 
+                                    <td class="allow-border" style="font-size: medium;">
+                                        <strong> &nbsp;&nbsp;&nbsp;&nbsp; Total for Furniture and Equipment </strong> 
+                                    </td>
+                                    <td class="allow-border"></td>
+                                    <td style="text-align: right;" class="allow-border" ><a href="#">0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Fixed Assets</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td> 
+                                </tr>      
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="font-size: medium; text-align: center;">TOTAL ASSETS</td>
+                                    <td  style="text-align: right;" class="allow-border"> 0</td> 
+                                </tr>
+                                <tr> 
+                                    <td><span style="font-size: large;">LIABILITIES &amp; EQUITIES</span></td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Current Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Employee Reimbursements </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> HMRC-PAYE </a> </td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Output VAT </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Unearned Revenue </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT MOSS Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td> 
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> VAT Payable </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#"> 0</a> </td> 
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Current Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0</td> 
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;"> Other Liabilities</td> 
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td><a href="#"> Tag Adjustments </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"><a href="#">0</a> </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Other Liabilities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td style="text-align: right;" class="allow-border">  0 </td>
+                                </tr>  
+                                <tr>  
+                                    <td style="font-size: medium;">Equities</td>
+                                    <td>&nbsp;</td>
+                                </tr>  
+                                <tr> 
+                                    <td>   <a href="#"> Current Year Earnings </a></td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#">0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Opening Balance Offset </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td><a href="#"> Owner's Equity </a> </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> <a href="#"> 0</a> </td>
+                                </tr> 
+                                <tr> 
+                                    <td style="font-size: medium;">  Retained Earnings  </td>
+                                    <td></td>
+                                    <td style="text-align: right;"> 0 </td>
+                                </tr>  
+                                <tr> 
+                                    <td class="allow-border" style="font-size: medium;"><b>Total Equities</b></td>
+                                    <td class="allow-border">&nbsp;</td>
+                                    <td class="allow-border" style="text-align: right;">  0 </td>
+                                </tr>   
+                                <tr> 
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: center; font-size: medium;">TOTAL LIABILITIES &amp; EQUITIES</td>
+                                    <td style="text-align: right; border-bottom: 1pt double white;"> 0</td>
+                                </tr>
+                            </tr>
+                        </tbody><br>
+                    </table>
+                    <div>
+                        <p>
+                            <small>**Amount is displayed in your base currency</small>&nbsp;
+                            <span class="badge text-semibold badge-success d-inline">INR</span>
+                        </p>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div><br><br>
 </div>
 
 <script>
 
-    let selectedOption = "";
-
-    function toggleDropdown() {
-        const dropdown = document.querySelector('.multi-line');
-        dropdown.classList.toggle('active');
+function openfur(){
+        $("#furdiv1").show()
+        $("#furdiv2").show()
+        $("#furplus").hide()
+        $("#furminus").show()
+        $("#totalfur").hide()
+        $("#furvalue").show()
+        $("#totalfun").show()
+        $("#funvalue").hide()
     }
 
-    function selectOption(optionText) {
-        selectedOption = optionText;
-        var index = selectedOption.indexOf("\n");  // Gets the first index where a space occours
-        var optionstring = selectedOption.slice(0, index);
-        document.querySelector('#filteracc').textContent = optionstring;
-        toggleDropdown();
+    function closefur(){
+        $("#furdiv1").hide()
+        $("#furdiv2").hide()
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
+        $("#furplus").show()
+        $("#furminus").hide()
+        $("#totalfur").show()
+        $("#furvalue").hide()
+    }
+
+    function openfun(){
+        $("#fundiv1").show()
+        $("#fundiv2").show()
+        $("#funplus").hide()
+        $("#funminus").show()
+        $("#totalfun").hide()
+        $("#funvalue").show()
+    }
+
+    function closefun(){
+        $("#fundiv1").hide()
+        $("#fundiv2").hide()
+        $("#funplus").show()
+        $("#funminus").hide()
+        $("#totalfun").show()
+        $("#funvalue").hide()
+    }
+
+    function display() {
+        var printContents = document.getElementById("pdfdiv").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        $('#exportDropdown1').dropdown()
+    }
+
+    function exportToPDF(){
+        var content = document.getElementById('pdfdiv');
+        html2pdf()
+        .from(content)
+        .save('report.pdf')
+    }
+
+    // Function to save Excel using XLSX
+    function exportToExcel() {
+        var table = document.querySelector('table');
+        var ws = XLSX.utils.table_to_sheet(table);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'report.xlsx');
     }
 
     // Initialize Pikaday date picker
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var nowDate = new Date(); 
-    document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
-    document.getElementById('date_input').value= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format
         onSelect: function(date) {
             
-        // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
-        document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
-        document.getElementById('date_input').value=  picker.toString();
-        document.getElementById("demo").innerHTML=document.getElementById("date_input").value
-        document.getElementById('datepicker-container').style.display = 'none';
-        document.getElementById('date-options').style.display = 'none';
+            // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
+            document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
+            document.getElementById('tbhd').innerHTML = picker.toString().slice(4)  
+            document.getElementById('tbhdp').innerHTML = picker.toString().slice(4)  
+            document.getElementById('todaydate').innerHTML = picker.toString().slice(4) 
+            document.getElementById('todaydatep').innerHTML = picker.toString().slice(4) 
+            document.getElementById('datepicker-container').style.display = 'none';
+            document.getElementById('date-options').style.display = 'none';
         }
     });
-
-    
 
     // Handle custom dropdown button click
     const customDropdownBtn = document.getElementById('custom-dropdown-btn');
@@ -339,7 +609,7 @@
 
     // Add date option handlers
     const dateOptionButtons = document.querySelectorAll('.date-option');
-
+    
     dateOptionButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             const optionText = button.textContent;
@@ -438,285 +708,19 @@
         });
     });
 
-    function multiselectfun(mul_id){
-        //multiselect
-        var mul_val = mul_id.slice(-1);
-        const multiselect = document.getElementById("multiselect"+mul_val);
-        const dropdown = document.getElementById('dropdown'+mul_val);
-
-        multiselect.addEventListener('click', () => {
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        });
-
-        const options = document.querySelectorAll('.option');
-        options.forEach(option => {
-            option.addEventListener('click', () => {
-                option.classList.toggle('selected');
-                const selectedItems = Array.from(options)
-                .filter(option => option.classList.contains('selected'))
-                .map(option => option.dataset.value);
-                i=0
-                if(selectedItems.length > 0){
-                    document.getElementById("inputdiv"+mul_val).innerHTML = selectedItems.join(', ')
-                }else{
-                    document.getElementById("inputdiv"+mul_val).innerHTML = ' '
-                }
-            });
-        });
-
-        // Close the dropdown when clicking outside of it
-        window.addEventListener('click', (event) => {
-            if (!multiselect.contains(event.target)) {
-                dropdown.style.display = 'none';
-            }
-        });
+    var formdate = "{{newdate}}";
+    if(formdate){
+        document.getElementById('custom-dropdown-btn').innerHTML= formdate
+        document.getElementById('tbhd').innerHTML= formdate
+        document.getElementById('tbhdp').innerHTML= formdate
+        document.getElementById('todaydate').innerHTML= formdate
+        document.getElementById('todaydatep').innerHTML= formdate
+    }else{
+        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+        document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
+        document.getElementById('todaydatep').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
     };
 
-
-    function search_here() {
-        let input = document.getElementById('searchbar').value
-        input=input.toLowerCase();
-        let x = document.getElementsByClassName('searchdiv');
-        
-        for (i = 0; i < x.length; i++) {
-            if (!x[i].innerHTML.toLowerCase().includes(input)) {
-                x[i].style.display="none";
-            }
-            else {
-                x[i].style.display="list-item";				
-            }
-        }
-    }
-
-    $(document).ready(function(){
-        $("#account").click(function(){
-            $("#accountdiv").toggle();
-            $(".accountdivr").toggle();
-        });
-        $("#minaccount").click(function(){
-            $(".accountdivr").toggle();
-            $("#accountdiv").toggle();
-        });
-
-        $("#code").click(function(){
-            $("#codediv").toggle();
-            $(".codedivr").toggle();
-        });
-        $("#mincode").click(function(){
-            $(".codedivr").toggle();
-            $("#codediv").toggle();
-        });
-
-        $("#total").click(function(){
-            $("#totaldiv").toggle();
-            $(".totaldivr").toggle();
-        });
-        $("#mintotal").click(function(){
-            $(".totaldivr").toggle();
-            $("#totaldiv").toggle();
-        });
-
-        $("#date").click(function(){
-            $("#datediv").toggle();
-            $(".datedivr").toggle();
-        });
-        $("#mindate").click(function(){
-            $(".datedivr").toggle();
-            $("#datediv").toggle();
-        });
-    });
-
-    function selectfield(sel,sel_id){
-        var id_val = sel_id.slice(-1);
-        if(sel=="project"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_proj_"+id_val).show();
-            $("#final_comparator_dep_"+id_val).hide();
-            $("#final_comparator_seg_"+id_val).hide();
-            $("#final_comparator_prod_"+id_val).hide();
-            $("#showproject"+id_val).show();
-            $("#showdepartment"+id_val).hide();
-            $("#showsegment"+id_val).hide();
-            $("#showproduct"+id_val).hide();
-            projisempty("is",id_val)
-
-        }
-
-        if(sel=="department"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_proj_"+id_val).hide();
-            $("#final_comparator_dep_"+id_val).show();
-            $("#final_comparator_seg_"+id_val).hide();
-            $("#final_comparator_prod_"+id_val).hide();
-            $("#showproject"+id_val).hide();
-            $("#showdepartment"+id_val).show();
-            $("#showsegment"+id_val).hide();
-            $("#showproduct"+id_val).hide();
-            depisempty("is",id_val)
-        }
-        
-        if(sel=="segments"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_proj_"+id_val).hide();
-            $("#final_comparator_dep_"+id_val).hide();
-            $("#final_comparator_seg_"+id_val).show();
-            $("#final_comparator_prod_"+id_val).hide();
-            $("#showproject"+id_val).hide();
-            $("#showdepartment"+id_val).hide();
-            $("#showsegment"+id_val).show();
-            $("#showproduct"+id_val).hide();
-            segisempty("is",id_val)
-        }
-        
-        if(sel=="products"){
-            $("#initial_comparator_"+id_val).hide();
-            $("#final_comparator_proj_"+id_val).hide();
-            $("#final_comparator_dep_"+id_val).hide();
-            $("#final_comparator_seg_"+id_val).hide();
-            $("#final_comparator_prod_"+id_val).show();
-            $("#showproject"+id_val).hide();
-            $("#showdepartment"+id_val).hide();
-            $("#showsegment"+id_val).hide();
-            $("#showproduct"+id_val).show();
-            prodisempty("is",id_val)
-        }
-    }
-
-    function projisempty(proj,proj_id){
-        var proj_val = proj_id.slice(-1);
-        if(proj=="empty"){
-            $("#showproject"+proj_val).hide();
-            $("#ifempty_"+proj_val).show();
-        }
-        else{
-            $("#showproject"+proj_val).show();
-            $("#ifempty_"+proj_val).hide();
-        }
-    }
-
-    function depisempty(dep,dep_id){
-        var dep_val = dep_id.slice(-1);
-        if(dep=="empty"){
-            $("#showdepartment"+dep_val).hide();
-            $("#ifempty_"+dep_val).show();
-        }
-        else{
-            $("#showdepartment"+dep_val).show();
-            $("#ifempty_"+dep_val).hide();
-        }
-    }
-
-    function segisempty(seg,seg_id){
-        var seg_val = seg_id.slice(-1);
-        if(seg=="empty"){
-            $("#showsegment"+seg_val).hide();
-            $("#ifempty_"+seg_val).show();
-        }
-        else{
-            $("#showsegment"+seg_val).show();
-            $("#ifempty_"+seg_val).hide();
-        }
-    }
-
-    function prodisempty(prod,prod_id){
-        var prod_val = prod_id.slice(-1);
-        if(prod=="empty"){
-            $("#showproduct"+prod_val).hide();
-            $("#ifempty_"+prod_val).show();
-        }
-        else{
-            $("#showproduct"+prod_val).show();
-            $("#ifempty_"+prod_val).hide();
-        }
-    }
-
-
-
-    $(document).ready(function(){
-        $('#CompareWith').on('change', function(){
-            var demovalue = $(this).val(); 
-            if (demovalue=="py"){
-                $("#showpy").show()
-                $("#showpp").hide()
-            }else{
-                $("#showpp").show()
-                $("#showpy").hide()
-            }
-        });
-    });
-
-
-    $(document).ready(function(){
-        $("#AddFilter").click(function(){
-            $("#AddFilter").hide();
-            $("#AddMore").show();
-            $("#filterdiv").show();
-
-        });
-      });
-
-    $(document).ready(function() {
-        $("body").on("click",".add-more",function(){ 
-            var length = $(".after-add-more").length
-            var html = $(".after-add-more").first().clone();      
-            $(".after-add-more").last().after(html);
-            html.find("#field_0").attr("id","field_"+length)
-            html.find("#initial_comparator_0").attr("id","initial_comparator_"+length)
-            html.find("#showproject0").attr("id","showproject"+length)
-            html.find("#showdepartment0").attr("id","showdepartment"+length)
-            html.find("#showsegment0").attr("id","showsegment"+length)
-            html.find("#showproduct0").attr("id","showproduct"+length)
-            html.find("#multiselect0").attr("id","multiselect"+length)
-            html.find("#dropdown0").attr("id","dropdown"+length)
-            html.find("#inputdiv0").attr("id","inputdiv"+length)
-            html.find("#final_comparator_proj_0").attr("id","final_comparator_proj_"+length)
-            html.find("#final_comparator_dep_0").attr("id","final_comparator_dep_"+length)
-            html.find("#final_comparator_seg_0").attr("id","final_comparator_seg_"+length)
-            html.find("#final_comparator_prod_0").attr("id","final_comparator_prod_"+length)
-            html.find("#last_comparator_proj_0").attr("id","last_comparator_proj_"+length)
-            html.find("#last_comparator_dep_0").attr("id","last_comparator_dep_"+length)
-            html.find("#last_comparator_seg_0").attr("id","last_comparator_seg_"+length)
-            html.find("#last_comparator_prod_0").attr("id","last_comparator_prod_"+length)
-            html.find("#ifempty_0").attr("id","ifempty_"+length)
-
-            $("#ifempty_"+length).hide();
-            $("#showproject"+length).hide();
-            $("#showproject"+length).hide();
-            $("#showdepartment"+length).hide();
-            $("#showsegment"+length).hide();
-            $("#showproduct"+length).hide();
-            document.getElementById("inputdiv"+length).innerHTML=" "
-        });
-
-        $("body").on("click",".remove",function(){ 
-
-            var length = $(".after-add-more").length
-            if(length==1){
-                $("#AddFilter").show();
-                $("#AddMore").hide();
-                $("#filterdiv").hide();
-            }else{
-                $(this).parents(".after-add-more").remove();
-            }
-        });
-    });
-
-    function general(){
-        $("#generaldiv").show()
-        $("#columndiv").hide()
-        document.getElementById("general_colour").style.backgroundColor = "#007bff";
-        document.getElementById("column_colour").style.backgroundColor = "transparent";
-    }
-
-    function column(){
-        $("#generaldiv").hide()
-        $("#columndiv").show()
-        document.getElementById("general_colour").style.backgroundColor = "transparent";
-        document.getElementById("column_colour").style.backgroundColor = "#007bff";
-    }
-
 </script>
-
-
 
 {% endblock %}

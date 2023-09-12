@@ -41,12 +41,12 @@
         border-right: 1pt solid white;
     }
 
-    a:hover{
+    table a:hover{
         background-color:#007bff;
         color:#007bff;
     }
 
-    a:active{
+    table a:active{
         background-color: #007bff;
     }
 
@@ -120,7 +120,6 @@
     .customize:hover{
         background-color: transparent;
     }
-
 </style>
 
 <div class="container-fluid">
@@ -151,13 +150,17 @@
             <button class="btn btn-light"><a class="text-dark customize" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class=" col-md-2 d-flex " >
-            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">&nbsp;Print</i></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
+            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
+                <i class="fa fa-print">&nbsp;Print</i>
+            </button>
+            <div class="dropdown-menu" id="printdrop" aria-labelledby="exportDropdown1">
+                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
+                <a class="dropdown-item" href="#" onclick="display()">Print</a>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
                 <i class='fas fa-file-export'></i> Export
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="exportDropdown">
-                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
+            <div class="dropdown-menu " aria-labelledby="exportDropdown2">
                 <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
             </div>
         </div>
@@ -170,16 +173,12 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh; width: 77vw;">
+    <div class="row" style="width: 77vw;">
+        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh;">
             <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3>
             <h1 style="text-align: center;">Horizontal Balance Sheet</h1>
             <h6 style="text-align: center;">Basis: Cash</h6>
-            {% if newdate %}
-                <h6 style="text-align: center;">As of <span >&nbsp;{{newdate}}</span></h6> <br>
-            {% else %}
-                <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
-            {% endif %}
+            <h6 style="text-align: center;">As of <span id="todaydate"></span></h6> <br>
             <div class="table-responsive">
                 <div class="container-fluid">
                     <table class="table" style="border-color: white;">
@@ -480,6 +479,8 @@
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
+        $('#exportDropdown1').dropdown()
+
     }
 
     function exportToPDF(){
@@ -502,14 +503,7 @@
     const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var nowDate = new Date(); 
-    var formdate = "{{newdate}}";
-    
-    if(formdate){
-        document.getElementById('custom-dropdown-btn').innerHTML= formdate
-    }else{
-        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
-    };
-    document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
+
     const picker = new Pikaday({
         field: document.getElementById('datepicker'),
         format: 'MM/DD/YYYY', // You can change the date format
@@ -646,6 +640,15 @@
             document.getElementById('date-options').style.display = 'none';
         });
     });
+
+    var formdate = "{{newdate}}";
+    if(formdate){
+        document.getElementById('custom-dropdown-btn').innerHTML= formdate
+        document.getElementById('todaydate').innerHTML= formdate
+    }else{
+        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
+        document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 
+    };
 
 </script>
 

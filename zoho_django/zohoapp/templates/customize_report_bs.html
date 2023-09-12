@@ -47,12 +47,13 @@
     }
 
     .row-container a:hover{
-        background-color:#007bff;
-        color:#007bff;
+        background-color:grey;
+        color:black;
     }
 
     .row-container a:active{
-        background-color: #007bff;
+        background-color: grey;
+        color: #060606;
     }
 
     .ui-dateRangePicker {
@@ -138,9 +139,6 @@
         font-weight: 100;
     }
 
-    .close-button:hover{
-        color: blue;
-    }
 
     .multi-line {
         position: relative;
@@ -180,6 +178,22 @@
         display: block;
     }
 
+    #AddFilter:hover, #addmore_btn:hover{
+        background-color: transparent;
+    }
+
+     #remove_btn:hover,#filteracc:hover{
+        background-color: #f8f9fa;
+    }
+
+    #multi{
+        color: black;
+    }
+
+    #multi:hover{
+        background-color: #007bff;
+        color: white;
+    }
 
 </style>
 
@@ -196,12 +210,12 @@
 
     <div class="row row-container">
         <div class="col-md-3"><br>
-            <div class="nav-item" id="general_colour" style="background-color: #007bff">
-                <a class="nav-link cursor-pointer text-white" href="#" onclick="general()">General</a>
+            <div class="nav-item" id="general_colour" style="background-color: grey">
+                <a class="nav-link cursor-pointer" id="general_id" href="#" onclick="general()"  style="color: black;">General</a>
             </div><hr> 
     
             <div class="nav-item" id="column_colour">
-                <a class="nav-link cursor-pointer text-white" href="#" onclick="column()">Show / Hide Columns</a>
+                <a class="nav-link cursor-pointer" href="#" id="column_id" onclick="column()"  style="color: white;" >Show / Hide Columns</a>
             </div><br>
         </div>
 
@@ -246,7 +260,7 @@
                             <label for="CompareWith" style="font-size: medium; margin-top: 1vh;">Compare With</label>
                         </div>
                         <div class="col-md-6">
-                            <select id="CompareWith" class="form-control text-dark bg-white">
+                            <select id="CompareWith" class="form-control text-dark">
                                 <option value="none" style="color: #060606;" selected>None</option>
                                 <option value="py" style="color: #060606;" >Previous Year(s)</option>
                                 <option value="pp" style="color: #060606;" >Previous Period(s)</option>
@@ -311,15 +325,15 @@
                                 <label for="FilterAccounts" style="margin-top: 1vh; font-size: medium;">Filter Accounts</label>
                             </div>
                             <div class="col-md-9 custom-dropdown multi-line">
-                                <button id="filteracc" onclick="toggleDropdown()">Select an option</button>
+                                <a class="btn btn-light" id="filteracc" onclick="toggleDropdown()" style="width: 100%; height: 5vh; text-align: left;">Select an option</a >
                                 <div class="dropdown-content">
-                                    <div value="ZeroBalance" class="dropdown-option text-dark" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
+                                    <div value="ZeroBalance" id="multi" class="dropdown-option" onclick="selectOption('Accounts With Zero Balance. \n Filter every account except the ones with zero-balance.')">
                                         Accounts Without Zero Balance. <br> <span style="font-size: small;">Filter every account except the ones with zero-balance.</span>
                                     </div>
-                                    <div value="AlAcc" class="dropdown-option text-dark" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
+                                    <div value="AlAcc"id="multi" class="dropdown-option" onclick="selectOption('All Accounts.\n Filter all accounts, including the ones with zero-balance.')">
                                         All Accounts. <br><span style="font-size: small;">Filter all accounts, including the ones with zero-balance.</span>
                                     </div>
-                                    <div value="WithTrans" class="dropdown-option text-dark" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
+                                    <div value="WithTrans" id="multi" class="dropdown-option" onclick="selectOption('Accounts With Transaction. \n Filter transactions created during the specific period.')">
                                         Accounts With Transaction. <br> <span style="font-size: small;">Filter the transactions that were created during the specific period.</span>
                                     </div>
                                 </div>
@@ -332,7 +346,7 @@
                 <h6 style="color: aliceblue; font-size: medium;">Advanced Filters</h6>
                 <p style="color: #eeebeb; font-size: medium;">Use advanced filters to filter the report based on the fields of Projects, Reporting Tag.</p>
                 
-                <button id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</button>
+                <a id="AddFilter" style="color: rgb(184, 121, 4);" class="btn" style="display: block;">+ Add Filter</a>
                 <div class="row after-add-more" id="filterdiv" style="display: none;">           
                     <div class="col-md-4 form-group ">
                         <div class="form-group d-flex">
@@ -429,26 +443,26 @@
                     </div>
     
                     <div class="col-md-1">
-                        <button class="btn btn-light remove" style="height: 5vh;">-</button>&nbsp;
+                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;">-</a>&nbsp;
                     </div>
                 </div>
     
     
                 <div id="AddMore" style="display: none;">
-                    <button style="color: rgb(184, 121, 4);" class="btn add-more">+ Add More</button>
+                    <a style="color: rgb(184, 121, 4);" class="btn add-more" id="addmore_btn">+ Add More</a>
                 </div><br><br>
                 <div class="row">
                     <div class="col-md-4 d-flex">
-                        <button class="btn" style="width: 100%; background-color: #007bff; margin-right: 2vh;">Run Report</button>
-                        <a class="btn" href="{% url 'load_customize_report_bs' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
+                        <button class="btn btn-success" style="width: 100%;  margin-right: 2vh; background-color: transparent;">Run Report</button>
+                        <a class="btn btn-danger" href="{% url 'load_customize_report_bs' %}" style="width: 100%; background-color: transparent;">Cancel</a>
                     </div>
                 </div>
             </div>
             
             </form>
             
-        <div class="col-md-9 myDiv" id="columndiv" style="display: none;"><br><br>
-            <div class="row" style="height: 100%;;">
+        <div class="col-md-9 myDiv" id="columndiv" style="display: none;">
+            <div class="row" style="height: 100%;">
                 <div class="col-md-5" id="avlcol">
                     <div class="outerborder bg-dark">
                         <h3 class="text-uppercase"  style="text-align: center; color: grey;">Available Columns</h3>
@@ -519,8 +533,8 @@
             </div>
             <div class="row">
                 <div class="col-md-4 d-flex">
-                    <button class="btn" style="width: 100%; background-color: #007bff; margin-right: 2vh;">Run Report</button>
-                    <a class="btn" href="{% url 'load_customize_report_bs' %}" style="width: 100%; background-color: #dc3545;">Cancel</a>
+                    <button class="btn btn-success" style="width: 100%; background-color: transparent; margin-right: 2vh;">Run Report</button>
+                    <a class="btn btn-danger" href="{% url 'load_customize_report_bs' %}" style="width: 100%; background-color: transparent;">Cancel</a>
                 </div>
             </div>
         </div>
@@ -955,7 +969,9 @@
     function general(){
         $("#generaldiv").show()
         $("#columndiv").hide()
-        document.getElementById("general_colour").style.backgroundColor = "#007bff";
+        document.getElementById("general_colour").style.backgroundColor = "grey";
+        document.getElementById("general_id").style.color = "black";
+        document.getElementById("column_id").style.color = "white";
         document.getElementById("column_colour").style.backgroundColor = "transparent";
     }
 
@@ -963,7 +979,9 @@
         $("#generaldiv").hide()
         $("#columndiv").show()
         document.getElementById("general_colour").style.backgroundColor = "transparent";
-        document.getElementById("column_colour").style.backgroundColor = "#007bff";
+        document.getElementById("general_id").style.color = "white";
+        document.getElementById("column_id").style.color = "black";
+        document.getElementById("column_colour").style.backgroundColor = "grey";
     }
 
 </script>
