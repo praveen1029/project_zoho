@@ -211,17 +211,18 @@
     <div class="row row-container">
         <div class="col-md-3"><br>
             <div class="nav-item" id="general_colour" style="background-color: grey">
-                <a class="nav-link cursor-pointer" id="general_id" href="#" onclick="general()"  style="color: black;">General</a>
+                <a class="nav-link cursor-pointer" id="general_id" href="#" onclick="general()"  style="color: white; font-size: 3vh;">General</a>
             </div><hr> 
     
             <div class="nav-item" id="column_colour">
-                <a class="nav-link cursor-pointer" href="#" id="column_id" onclick="column()"  style="color: white;" >Show / Hide Columns</a>
+                <a class="nav-link cursor-pointer" href="#" id="column_id" onclick="column()"  style="color: white; font-size: 3vh;" >Show / Hide Columns</a>
             </div><br>
         </div>
 
         <div class="col-md-9 myDiv" id="generaldiv" style="display: block;">
             <form method='post' class='post-form' action="{% url 'update_balancesheet' %}" enctype="multipart/form-data">
                 {% csrf_token %}
+                
                 <div class="custom-dropdown">
                     <div class="row">
                         <div class="col-md-3">
@@ -253,6 +254,34 @@
                         </div>
                     </div>
                 </div><br><br>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="comapny" style="font-size: medium; margin-top: 1vh;">Select Company</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="comapny" class="form-control text-dark bg-white">
+                                <option value="#" style="color: #060606;" selected hidden></option>
+                                <option value="{{company.company_name}}" style="color: #060606;">{{company.company_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="ReportBasis" style="font-size: medium; margin-top: 1vh;" >Report Basis</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="ReportBasis" class="form-control text-dark bg-white">
+                                <option value="#" style="color: #060606;" selected hidden></option>
+                                <option value="Accrual" style="color: #060606;">Accrual</option>
+                                <option value="Cash" style="color: #060606;">Cash</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><br>
     
                 <div class="form-group">
                     <div class="row">
@@ -302,21 +331,6 @@
                         </div>
                     </div>
                 </div>
-    
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="ReportBasis" style="font-size: medium; margin-top: 1vh;" >Report Basis</label>
-                        </div>
-                        <div class="col-md-6">
-                            <select id="ReportBasis" class="form-control text-dark bg-white">
-                                <option value="#" style="color: #060606;" selected hidden></option>
-                                <option value="Accrual" style="color: #060606;">Accrual</option>
-                                <option value="Cash" style="color: #060606;">Cash</option>
-                            </select>
-                        </div>
-                    </div>
-                </div><br>
     
                 <div class="form-group">
                     <div class="form-group">
@@ -443,7 +457,7 @@
                     </div>
     
                     <div class="col-md-1">
-                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;">-</a>&nbsp;
+                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;"><span style="font-size: 3vh;">-</span></a>&nbsp;
                     </div>
                 </div>
     
@@ -970,8 +984,6 @@
         $("#generaldiv").show()
         $("#columndiv").hide()
         document.getElementById("general_colour").style.backgroundColor = "grey";
-        document.getElementById("general_id").style.color = "black";
-        document.getElementById("column_id").style.color = "white";
         document.getElementById("column_colour").style.backgroundColor = "transparent";
     }
 
@@ -979,8 +991,6 @@
         $("#generaldiv").hide()
         $("#columndiv").show()
         document.getElementById("general_colour").style.backgroundColor = "transparent";
-        document.getElementById("general_id").style.color = "white";
-        document.getElementById("column_id").style.color = "black";
         document.getElementById("column_colour").style.backgroundColor = "grey";
     }
 

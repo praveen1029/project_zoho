@@ -120,6 +120,7 @@
     .customize:hover{
         background-color: transparent;
     }
+
 </style>
 
 <div class="container-fluid">
@@ -146,35 +147,34 @@
                 </div>
             </div><br><br>
         </div>
-        <div class="col-md-6" >
+        <div class="col-md-5" >
             <button class="btn btn-light"><a class="text-dark customize" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class=" col-md-2 d-flex " >
-            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
+        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class=" col-md-1 d-flex" >            
+            <button class="btn btn-light" type="button" style="height: 30px;" onclick="display()">
                 <i class="fa fa-print">&nbsp;Print</i>
             </button>
-            <div class="dropdown-menu" id="printdrop" aria-labelledby="exportDropdown1">
-                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
-                <a class="dropdown-item" href="#" onclick="display()">Print</a>
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="col-md-1 d-flex">
+            <button class="btn btn-light" type="button" style="height: 30px;" onclick="exportToPDF()">
+                <i class="fa fa-file-pdf-o" aria-hidden="true">&nbsp;PDF</i>
+            </button>
+        </div>
+        <div class="col-md-2 d-flex">
             <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
                 <i class='fas fa-file-export'></i> Export
             </button>
             <div class="dropdown-menu " aria-labelledby="exportDropdown2">
                 <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
-            </div>
-        </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <div class="col-md-1">
-            <a href="{% url 'report_inventory_view' %}" class="btn btn-light close-button">
-               X 
-            </a>
+            </div>&nbsp;&nbsp;&nbsp;
+            <a href="{% url 'report_inventory_view' %}" class="btn btn-light close-button" style="height: 30px;">
+                X 
+             </a>
         </div>
     </div>
 
-    <div class="row" style="width: 77vw;">
-        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh;">
+    <div class="row">
+        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh; width: 77vw;">
             <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3>
             <h1 style="text-align: center;">Horizontal Balance Sheet</h1>
             <h6 style="text-align: center;">Basis: Cash</h6>
@@ -185,7 +185,7 @@
                         <tbody>
                             <tr>
                                 <td style="vertical-align: top; width: 50%;">
-                                    <div class="text-uppercase" style="text-align: center; color: grey; font-size: 3vh;">
+                                    <div class="text-uppercase" style="text-align: center; color: grey; font-size: 2rem; font-weight: 500;">
                                         Liabilities &amp; Equities  
                                         <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
                                     </div>
@@ -263,7 +263,7 @@
                                 </td>
 
                                 <td style=" border-left: 1pt solid white; width: 50%;">
-                                    <div class="text-uppercase"  style="text-align: center; color: grey; font-size: 3vh;">
+                                    <div class="text-uppercase"  style="text-align: center; color: grey; font-size: 2rem; font-weight: 500;">
                                         Assets
                                         <p style="border-bottom: 1px solid white; margin-left: -2vh; margin-right: -2vh; margin-top: 2vh;"></p>
                                     </div>

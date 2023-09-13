@@ -204,13 +204,14 @@
     <div class="row row-container">
         <div class="col-md-3"><br>
             <div class="nav-item " id="general">
-                <a class="nav-link cursor-pointer active" style="background-color: grey; color: black;">General</a>
-            </div> <br>
+                <a class="nav-link cursor-pointer active" style="background-color: grey; color: white; font-size: 3vh;">General</a>
+            </div> 
         </div>
 
-        <div class="col-md-9 myDiv" id="generaldiv"><br>
+        <div class="col-md-9 myDiv" id="generaldiv">
             <form method='post' class='post-form' action="{% url 'update_hbalancesheet' %}" enctype="multipart/form-data">
                 {% csrf_token %}
+                
                 <div class="custom-dropdown">
                     <div class="row">
                         <div class="col-md-3">
@@ -243,6 +244,20 @@
                         </div>
                     </div>
                 </div><br><br>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="comapny" style="font-size: medium; margin-top: 1vh;">Select Company</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="comapny" class="form-control text-dark bg-white">
+                                <option value="#" style="color: #060606;" selected hidden></option>
+                                <option value="{{company.company_name}}" style="color: #060606;">{{company.company_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div><br>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-3">
@@ -386,7 +401,7 @@
                     </div>
     
                     <div class="col-md-1">
-                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;">-</a>&nbsp;
+                        <a class="btn btn-light remove" id="remove_btn" style="height: 5vh;"><span style="font-size: 3vh;">-</span></a>&nbsp;
                     </div>
                 </div>
     

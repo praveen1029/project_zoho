@@ -1,392 +1,988 @@
-{% extends 'base.html' %}
-{% block content %}
-{% load static %}
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/css/pikaday.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.0/pikaday.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Table Header</title>
+    <style>
+        /* Apply basic styles to the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style the sticky header */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <!-- Table headings here -->
+                <tr>
+                    <th>Header 1</th>
+                    <th>Header 2</th>
+                    <th>Header 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows here -->
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <tr>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
 
-<style>
-
-    table {
-        width: 100%;
-        }
-
-    th,td {
-        text-align: left;
-        color: white;
-    }
-
-    td {
-        border: none;
-    }
-
-    table,th{
-        border: 1pt solid white;
-    }
-
-    th i{
-        font-size: 200%;
-        color: white;
-    }
-
-    .right{
-        text-align: right;
-        border-right: 1pt solid white;
-    }
-
-    .border_right{
-        border-right: 1pt solid white;
-    }
-
-    a:hover{
-        background-color:#007bff;
-        color:#007bff;
-    }
-
-    a:active{
-        background-color: #007bff;
-    }
-
-    .myDiv:target{
-        display:block !important;
-    }
-
-    .myd{
-        display:none;
-        padding:10px;
-        margin-top:20px;
-    }  
-
-    #custom-dropdown-btn{
-        background-color: white;
-        width: 96%;
-        height: 4vh;
-        text-align: left;
-    }
-
-    #date-options{
-        background-color: white;
-        width: 96%;
-        margin-top: 1vh;
-        margin-left: 4vh;
-        border-radius: 10px;
-    }
-
-    #date-options a{
-        color: #060606;
-    }
-
-    #date-options a:hover{
-        background-color: white;
-    }
-
-    .div-option:hover{
-        background-color: #007bff;
-    }
-
-    .dropdown-item:hover{
-        background-color: white;
-    }
-
-    #furplus, #funplus,#totalfur,#totalfun{
-        display: none;
-    }
-
-    #furminus,#funminus,#furplus,#funplus a:hover{
-        background-color:transparent;
-    }
-
-    .close-button{
-        font-size: 2vh; 
-        font-weight: 100;
-    }
-
-    .close-button:hover{
-        color: blue;
-    }
-
-    table a{
-        color:white
-    }
-
-    table a:hover{
-        color:rgb(184, 121, 4);
-        background-color: transparent;
-    }
-
-    .customize:hover{
-        background-color: transparent;
-    }
-
-</style>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="custom-dropdown">
-                <div class="d-flex">
-                    <i class="fa fa-calendar" aria-hidden="true" style="font-size: 4vh; color: white;"></i>&nbsp;
-                    <a id="custom-dropdown-btn" href="#" class="btn bg-white text-dark" style="font-size: 1vw; height: 30px;"></a>
-                </div>
-                <div id="datepicker-container" style="display: none;">
-                    <div id="date-options" style="display: none;">
-                        <a class="date-option" href="#"><div class="div-option">Today</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Quarter</div></a>
-                        <a class="date-option" href="#"><div class="div-option">This Year</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Yesterday</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Week</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Month</div></a>
-                        <a class="date-option" href="#"><div class="div-option">Previous Quarter</div></a>
-                        <a id="datepicker" href="#"><div class="div-option">Custom</div></a>
-                    </div>
-                </div>
-            </div><br><br>
-        </div>
-        <div class="col-md-6" >
-            <button class="btn btn-light"><a class="text-dark customize" href="{% url 'load_customize_report_hbs' %}"><i class="fa fa-cog">&nbsp;</i>Customize Report</a></button>
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class=" col-md-2 d-flex " >
-            <button class="btn btn-light" onclick="display()" style="height: 30px;"><i class="fa fa-print">&nbsp;Print</i></button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn btn-light dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 30px;">
-                <i class='fas fa-file-export'></i> Export
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="exportDropdown">
-                <a class="dropdown-item" href="#" onclick="exportToPDF()">PDF</a>
-                <a class="dropdown-item" href="#" onclick="exportToExcel()">XLS (Excel)</a>
-            </div>
-        </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-        <div class="col-md-1">
-            <a href="{% url 'report_inventory_view' %}" class="btn btn-light close-button">
-               X 
-            </a>
-        </div>
+        <div id="demo"><p></p></div>
     </div>
+    <script>
+        // Get the table header
+        const tableHeader = document.querySelector("thead");
 
-</div>
-
-
-<script>
-    function openfur(){
-        $("#furdiv1").show()
-        $("#furdiv2").show()
-        $("#furplus").hide()
-        $("#furminus").show()
-        $("#totalfur").hide()
-        $("#furvalue").show()
-        $("#fundiv1").hide()
-        $("#fundiv2").hide()
-        $("#funplus").show()
-        $("#funminus").hide()
-    }
-
-    function closefur(){
-        $("#furdiv1").hide()
-        $("#furdiv2").hide()
-        $("#furplus").show()
-        $("#furminus").hide()
-        $("#totalfur").show()
-        $("#furvalue").hide()
-        $("#fundiv1").hide()
-        $("#fundiv2").hide()
-    }
-
-    function openfun(){
-        $("#fundiv1").show()
-        $("#fundiv2").show()
-        $("#funplus").hide()
-        $("#funminus").show()
-        $("#totalfun").hide()
-        $("#funvalue").show()
-    }
-
-    function closefun(){
-        $("#fundiv1").hide()
-        $("#fundiv2").hide()
-        $("#funplus").show()
-        $("#funminus").hide()
-        $("#totalfun").show()
-        $("#funvalue").hide()
-    }
-
-    function display() {
-        var printContents = document.getElementById("pdfdiv").innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
-
-    function exportToPDF(){
-        var content = document.getElementById('pdfdiv');
-        html2pdf()
-        .from(content)
-        .save('report.pdf')
-    }
-
-    // Function to save Excel using XLSX
-    function exportToExcel() {
-        var table = document.querySelector('table');
-        var ws = XLSX.utils.table_to_sheet(table);
-        var wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        XLSX.writeFile(wb, 'report.xlsx');
-    }
-
-    // Initialize Pikaday date picker
-    const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-    const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    var nowDate = new Date(); 
-    var formdate = "{{newdate}}";
-    
-    if(formdate){
-        document.getElementById('custom-dropdown-btn').innerHTML= formdate
-    }else{
-        document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
-    };
-    const picker = new Pikaday({
-        field: document.getElementById('datepicker'),
-        format: 'MM/DD/YYYY', // You can change the date format
-        onSelect: function(date) {
-            
-            // document.getElementById('custom-dropdown-btn').textContent =  "Custom";
-            document.getElementById('custom-dropdown-btn').textContent =  picker.toString();
-            document.getElementById('datepicker-container').style.display = 'none';
-            document.getElementById('date-options').style.display = 'none';
-        }
-    });
-
-    // Handle custom dropdown button click
-    const customDropdownBtn = document.getElementById('custom-dropdown-btn');
-    const datepickerContainer = document.getElementById('datepicker-container');
-    const dateOptions = document.getElementById('date-options');
-
-    customDropdownBtn.addEventListener('click', function() {
-        if (datepickerContainer.style.display === 'none') {
-            datepickerContainer.style.display = 'block';
-            dateOptions.style.display = 'block';
-        } else {
-            datepickerContainer.style.display = 'none';
-            dateOptions.style.display = 'none';
-        }
-    });
-
-    // Close date picker if clicking outside
-    document.addEventListener('click', function(event) {
-        if (!datepickerContainer.contains(event.target) && event.target !== customDropdownBtn) {
-            datepickerContainer.style.display = 'none';
-            dateOptions.style.display = 'none';
-        }
-    });
-
-    // Add date option handlers
-    const dateOptionButtons = document.querySelectorAll('.date-option');
-    
-    dateOptionButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const optionText = button.textContent;
-            switch (optionText) {
-                case 'Today':
-                    picker.setDate(new Date());
-                    // document.getElementById('custom-dropdown-btn').textContent =  "Today";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'This Week':
-                    // Set date to the start of the week (Sunday)
-                    const today = new Date();
-                    today.setDate(today.getDate() - today.getDay());
-                    picker.setDate(today);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "This Week";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'This Month':
-                    // Set date to the 1st day of the current month
-                    const firstDayOfMonth = new Date();
-                    firstDayOfMonth.setDate(1);
-                    picker.setDate(firstDayOfMonth);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "This Month";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'This Quarter':
-                    // Calculate the start date of the current quarter
-                    const quarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3;
-                    const firstDayOfQuarter = new Date(new Date().getFullYear(), quarterStartMonth, 1);
-                    picker.setDate(firstDayOfQuarter);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "This Quarter";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';                        
-                    break;
-
-                case 'This Year':
-                    // Set date to January 1st of the current year
-                    const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
-                    picker.setDate(firstDayOfYear);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "This Year";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'Yesterday':
-                    const yesterday = new Date();
-                    yesterday.setDate(yesterday.getDate() - 1);
-                    picker.setDate(yesterday);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "Yesterday";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'Previous Week':
-                    // Set date to the start of the previous week (Sunday)
-                    const prevWeekStart = new Date();
-                    prevWeekStart.setDate(prevWeekStart.getDate() - prevWeekStart.getDay() - 7);
-                    picker.setDate(prevWeekStart);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Week";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'Previous Month':
-                    // Set date to the 1st day of the previous month
-                    const prevMonth = new Date();
-                    prevMonth.setDate(1);
-                    prevMonth.setMonth(prevMonth.getMonth() - 1);
-                    picker.setDate(prevMonth);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Month";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-
-                case 'Previous Quarter':
-                    // Calculate the start date of the previous quarter
-                    const prevQuarterStartMonth = Math.floor(new Date().getMonth() / 3) * 3 - 3;
-                    const prevQuarterStart = new Date(new Date().getFullYear(), prevQuarterStartMonth, 1);
-                    picker.setDate(prevQuarterStart);
-                    // document.getElementById('custom-dropdown-btn').textContent =  "Previous Quarter";
-                    // document.getElementById('datepicker-container').style.display = 'none';
-                    // document.getElementById('date-options').style.display = 'none';
-                    break;
-                    
-                default:
-                    break;
+        // Function to handle scroll events
+        function handleScroll() {
+            if (window.pageYOffset > tableHeader.offsetTop) {
+                tableHeader.classList.add("sticky-header");
+                document.getElementById("demo").innerHTML =1
+            } else {
+                tableHeader.classList.remove("sticky-header");
             }
-            document.getElementById('datepicker-container').style.display = 'none';
-            document.getElementById('date-options').style.display = 'none';
-        });
-    });
+        }
 
-</script>
-
-{% endblock %}
+        // Listen for scroll events
+        window.addEventListener("scroll", handleScroll);
+    </script>
+</body>
+</html>
