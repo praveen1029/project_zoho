@@ -9677,7 +9677,7 @@ def load_customize_report_bs(request):
 def update_balancesheet(request):
     if request.method=='POST':
         newdate= request.POST.get('newdate', False)
-        return render(request,'balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
+        return render(request,'balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:],"valid":1})
 
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):

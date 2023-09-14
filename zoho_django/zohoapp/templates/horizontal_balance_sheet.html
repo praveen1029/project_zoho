@@ -121,6 +121,16 @@
         background-color: transparent;
     }
 
+    @media print{
+        body{
+            visibility: hidden;
+        }
+        
+        #printdiv{
+            visibility: visible;
+        }
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -173,8 +183,8 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="row bg-dark" id="pdfdiv" style="border-radius: 3vh; width: 77vw;">
+    <div class="row" id="pdfdiv" style="width:105%">
+        <div class="row bg-dark" id="printdiv" style="border-radius: 3vh; width: 77vw;">
             <h3 style="text-align: center; margin-top: 2vh;">{{company.company_name}}</h3>
             <h1 style="text-align: center;">Horizontal Balance Sheet</h1>
             <h6 style="text-align: center;">Basis: Cash</h6>
@@ -474,7 +484,7 @@
     }
 
     function display() {
-        var printContents = document.getElementById("pdfdiv").innerHTML;
+        var printContents = document.getElementById("printdiv").innerHTML;
         var originalContents = document.body.innerHTML;
         document.body.innerHTML = printContents;
         window.print();
