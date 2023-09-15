@@ -654,7 +654,7 @@
     var formdate = "{{newdate}}";
     if(formdate){
         document.getElementById('custom-dropdown-btn').innerHTML= formdate
-        document.getElementById('todaydate').innerHTML= formdate
+        document.getElementById('todaydate').innerHTML= formdate.slice(4)
     }else{
         document.getElementById('custom-dropdown-btn').innerHTML= weekday[nowDate.getDay()]+" "+month[nowDate.getMonth()]+" "+nowDate.getDate()+" "+ nowDate.getFullYear(); 
         document.getElementById('todaydate').innerHTML= nowDate.getDate() +" "+ month[nowDate.getMonth()]+" "+ nowDate.getFullYear(); 

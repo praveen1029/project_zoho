@@ -9664,12 +9664,6 @@ def load_balance_sheet(request):
     company = company_details.objects.get(user = request.user.id)
     return render(request,'balance_sheet.html', {"company":company})
 
-def load_balance_sheet1(request):
-    return render(request,'balance_sheet1.html', {"range":range(2,24),})
-
-def load_balance_sheet2(request):
-    return render(request,'balance_sheet2.html', {"range":range(2,24)})
-
 def load_customize_report_bs(request):
     company = company_details.objects.get(user = request.user.id)
     return render(request,'customize_report_bs.html', {"range":range(2,24),"company":company})
@@ -9677,7 +9671,8 @@ def load_customize_report_bs(request):
 def update_balancesheet(request):
     if request.method=='POST':
         newdate= request.POST.get('newdate', False)
-        return render(request,'balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:],"valid":1})
+        company = company_details.objects.get(user = request.user.id)
+        return render(request,'balance_sheet.html', {"company":company,"newdate":newdate,"valid":1})
 
 ############### HORIZONTAL BALANCE SHEET ################## 
 def load_horizontal_balance_sheet(request):
@@ -9691,4 +9686,5 @@ def load_customize_report_hbs(request):
 def update_hbalancesheet(request):
     if request.method=='POST':
         newdate= request.POST.get('newdate', False)
-        return render(request,'horizontal_balance_sheet.html', {"range":range(2,24),"newdate":newdate[4:]})
+        company = company_details.objects.get(user = request.user.id)
+        return render(request,'horizontal_balance_sheet.html', {"company":company,"newdate":newdate})
